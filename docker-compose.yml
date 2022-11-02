@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+    nginx:
+        build: 
+            context: .
+            dockerfile: nginx/Dockerfile
+        depends_on:
+            - app
+        restart: always
+        image: nginx
+        container_name: 'nginx'
+        ports:
+            - '80:80'
+            - '443:443'
+            
+    app:
+        image: social-app-v2
+        restart: always
+        container_name: 'social-app-v2'
+        working_dir: /usr/src
+        ports:
+            - 3001:3001
+            - 3002:3002
+
+    mongodb:
+        image: mongo:5.0
+        container_name: mongodb
+        restart: always
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+        volumes:
+            - /data/db
+        ports:
+            - '27017:27017'
+
+    mysql:
+        image: mysql:5.7
+        container_name: mysql
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=social_app_v2
+            - MYSQL_USER=social_app
+            - MYSQL_PASSWORD=groot
+        volumes:
+            - /var/lib/mysql
+        ports:
+            - '3306:3306'
