@@ -1,14 +1,26 @@
 import AddIcon from '@mui/icons-material/Add';
+import PeopleIcon from '@mui/icons-material/People';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { InitialDataProps } from './reducer';
 
 import './styles.scss';
 
 interface SidebarProps {
-    state: any;
+    state: InitialDataProps;
     dispatch: React.Dispatch<any>;
     mobileMode: boolean;
 }
 
-export default function Sidebar({ state, mobileMode }: SidebarProps) {
+export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
+    const handleSidebar = () => {
+        dispatch({
+            type: 'SET_SIDEBAR_OPEN',
+            data: {
+                open: !state.sidebar.open,
+            },
+        });
+    };
     return (
         <div
             className="Application-sidebar-container"
@@ -23,8 +35,31 @@ export default function Sidebar({ state, mobileMode }: SidebarProps) {
             }
         >
             <div className="Application-sidebar-title">
-                <AddIcon />
+                <AddIcon
+                    id="add"
+                    onClick={() =>
+                        dispatch({
+                            type: 'SET_ADDFRIEND',
+                            data: {
+                                open: true,
+                            },
+                        })
+                    }
+                />
                 <h1>Friends</h1>
+                {mobileMode && (
+                    <ArrowBackIcon
+                        onClick={handleSidebar}
+                        id="arrow"
+                        style={
+                            mobileMode
+                                ? state.sidebar.open
+                                    ? { right: '2vw' }
+                                    : {}
+                                : {}
+                        }
+                    />
+                )}
             </div>
             <div className="Application-sidebar">
                 <div className="Application-sidebar-friendslist">
@@ -44,6 +79,10 @@ export default function Sidebar({ state, mobileMode }: SidebarProps) {
                                 <p>{friend.username}</p>
                             </div>
                         ))}
+                </div>
+                <div className="Application-sidebar-actionbar">
+                    <SettingsIcon />
+                    <PeopleIcon />
                 </div>
             </div>
         </div>
