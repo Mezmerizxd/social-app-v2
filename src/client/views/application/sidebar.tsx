@@ -28,6 +28,11 @@ export default function Sidebar({ state, mobileMode }: SidebarProps) {
             </div>
             <div className="Application-sidebar">
                 <div className="Application-sidebar-friendslist">
+                    {!state.friends && (
+                        <div className="no-friends">
+                            <h1>No friends found</h1>
+                        </div>
+                    )}
                     {state.friends &&
                         state.friends.map((friend) => (
                             <div

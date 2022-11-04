@@ -59,6 +59,11 @@ export default function Messaging({
                 <h1>User</h1>
             </div>
             <div className="Application-messaging-messages">
+                {!state.messages && (
+                    <div className="no-messages">
+                        <h1>No messages found</h1>
+                    </div>
+                )}
                 {state.messages &&
                     state.messages.length > 0 &&
                     state.messages.map((message) => (

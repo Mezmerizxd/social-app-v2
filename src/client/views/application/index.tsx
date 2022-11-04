@@ -67,11 +67,13 @@ export default function Application() {
                     />
                 )}
 
-                <Messaging
-                    state={state}
-                    dispatch={dispatch}
-                    mobileMode={mobileMode}
-                />
+                {state.messages && (
+                    <Messaging
+                        state={state}
+                        dispatch={dispatch}
+                        mobileMode={mobileMode}
+                    />
+                )}
             </div>
         </div>
     );
