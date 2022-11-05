@@ -1,11 +1,12 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useEffect } from 'react';
+import { InitialDataProps } from './reducer';
 
 import './styles.scss';
 
 interface MessagingProps {
-    state: any;
+    state: InitialDataProps;
     dispatch: React.Dispatch<any>;
     mobileMode: boolean;
 }
@@ -19,14 +20,14 @@ export default function Messaging({
         document.getElementById('autoscroll').scrollIntoView(false);
     }, [state.messages]);
 
-    function handleSidebar() {
+    const handleSidebar = () => {
         dispatch({
             type: 'SET_SIDEBAR_OPEN',
             data: {
                 open: !state.sidebar.open,
             },
         });
-    }
+    };
 
     return (
         <div
@@ -59,6 +60,11 @@ export default function Messaging({
                 <h1>User</h1>
             </div>
             <div className="Application-messaging-messages">
+                {!state.messages && (
+                    <div className="no-messages">
+                        <h1>No messages found</h1>
+                    </div>
+                )}
                 {state.messages &&
                     state.messages.length > 0 &&
                     state.messages.map((message) => (

@@ -5,6 +5,7 @@ import './styles.scss';
 
 import Sidebar from './sidebar';
 import Messaging from './messaging';
+import AddFriend from './addFriend';
 
 export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
@@ -67,12 +68,17 @@ export default function Application() {
                     />
                 )}
 
-                <Messaging
-                    state={state}
-                    dispatch={dispatch}
-                    mobileMode={mobileMode}
-                />
+                {state.messages && (
+                    <Messaging
+                        state={state}
+                        dispatch={dispatch}
+                        mobileMode={mobileMode}
+                    />
+                )}
             </div>
+
+            {/* Popups */}
+            <AddFriend state={state} dispatch={dispatch} />
         </div>
     );
 }

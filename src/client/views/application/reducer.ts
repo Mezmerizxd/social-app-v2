@@ -5,6 +5,10 @@ export interface InitialDataProps {
         open: boolean;
         data: any;
     };
+    addFriend: {
+        error: any;
+        open: boolean;
+    };
 }
 
 export const InitialData: InitialDataProps = {
@@ -13,6 +17,10 @@ export const InitialData: InitialDataProps = {
     sidebar: {
         open: true,
         data: null,
+    },
+    addFriend: {
+        error: null,
+        open: false,
     },
 };
 
@@ -35,6 +43,22 @@ export const Reducer = (state: InitialDataProps, action: any) => {
             return {
                 ...state,
                 messages: action.data.messages,
+            };
+        case 'SET_ADDFRIEND':
+            return {
+                ...state,
+                addFriend: {
+                    ...state.addFriend,
+                    open: action.data.open,
+                },
+            };
+        case 'SET_ADDFRIEND_ERROR':
+            return {
+                ...state,
+                AddFriend: {
+                    ...state.addFriend,
+                    error: action.data.error,
+                },
             };
     }
 };

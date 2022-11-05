@@ -17,11 +17,7 @@ export default function App() {
                         >
                             Login
                         </button>
-                        <button
-                            onClick={() =>
-                                (window.location.href = '/app')
-                            }
-                        >
+                        <button onClick={() => (window.location.href = '/app')}>
                             View Design
                         </button>
                     </div>
