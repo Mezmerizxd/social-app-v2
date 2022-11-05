@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-interface ConfigReturnProps {
+type EnvReturn = {
     port: any;
     socketPort: any;
     // MySql
@@ -33,10 +33,16 @@ interface ConfigReturnProps {
     firebaseTokenUri: any;
     firebaseAuthProviderCertUrl: any;
     firebaseClientCertUrl: any;
-}
+};
 
-export default new (class Config {
-    public Env = (): ConfigReturnProps => {
+type LocalReturn = {
+    fbDbName: string;
+    fbDbUserAcccount: string;
+    fbDbUserData: string;
+};
+
+export default new (class Cfg {
+    public Env = (): EnvReturn => {
         dotenv.config({ path: path.join(__dirname, '../../../.server.env') });
         return {
             port: process.env.PORT,
@@ -71,6 +77,14 @@ export default new (class Config {
             firebaseAuthProviderCertUrl:
                 process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
             firebaseClientCertUrl: process.env.FIREBASE_CLIENT_X509_CERT_URL,
+        };
+    };
+
+    public Local = (): LocalReturn => {
+        return {
+            fbDbName: 'social_app_v2',
+            fbDbUserAcccount: 'user_account',
+            fbDbUserData: 'user_data',
         };
     };
 })();

@@ -1,6 +1,6 @@
 import * as mongo from 'mongodb';
 import Log from '../utils/Log';
-import Config from '../config';
+import Cfg from '../cfg';
 
 export default new (class MongoDb {
     private host: string;
@@ -8,11 +8,11 @@ export default new (class MongoDb {
     private client: mongo.MongoClient;
 
     constructor() {
-        if (Config.Env().mongoDbEnabled === 'true') {
+        if (Cfg.Env().mongoDbEnabled === 'true') {
             this.host =
                 process.env.NODE_ENV === 'production'
-                    ? Config.Env().mongoDbHost
-                    : Config.Env().mongoDbDevHost;
+                    ? Cfg.Env().mongoDbHost
+                    : Cfg.Env().mongoDbDevHost;
             this.options = {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
@@ -42,14 +42,14 @@ export default new (class MongoDb {
         collection: string,
         callback: (collection: any) => any
     ) => {
-        if (Config.Env().mongoDbEnabled === 'true') {
+        if (Cfg.Env().mongoDbEnabled === 'true') {
             try {
                 await this.client.connect();
                 const mongoCollection = this.client
                     .db(
                         process.env.NODE_ENV === 'production'
-                            ? Config.Env().mongoDbDb
-                            : Config.Env().mongoDbDevDb
+                            ? Cfg.Env().mongoDbDb
+                            : Cfg.Env().mongoDbDevDb
                     )
                     .collection(collection);
                 return await callback(mongoCollection);
@@ -62,13 +62,13 @@ export default new (class MongoDb {
     };
 
     public Test = async () => {
-        if (Config.Env().mongoDbEnabled === 'true') {
+        if (Cfg.Env().mongoDbEnabled === 'true') {
             try {
                 await this.client.connect();
                 const mongo = this.client.db(
                     process.env.NODE_ENV === 'production'
-                        ? Config.Env().mongoDbDb
-                        : Config.Env().mongoDbDevDb
+                        ? Cfg.Env().mongoDbDb
+                        : Cfg.Env().mongoDbDevDb
                 );
                 if (mongo) {
                     Log.debug('[Data] [MongoDb] Test successful.');
@@ -78,8 +78,6 @@ export default new (class MongoDb {
             } finally {
                 await this.client.close();
             }
-        } else {
-            Log.warn(`[Data] [MongoDb] Test failed, MongoDb is not enabled.`);
         }
     };
 })();

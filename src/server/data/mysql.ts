@@ -1,7 +1,7 @@
 import * as mysql from 'mysql2';
 import * as util from 'util';
 import Log from '../utils/Log';
-import Config from '../config';
+import Cfg from '../cfg';
 
 export default new (class MySql {
     private host: string;
@@ -12,24 +12,24 @@ export default new (class MySql {
     private connected: boolean;
 
     constructor() {
-        if (Config.Env().mySqlEnabled === 'true') {
+        if (Cfg.Env().mySqlEnabled === 'true') {
             this.host =
                 process.env.NODE_ENV === 'production'
-                    ? Config.Env().mySqlHost
-                    : Config.Env().mySqlDevHost;
+                    ? Cfg.Env().mySqlHost
+                    : Cfg.Env().mySqlDevHost;
             this.user =
                 process.env.NODE_ENV === 'production'
-                    ? Config.Env().mySqlUser
-                    : Config.Env().mySqlDevUser;
+                    ? Cfg.Env().mySqlUser
+                    : Cfg.Env().mySqlDevUser;
             this.password =
                 process.env.NODE_ENV === 'production'
-                    ? Config.Env().mySqlPaswd
-                    : Config.Env().mySqlDevPaswd;
+                    ? Cfg.Env().mySqlPaswd
+                    : Cfg.Env().mySqlDevPaswd;
 
             this.database =
                 process.env.NODE_ENV === 'production'
-                    ? Config.Env().mySqlDb
-                    : Config.Env().mySqlDevDb;
+                    ? Cfg.Env().mySqlDb
+                    : Cfg.Env().mySqlDevDb;
 
             this.connection = mysql.createConnection({
                 host: this.host,
@@ -46,11 +46,13 @@ export default new (class MySql {
                 this.connected = true;
                 Log.info('[Data] [MySql] Connection established.');
             });
+        } else {
+            Log.warn('[Data] [MySql] MySql is disabled.');
         }
     }
 
     public Query = (query: string, callback?: (results: any) => void) => {
-        if (Config.Env().mySqlEnabled === 'true' && this.connected) {
+        if (Cfg.Env().mySqlEnabled === 'true' && this.connected) {
             try {
                 this.connection.execute(query, (err: any, results: any) => {
                     if (err) {
@@ -67,7 +69,7 @@ export default new (class MySql {
     };
 
     public QueryAsync = async (query: string) => {
-        if (Config.Env().mySqlEnabled === 'true' && this.connected) {
+        if (Cfg.Env().mySqlEnabled === 'true' && this.connected) {
             try {
                 const promisql = util
                     .promisify(this.connection.query)
@@ -81,7 +83,7 @@ export default new (class MySql {
     };
 
     public Test = () => {
-        if (Config.Env().mySqlEnabled === 'true') {
+        if (Cfg.Env().mySqlEnabled === 'true') {
             this.connection = mysql.createConnection({
                 host: this.host,
                 user: this.user,
@@ -97,8 +99,6 @@ export default new (class MySql {
                 this.connected = true;
                 Log.debug('[Data] [MySql] Test successful.');
             });
-        } else {
-            Log.warn(`[Data] [MySql] Test failed, MySql is not enabled.`);
         }
     };
 })();

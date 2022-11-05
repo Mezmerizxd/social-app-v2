@@ -1,6 +1,6 @@
 import * as express from 'express';
 import Log from './utils/Log';
-import Config from './config';
+import Cfg from './cfg';
 
 import Middlewares from './middlewares';
 import Data from './data';
@@ -10,7 +10,7 @@ import Io from './api/v1/io';
 
 const app = express();
 const http = require('http').Server(app);
-const io = require('socket.io')(Config.Env().socketPort, {
+const io = require('socket.io')(Cfg.Env().socketPort, {
     cors: { origin: '*', methods: 'GET,HEAD,PUT,PATCH,POST,DELETE' },
 });
 
@@ -28,6 +28,6 @@ io.on('connection', (socket) => {
     new Io(io, socket);
 });
 
-http.listen(Config.Env().port, async () => {
+http.listen(Cfg.Env().port, async () => {
     Log.info('[Server] Started.');
 });
