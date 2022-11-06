@@ -4,6 +4,7 @@ import Firebase from '../../../data/firebase';
 import * as sjcl from 'sjcl';
 import Features from '../features';
 import Cfg from '../../../cfg';
+import Log from '../../../utils/Log';
 
 type RequestBody = {
     email: string;
@@ -13,6 +14,7 @@ type RequestBody = {
 
 export default new (class Signup {
     public perform = async (req: Request, res: Response) => {
+        Log.debugApi('[V1] [User] [Signup] Started');
         const body: RequestBody = req.body;
 
         // Email value checks
@@ -120,5 +122,6 @@ export default new (class Signup {
         } catch (error) {
             Responder(res, 'catch', null, `[User] Signup, ${error}`);
         }
+        Log.debugApi('[V1] [User] [Signup] Finished');
     };
 })();

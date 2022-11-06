@@ -12,7 +12,7 @@ export default new (class Features {
     private generators_max_attempts = 5;
 
     public GenerateUserId = async (): Promise<GenerateReturn> => {
-        Log.debug('[API/V1] [Features] GenerateUserId - started');
+        Log.debug('[API] [V1] [Features] GenerateUserId - started');
         let created = false;
         let id: number = 0;
         let attempts = 0;
@@ -29,12 +29,12 @@ export default new (class Features {
             if (!fbUserDataResp) created = true;
             attempts += 1;
         }
-        Log.debug('[API/V1] [Features] GenerateUserId - finished');
+        Log.debug('[API] [V1] [Features] GenerateUserId - finished');
         return { data: id };
     };
 
     public GenerateAuthorization = async (): Promise<GenerateReturn> => {
-        Log.debug('[API/V1] [Features] GenerateAuthorization - started');
+        Log.debug('[API] [V1] [Features] GenerateAuthorization - started');
         let created = false;
         let token: string = '';
         let attempts = 0;
@@ -56,7 +56,7 @@ export default new (class Features {
             if (!fbUserDataResp) created = true;
             attempts += 1;
         }
-        Log.debug('[API/V1] [Features] GenerateAuthorization - finished');
+        Log.debug('[API] [V1] [Features] GenerateAuthorization - finished');
         return { data: token };
     };
 })();

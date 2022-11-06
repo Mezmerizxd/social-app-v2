@@ -3,9 +3,9 @@ import EmailIcon from '@mui/icons-material/Email';
 import InputAdornment from '@mui/material/InputAdornment';
 import KeyIcon from '@mui/icons-material/Key';
 import './styles.scss';
-import { CustomTextField, CustomButton } from './styles';
+import { CustomTextField, CustomButton, CustomCheckBox } from './styles';
 import Api from '../../classes/Api';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SignupProps {
     dispatch: React.Dispatch<any>;
@@ -17,6 +17,12 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
     const [usernameValue, setUsernameValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
     const [errorValue, setErrorValue] = useState<string>(null);
+    const [remember, setRemember] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('remember') === 'true')
+            window.location.href = '/app';
+    }, []);
 
     async function handleSignup() {
         setErrorValue(null);
@@ -29,7 +35,12 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
             },
             true
         );
-        if (response && response.success === false) {
+        if (response.success === true) {
+            if (remember)
+                localStorage.setItem('remember', remember ? 'true' : 'false');
+            localStorage.setItem('authorization', response.data.authorization);
+            window.location.href = '/app';
+        } else {
             setErrorValue(response.error);
         }
     }
@@ -83,6 +94,12 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
                 }}
                 variant="outlined"
                 onChange={(e) => setPassowrdValue(e.target.value)}
+            />
+
+            <CustomCheckBox
+                label="Remember Me"
+                checked={remember}
+                state={setRemember}
             />
 
             {errorValue && <p id="error">{errorValue}</p>}

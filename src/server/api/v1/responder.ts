@@ -8,6 +8,9 @@ export default function Responder(
     error?: string
 ) {
     try {
+        Log.debugApi(
+            `[V1] [Responder] Response, Data: ${data} | Error: ${error}`
+        );
         type = type.toUpperCase();
         switch (type) {
             case 'SUCCESS':
@@ -28,7 +31,7 @@ export default function Responder(
                 });
         }
     } catch (error) {
-        Log.error(`[API/V1] [Responder] Error handling Success, ${error}`);
+        Log.error(`[API] [V1] [Responder] Error handling Success, ${error}`);
         return handler.status(400).json({
             success: false,
             error: 'Something went wrong.',

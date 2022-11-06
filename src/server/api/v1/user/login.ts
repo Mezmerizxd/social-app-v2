@@ -3,6 +3,7 @@ import Responder from '../responder';
 import Firebase from '../../../data/firebase';
 import * as sjcl from 'sjcl';
 import Cfg from '../../../cfg';
+import Log from '../../../utils/Log';
 
 type RequestBody = {
     email: string;
@@ -11,6 +12,7 @@ type RequestBody = {
 
 export default new (class Login {
     public perform = async (req: Request, res: Response) => {
+        Log.debugApi('[V1] [User] [Login] Started');
         const body: RequestBody = req.body;
 
         // Email value checks
@@ -90,5 +92,6 @@ export default new (class Login {
         } catch (error) {
             Responder(res, 'catch', null, `[User] Login, ${error}`);
         }
+        Log.debugApi('[V1] [User] [Login] Finished');
     };
 })();
