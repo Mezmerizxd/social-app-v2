@@ -9,28 +9,20 @@ export default new (class Api {
         body?: any,
         json?: boolean
     ): Promise<any> => {
-        return await fetch(this.getUri() + api, {
-            method: 'POST',
-            body: body ? JSON.stringify(body) : null,
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: this.authorization,
-            },
-        }).then((res) => {
-            return json === true ? res.json() : res;
-        });
-    };
-
-    public Get = async (api: string, json?: boolean): Promise<any> => {
-        return await fetch(this.getUri() + api, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: this.authorization,
-            },
-        }).then((res) => {
-            return json === true ? res.json() : res;
-        });
+        try {
+            return await fetch(this.getUri() + api, {
+                method: 'POST',
+                body: body ? JSON.stringify(body) : null,
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: this.authorization,
+                },
+            }).then((res) => {
+                return json === true ? res.json() : res;
+            });
+        } catch (error) {
+            console.log('error');
+        }
     };
 
     public getUri = () => {

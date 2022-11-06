@@ -2,9 +2,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import InputAdornment from '@mui/material/InputAdornment';
 import KeyIcon from '@mui/icons-material/Key';
-
 import './styles.scss';
 import { CustomTextField, CustomButton } from './styles';
+import Api from '../../classes/Api';
+import { useState } from 'react';
 
 interface SignupProps {
     dispatch: React.Dispatch<any>;
@@ -12,6 +13,27 @@ interface SignupProps {
 }
 
 export default function Signup({ contexts, dispatch }: SignupProps) {
+    const [emailValue, setEmailValue] = useState<string>(null);
+    const [usernameValue, setUsernameValue] = useState<string>(null);
+    const [passwordValue, setPassowrdValue] = useState<string>(null);
+    const [errorValue, setErrorValue] = useState<string>(null);
+
+    async function handleSignup() {
+        setErrorValue(null);
+        const response = await Api.Post(
+            '/user/signup',
+            {
+                email: emailValue,
+                username: usernameValue,
+                password: passwordValue,
+            },
+            true
+        );
+        if (response && response.success === false) {
+            setErrorValue(response.error);
+        }
+    }
+
     return (
         <div className="Signup-container">
             <CustomTextField
@@ -28,12 +50,7 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
                     ),
                 }}
                 variant="outlined"
-                onChange={(e) =>
-                    dispatch({
-                        type: 'SET_SIGNUP_EMAIL',
-                        data: { email: e.target.value },
-                    })
-                }
+                onChange={(e) => setEmailValue(e.target.value)}
             />
 
             <CustomTextField
@@ -49,12 +66,7 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
                     ),
                 }}
                 variant="outlined"
-                onChange={(e) =>
-                    dispatch({
-                        type: 'SET_SIGNUP_USERNAME',
-                        data: { username: e.target.value },
-                    })
-                }
+                onChange={(e) => setUsernameValue(e.target.value)}
             />
 
             <CustomTextField
@@ -70,15 +82,12 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
                     ),
                 }}
                 variant="outlined"
-                onChange={(e) =>
-                    dispatch({
-                        type: 'SET_SIGNUP_PASSWORD',
-                        data: { password: e.target.value },
-                    })
-                }
+                onChange={(e) => setPassowrdValue(e.target.value)}
             />
 
-            <CustomButton>Signup</CustomButton>
+            {errorValue && <p id="error">{errorValue}</p>}
+
+            <CustomButton onClick={handleSignup}>Signup</CustomButton>
 
             <p
                 onClick={() =>

@@ -90,5 +90,15 @@
                 color: white;
             }
         }
+
+        #error {
+            text-decoration: none;
+            background-color: rgb(247, 115, 115);
+            padding: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: auto;
+            border-radius: 6px;
+        }
     }
 }

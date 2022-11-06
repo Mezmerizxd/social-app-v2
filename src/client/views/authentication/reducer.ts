@@ -2,11 +2,13 @@ export interface InitialDataProps {
     login: {
         email: string;
         password: string;
+        error: string;
     };
     signup: {
         email: string;
         username: string;
         password: string;
+        error: string;
     };
     context: string;
 }
@@ -15,11 +17,13 @@ export const InitialData: InitialDataProps = {
     login: {
         email: '',
         password: '',
+        error: '',
     },
     signup: {
         email: '',
         username: '',
         password: '',
+        error: '',
     },
     context: '',
 };
@@ -47,6 +51,14 @@ export const Reducer = (state: InitialDataProps, action: any) => {
                     password: action.data.password,
                 },
             };
+        case 'SET_LOGIN_ERROR':
+            return {
+                ...state,
+                login: {
+                    ...state.login,
+                    error: action.data.error,
+                },
+            };
         case 'SET_SIGNUP_EMAIL':
             return {
                 ...state,
@@ -69,6 +81,14 @@ export const Reducer = (state: InitialDataProps, action: any) => {
                 signup: {
                     ...state.signup,
                     password: action.data.password,
+                },
+            };
+        case 'SET_SIGNUP_ERROR':
+            return {
+                ...state,
+                signup: {
+                    ...state.signup,
+                    error: action.data.error,
                 },
             };
     }
