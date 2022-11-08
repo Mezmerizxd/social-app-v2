@@ -16,6 +16,6 @@ export default class Io {
     }
 
     private disconnect = () => {
-        Log.debug('[API/V1] [IO] Connection to socket destroyed.');
+        Log.debugApi('[V1] [IO] Connection to socket destroyed.');
     };
 }

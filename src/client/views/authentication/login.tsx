@@ -3,7 +3,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import KeyIcon from '@mui/icons-material/Key';
 
 import './styles.scss';
-import { CustomTextField, CustomButton } from './styles';
+import { CustomTextField, CustomButton, CustomCheckBox } from './styles';
+import { useEffect, useState } from 'react';
+import Api from '../../classes/Api';
 
 interface LoginProps {
     dispatch: React.Dispatch<any>;
@@ -11,6 +13,36 @@ interface LoginProps {
 }
 
 export default function Login({ contexts, dispatch }: LoginProps) {
+    const [emailValue, setEmailValue] = useState<string>(null);
+    const [passwordValue, setPassowrdValue] = useState<string>(null);
+    const [errorValue, setErrorValue] = useState<string>(null);
+    const [remember, setRemember] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('remember') === 'true')
+            window.location.href = '/app';
+    }, []);
+
+    async function handleLogin() {
+        setErrorValue(null);
+        const response = await Api.Post(
+            '/user/login',
+            {
+                email: emailValue,
+                password: passwordValue,
+            },
+            true
+        );
+        if (response.success === true) {
+            if (remember)
+                localStorage.setItem('remember', remember ? 'true' : 'false');
+            localStorage.setItem('authorization', response.data.authorization);
+            window.location.href = '/app';
+        } else {
+            setErrorValue(response.error);
+        }
+    }
+
     return (
         <div className="Login-container">
             <CustomTextField
@@ -27,12 +59,7 @@ export default function Login({ contexts, dispatch }: LoginProps) {
                     ),
                 }}
                 variant="outlined"
-                onChange={(e) =>
-                    dispatch({
-                        type: 'SET_LOGIN_EMAIL',
-                        data: { email: e.target.value },
-                    })
-                }
+                onChange={(e) => setEmailValue(e.target.value)}
             />
 
             <CustomTextField
@@ -48,15 +75,18 @@ export default function Login({ contexts, dispatch }: LoginProps) {
                     ),
                 }}
                 variant="outlined"
-                onChange={(e) =>
-                    dispatch({
-                        type: 'SET_LOGIN_PASSWORD',
-                        data: { password: e.target.value },
-                    })
-                }
+                onChange={(e) => setPassowrdValue(e.target.value)}
             />
 
-            <CustomButton>Login</CustomButton>
+            <CustomCheckBox
+                label="Remember Me"
+                checked={remember}
+                state={setRemember}
+            />
+
+            {errorValue && <p id="error">{errorValue}</p>}
+
+            <CustomButton onClick={handleLogin}>Login</CustomButton>
 
             <p
                 onClick={() =>
