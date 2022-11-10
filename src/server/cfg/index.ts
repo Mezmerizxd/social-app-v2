@@ -41,9 +41,16 @@ type LocalReturn = {
     fbDbUserData: string;
 };
 
+type UserApiReturn = {
+    maxUsernameLength: number;
+    minUsernameLength: number;
+    minPasswordLength: number;
+    illegalUsernameCharacters: string[];
+};
+
 export default new (class Cfg {
     public Env = (): EnvReturn => {
-        dotenv.config({ path: path.join(__dirname, '../../../.server.env') });
+        dotenv.config({ path: path.join(__dirname, '../../../.env') });
         return {
             port: process.env.PORT,
             socketPort: process.env.SOCKET_PORT,
@@ -85,6 +92,15 @@ export default new (class Cfg {
             fbDbName: 'social_app_v2',
             fbDbUserAcccount: 'user_account',
             fbDbUserData: 'user_data',
+        };
+    };
+
+    public UserApi = (): UserApiReturn => {
+        return {
+            maxUsernameLength: 12,
+            minUsernameLength: 1,
+            minPasswordLength: 6,
+            illegalUsernameCharacters: [],
         };
     };
 })();

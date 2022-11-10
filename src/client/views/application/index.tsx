@@ -6,6 +6,7 @@ import './styles.scss';
 import Sidebar from './sidebar';
 import Messaging from './messaging';
 import AddFriend from './addFriend';
+import FriendRequests from './friendRequests';
 
 export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
@@ -15,6 +16,9 @@ export default function Application() {
         setTimeout(async () => {
             const friends = [];
             const messages = [];
+            const sent = [];
+            const received = [];
+
             for (let i = 0; i < 100; i++) {
                 friends.push({
                     userId: i,
@@ -34,6 +38,21 @@ export default function Application() {
                     avatar: 'https://i.pravatar.cc/300',
                 });
             }
+            for (let i = 0; i < 100; i++) {
+                sent.push({
+                    userId: i,
+                    username: 'Test ' + i,
+                    avatar: 'https://i.pravatar.cc/300',
+                });
+            }
+            for (let i = 0; i < 100; i++) {
+                received.push({
+                    userId: i,
+                    username: 'Test ' + i,
+                    avatar: 'https://i.pravatar.cc/300',
+                });
+            }
+
             dispatch({
                 type: 'SET_FRIENDS',
                 data: {
@@ -44,6 +63,13 @@ export default function Application() {
                 type: 'SET_MESSAGES',
                 data: {
                     messages: messages,
+                },
+            });
+            dispatch({
+                type: 'SET_FRIEND_REQUESTS_DATA',
+                data: {
+                    sent: sent,
+                    received: received,
                 },
             });
         });
@@ -79,6 +105,7 @@ export default function Application() {
 
             {/* Popups */}
             <AddFriend state={state} dispatch={dispatch} />
+            <FriendRequests state={state} dispatch={dispatch} />
         </div>
     );
 }

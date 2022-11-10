@@ -1,7 +1,7 @@
 # Social App V2
  
 # Environment Variables
-You can find an example of the environment variables inside `'.server.example.env'`, please copy everything from inside that file into a new file called `'.server.env'` and configure it to your liking (if you change the ports then you will need to configure the docker files too).
+You can find an example of the environment variables inside `'.example.env'`, please copy everything from inside that file into a new file called `'.env'` and configure it to your liking (if you change the ports then you will need to configure the docker files too).
 
 # Commands
 ## Basic commands
