@@ -41,6 +41,13 @@ type LocalReturn = {
     fbDbUserData: string;
 };
 
+type UserApiReturn = {
+    maxUsernameLength: number;
+    minUsernameLength: number;
+    minPasswordLength: number;
+    illegalUsernameCharacters: string[];
+}
+
 export default new (class Cfg {
     public Env = (): EnvReturn => {
         dotenv.config({ path: path.join(__dirname, '../../../.env') });
@@ -87,4 +94,13 @@ export default new (class Cfg {
             fbDbUserData: 'user_data',
         };
     };
+
+    public UserApi = (): UserApiReturn => {
+        return {
+            maxUsernameLength: 12,
+            minUsernameLength: 1,
+            minPasswordLength: 6,
+            illegalUsernameCharacters: []
+        }
+    }
 })();
