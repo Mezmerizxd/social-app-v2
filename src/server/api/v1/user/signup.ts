@@ -22,7 +22,7 @@ export default new (class Signup {
             Responder(res, 'error', null, 'Email is required.');
             return;
         }
-        if (!body.email.includes("@")) {
+        if (!body.email.includes('@')) {
             Responder(res, 'error', null, 'Email is invalid.');
             return;
         }
@@ -32,16 +32,39 @@ export default new (class Signup {
             Responder(res, 'error', null, 'Username is required.');
             return;
         }
-        if (Cfg.UserApi().illegalUsernameCharacters.some((char: string) => body.username.includes(char))) {
-            Responder(res, 'error', null, 'Username contains illegaal characters.');
+        if (
+            Cfg.UserApi().illegalUsernameCharacters.some((char: string) =>
+                body.username.includes(char)
+            )
+        ) {
+            Responder(
+                res,
+                'error',
+                null,
+                'Username contains illegaal characters.'
+            );
             return;
         }
         if (body.username.length < Cfg.UserApi().minUsernameLength) {
-            Responder(res, 'error', null, `Username must be more than ${Cfg.UserApi().minUsernameLength} characters.`);
+            Responder(
+                res,
+                'error',
+                null,
+                `Username must be more than ${
+                    Cfg.UserApi().minUsernameLength
+                } characters.`
+            );
             return;
         }
         if (body.username.length > Cfg.UserApi().maxUsernameLength) {
-            Responder(res, 'error', null, `Username must be less than ${Cfg.UserApi().maxUsernameLength} characters.`);
+            Responder(
+                res,
+                'error',
+                null,
+                `Username must be less than ${
+                    Cfg.UserApi().maxUsernameLength
+                } characters.`
+            );
             return;
         }
 
@@ -51,7 +74,14 @@ export default new (class Signup {
             return;
         }
         if (body.password.length < Cfg.UserApi().minPasswordLength) {
-            Responder(res, 'error', null, `Password must be more than ${Cfg.UserApi().minPasswordLength} characters.`);
+            Responder(
+                res,
+                'error',
+                null,
+                `Password must be more than ${
+                    Cfg.UserApi().minPasswordLength
+                } characters.`
+            );
             return;
         }
 

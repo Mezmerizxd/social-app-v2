@@ -46,7 +46,7 @@ type UserApiReturn = {
     minUsernameLength: number;
     minPasswordLength: number;
     illegalUsernameCharacters: string[];
-}
+};
 
 export default new (class Cfg {
     public Env = (): EnvReturn => {
@@ -100,7 +100,7 @@ export default new (class Cfg {
             maxUsernameLength: 12,
             minUsernameLength: 1,
             minPasswordLength: 6,
-            illegalUsernameCharacters: []
-        }
-    }
+            illegalUsernameCharacters: [],
+        };
+    };
 })();

@@ -22,13 +22,13 @@ export default function AddFriend({ state, dispatch }: AddFriendPrpos) {
         state.addFriend.open && (
             <div className="Popup-container" onClick={close}>
                 <div
-                    className="Popup-addfriend"
+                    className="Popup-basic"
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <div className="Popup-addfriend-title">
+                    <div className="Popup-basic-title">
                         <h1>Add Friend</h1>
                     </div>
-                    <div className="Popup-addfriend-content">
+                    <div className="Popup-basic-content">
                         <CustomTextField
                             label={'Enter a username'}
                             type="text"
@@ -40,11 +40,11 @@ export default function AddFriend({ state, dispatch }: AddFriendPrpos) {
                     </div>
                     {(state.addFriend.error && state.addFriend.error !== '') ||
                         (null && (
-                            <div className="Popup-addfriend-error">
+                            <div className="Popup-basic-error">
                                 <p>{state.addFriend.error}</p>
                             </div>
                         ))}
-                    <div className="Popup-addfriend-actions">
+                    <div className="Popup-basic-actions">
                         <CustomButton id="close" onClick={close}>
                             Close
                         </CustomButton>

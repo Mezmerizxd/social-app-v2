@@ -9,6 +9,12 @@ export interface InitialDataProps {
         error: any;
         open: boolean;
     };
+    friendRequests: {
+        open: boolean;
+        error: any;
+        sent: [{ userId: any; avatar: any; username: any }];
+        received: [{ userId: any; avatar: any; username: any }];
+    };
 }
 
 export const InitialData: InitialDataProps = {
@@ -21,6 +27,12 @@ export const InitialData: InitialDataProps = {
     addFriend: {
         error: null,
         open: false,
+    },
+    friendRequests: {
+        open: false,
+        error: null,
+        sent: null,
+        received: null,
     },
 };
 
@@ -55,9 +67,26 @@ export const Reducer = (state: InitialDataProps, action: any) => {
         case 'SET_ADDFRIEND_ERROR':
             return {
                 ...state,
-                AddFriend: {
+                addFriend: {
                     ...state.addFriend,
                     error: action.data.error,
+                },
+            };
+        case 'SET_FRIEND_REQUESTS':
+            return {
+                ...state,
+                friendRequests: {
+                    ...state.friendRequests,
+                    open: action.data.open,
+                },
+            };
+        case 'SET_FRIEND_REQUESTS_DATA':
+            return {
+                ...state,
+                friendRequests: {
+                    ...state.friendRequests,
+                    sent: action.data.sent,
+                    received: action.data.received,
                 },
             };
     }
