@@ -476,6 +476,51 @@ $media-breakpoint-mobile: 450px;
                     color: white;
                 }
             }
+            
+            .Popup-settings-content {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                
+                .Settings-content-profile {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px rgba(255, 255, 255, 0.4) solid;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    border-radius: 6px;
+
+                    img {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        border-radius: 100%;
+                        width: 50px;
+                        margin-right: 10px;
+                    }
+
+                    i {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        svg {
+                            margin-left: 10px;
+                            padding: 5px;
+                            border-radius: 50%;
+                            width: 20px;
+                            height: 20px;
+                            cursor: pointer;
+                            transition: 0.2s;
+                            color: white;
+                        }
+                    }
+                }
+
+                .Settings-content-account {
+                    margin-top: 10px;
+                }
+            }
         }
     }
 }

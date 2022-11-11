@@ -7,6 +7,7 @@ import Sidebar from './sidebar';
 import Messaging from './messaging';
 import AddFriend from './addFriend';
 import FriendRequests from './friendRequests';
+import Settings from "./settings";
 
 export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
@@ -52,6 +53,12 @@ export default function Application() {
                     avatar: 'https://i.pravatar.cc/300',
                 });
             }
+            const account = {
+                username: "test",
+                userId: 10001,
+                email: "test@email.com",
+                avatar: "https://i.pravatar.cc/300"
+            }
 
             dispatch({
                 type: 'SET_FRIENDS',
@@ -70,6 +77,15 @@ export default function Application() {
                 data: {
                     sent: sent,
                     received: received,
+                },
+            });
+            dispatch({
+                type: 'SET_SETTINGS_DATA',
+                data: {
+                    username: account.username,
+                    userId: account.userId,
+                    email: account.email,
+                    avatar: account.avatar,
                 },
             });
         });
@@ -106,6 +122,7 @@ export default function Application() {
             {/* Popups */}
             <AddFriend state={state} dispatch={dispatch} />
             <FriendRequests state={state} dispatch={dispatch} />
+            <Settings state={state} dispatch={dispatch} />
         </div>
     );
 }

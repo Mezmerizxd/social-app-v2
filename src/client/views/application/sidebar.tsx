@@ -81,7 +81,14 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
                         ))}
                 </div>
                 <div className="Application-sidebar-actionbar">
-                    <SettingsIcon />
+                    <SettingsIcon onClick={() =>
+                            dispatch({
+                                type: 'SET_SETTINGS',
+                                data: {
+                                    open: true,
+                                },
+                            })
+                        } />
                     <PeopleIcon
                         onClick={() =>
                             dispatch({
