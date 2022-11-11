@@ -6,7 +6,7 @@ import { InitialDataProps } from './reducer';
 
 import './styles.scss';
 import { useState } from 'react';
-import {CustomButton} from "./styles";
+import { CustomButton } from './styles';
 
 interface FriendRequestsPrpos {
     state: InitialDataProps;
@@ -24,6 +24,23 @@ export default function FriendRequests({
             type: 'SET_FRIEND_REQUESTS',
             data: {
                 open: false,
+            },
+        });
+    };
+
+    const accept = (id: any) => {
+        dispatch({
+            type: 'FRIEND_REQUESTS_REMOVE',
+            data: {
+                userId: id,
+            },
+        });
+    };
+    const decline = (id: any) => {
+        dispatch({
+            type: 'FRIEND_REQUESTS_REMOVE',
+            data: {
+                userId: id,
             },
         });
     };
@@ -69,8 +86,18 @@ export default function FriendRequests({
                                             <img src={request.avatar} alt="" />
                                             <p>{request.username}</p>
                                             <div className="Popup-basic-friendRequests-request-actions">
-                                                <CancelIcon id="decline" />
-                                                <CheckCircleIcon id="accept" />
+                                                <CancelIcon
+                                                    id="decline"
+                                                    onClick={() =>
+                                                        decline(request.userId)
+                                                    }
+                                                />
+                                                <CheckCircleIcon
+                                                    id="accept"
+                                                    onClick={() =>
+                                                        accept(request.userId)
+                                                    }
+                                                />
                                             </div>
                                         </div>
                                     ))}
@@ -98,8 +125,22 @@ export default function FriendRequests({
                                                 />
                                                 <p>{request.username}</p>
                                                 <div className="Popup-basic-friendRequests-request-actions">
-                                                    <CancelIcon id="decline" />
-                                                    <CheckCircleIcon id="accept" />
+                                                    <CancelIcon
+                                                        id="decline"
+                                                        onClick={() =>
+                                                            decline(
+                                                                request.userId
+                                                            )
+                                                        }
+                                                    />
+                                                    <CheckCircleIcon
+                                                        id="accept"
+                                                        onClick={() =>
+                                                            accept(
+                                                                request.userId
+                                                            )
+                                                        }
+                                                    />
                                                 </div>
                                             </div>
                                         )

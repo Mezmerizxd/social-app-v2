@@ -89,5 +89,18 @@ export const Reducer = (state: InitialDataProps, action: any) => {
                     received: action.data.received,
                 },
             };
+        case 'FRIEND_REQUESTS_REMOVE':
+            return {
+                ...state,
+                friendRequests: {
+                    ...state.friendRequests,
+                    sent: state.friendRequests.sent.filter(
+                        (user) => user.userId !== action.data.userId
+                    ),
+                    received: state.friendRequests.received.filter(
+                        (user) => user.userId !== action.data.userId
+                    ),
+                },
+            };
     }
 };
