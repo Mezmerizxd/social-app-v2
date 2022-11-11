@@ -42,10 +42,7 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                     <div className="Popup-settings-content">
                         <div className="Settings-content-profile">
                             <div className="Settings-content-profile-image">
-                                <EditIcon
-                                    style={{ background: '#61B84B' }
-                                    }
-                                />
+                                <EditIcon style={{ background: '#61B84B' }} />
                                 <img src="https://i.pravatar.cc/300" alt="" />
                             </div>
                             {editUsernameLocked === true && (
