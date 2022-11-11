@@ -450,7 +450,7 @@ $media-breakpoint-mobile: 450px;
 
                 #close {
                     width: 100%;
-                    margin-right: 20px;
+                    margin-right: 50px;
                     background-color: #ed7461;
                     color: white;
                     &:hover {
@@ -459,12 +459,22 @@ $media-breakpoint-mobile: 450px;
                 }
                 #send {
                     width: 100%;
-                    margin-left: 20px;
+                    margin-left: 50px;
                     background-color: #68c551;
                     color: white;
                     &:hover {
                         background-color: #63b84e;
                     }
+                }
+            }
+
+            .Popup-basic-action-center {
+                text-align: center;
+                margin-bottom: 10px;
+                #close {
+                    background-color: #68c551;
+                    color: white;
+
                 }
             }
         }

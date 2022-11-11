@@ -6,6 +6,7 @@ import { InitialDataProps } from './reducer';
 
 import './styles.scss';
 import { useState } from 'react';
+import {CustomButton} from "./styles";
 
 interface FriendRequestsPrpos {
     state: InitialDataProps;
@@ -110,6 +111,12 @@ export default function FriendRequests({
                                 )}
                             </>
                         )}
+                    </div>
+
+                    <div className="Popup-basic-action-center">
+                        <CustomButton id="close" onClick={close}>
+                            Close
+                        </CustomButton>
                     </div>
                 </div>
             </div>
