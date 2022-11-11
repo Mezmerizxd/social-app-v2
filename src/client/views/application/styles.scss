@@ -147,9 +147,18 @@ $media-breakpoint-mobile: 450px;
                 height: 40px;
                 background: rgba(35, 35, 35, 0.4);
                 box-shadow: -5px 0px 2px 0px rgba(35, 35, 35, 0.75);
-
                 svg {
                     position: relative;
+                }
+
+                p {
+                    font-family: 'Quicksand', sans-serif;
+                    font-weight: lighter;
+                    font-size: 1rem;
+                    color: rgb(157, 255, 0);
+                    margin-left: 5px;
+                    overflow-x: hidden;
+                    width: calc(100% - 100px);
                 }
             }
         }
@@ -450,7 +459,7 @@ $media-breakpoint-mobile: 450px;
 
                 #close {
                     width: 100%;
-                    margin-right: 20px;
+                    margin-right: 50px;
                     background-color: #ed7461;
                     color: white;
                     &:hover {
@@ -459,12 +468,81 @@ $media-breakpoint-mobile: 450px;
                 }
                 #send {
                     width: 100%;
-                    margin-left: 20px;
+                    margin-left: 50px;
                     background-color: #68c551;
                     color: white;
                     &:hover {
                         background-color: #63b84e;
                     }
+                }
+            }
+
+            .Popup-basic-action-center {
+                text-align: center;
+                margin-bottom: 10px;
+                #close {
+                    background-color: #68c551;
+                    color: white;
+                }
+            }
+
+            .Popup-settings-content {
+                margin-top: 10px;
+                margin-bottom: 10px;
+
+                .Settings-content-profile {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px rgba(255, 255, 255, 0.4) solid;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    border-radius: 6px;
+
+                    img {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        border-radius: 100%;
+                        width: 50px;
+                        margin-right: 10px;
+                    }
+
+                    i {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        svg {
+                            margin-left: 10px;
+                            padding: 5px;
+                            border-radius: 50%;
+                            width: 20px;
+                            height: 20px;
+                            cursor: pointer;
+                            transition: 0.2s;
+                            color: white;
+                        }
+                    }
+
+                    .Settings-content-profile-image {
+                        width: auto;
+                        height: auto;
+                        svg {
+                            position: absolute;
+                            margin-left: 35px;
+                            width: 16px;
+                            height: 16px;
+                            padding: 3px;
+                            border-radius: 50%;
+                            color: white;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .Settings-content-account {
+                    margin-top: 10px;
                 }
             }
         }

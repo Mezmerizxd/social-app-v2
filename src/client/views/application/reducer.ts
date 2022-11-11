@@ -15,6 +15,13 @@ export interface InitialDataProps {
         sent: [{ userId: any; avatar: any; username: any }];
         received: [{ userId: any; avatar: any; username: any }];
     };
+    settings: {
+        open: boolean;
+        username: any;
+        userId: any;
+        email: any;
+        avatar: any;
+    };
 }
 
 export const InitialData: InitialDataProps = {
@@ -33,6 +40,13 @@ export const InitialData: InitialDataProps = {
         error: null,
         sent: null,
         received: null,
+    },
+    settings: {
+        open: false,
+        username: null,
+        userId: null,
+        email: null,
+        avatar: null,
     },
 };
 
@@ -87,6 +101,38 @@ export const Reducer = (state: InitialDataProps, action: any) => {
                     ...state.friendRequests,
                     sent: action.data.sent,
                     received: action.data.received,
+                },
+            };
+        case 'FRIEND_REQUESTS_REMOVE':
+            return {
+                ...state,
+                friendRequests: {
+                    ...state.friendRequests,
+                    sent: state.friendRequests.sent.filter(
+                        (user) => user.userId !== action.data.userId
+                    ),
+                    received: state.friendRequests.received.filter(
+                        (user) => user.userId !== action.data.userId
+                    ),
+                },
+            };
+        case 'SET_SETTINGS':
+            return {
+                ...state,
+                settings: {
+                    ...state.settings,
+                    open: action.data.open,
+                },
+            };
+        case 'SET_SETTINGS_DATA':
+            return {
+                ...state,
+                settings: {
+                    ...state.settings,
+                    username: action.data.username,
+                    userId: action.data.userId,
+                    email: action.data.email,
+                    avatar: action.data.avatar,
                 },
             };
     }
