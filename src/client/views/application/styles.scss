@@ -147,9 +147,18 @@ $media-breakpoint-mobile: 450px;
                 height: 40px;
                 background: rgba(35, 35, 35, 0.4);
                 box-shadow: -5px 0px 2px 0px rgba(35, 35, 35, 0.75);
-
                 svg {
                     position: relative;
+                }
+
+                p {
+                    font-family: 'Quicksand', sans-serif;
+                    font-weight: lighter;
+                    font-size: 1rem;
+                    color: rgb(157, 255, 0);
+                    margin-left: 5px;
+                    overflow-x: hidden;
+                    width: calc(100% - 100px);
                 }
             }
         }

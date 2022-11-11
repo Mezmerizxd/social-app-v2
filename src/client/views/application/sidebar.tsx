@@ -101,6 +101,7 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
                             })
                         }
                     />
+                    <p>{state.settings.username}</p>
                 </div>
             </div>
         </div>
