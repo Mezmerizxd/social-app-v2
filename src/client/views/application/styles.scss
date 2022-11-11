@@ -515,6 +515,21 @@ $media-breakpoint-mobile: 450px;
                             color: white;
                         }
                     }
+
+                    .Settings-content-profile-image {
+                        width: auto;
+                        height: auto;
+                        svg {
+                            position: absolute;
+                            margin-left: 35px;
+                            width: 16px;
+                            height: 16px;
+                            padding: 3px;
+                            border-radius: 50%;
+                            color: white;
+                            cursor: pointer;
+                        }
+                    }
                 }
 
                 .Settings-content-account {

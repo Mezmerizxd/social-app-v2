@@ -41,7 +41,13 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                     </div>
                     <div className="Popup-settings-content">
                         <div className="Settings-content-profile">
-                            <img src="https://i.pravatar.cc/300" alt="" />
+                            <div className="Settings-content-profile-image">
+                                <EditIcon
+                                    style={{ background: '#61B84B' }
+                                    }
+                                />
+                                <img src="https://i.pravatar.cc/300" alt="" />
+                            </div>
                             {editUsernameLocked === true && (
                                 <CustomSettingsInputField
                                     label={state.settings.username}
