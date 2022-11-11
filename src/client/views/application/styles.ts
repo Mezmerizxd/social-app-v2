@@ -36,8 +36,8 @@ export const CustomButton = styled(Button)({
 
 export const CustomSettingsInputField = styled(TextField)({
     width: '100%',
-    marginTop: "10px",
-    marginBottom: "10px",
+    marginTop: '10px',
+    marginBottom: '10px',
     '& label': {
         color: '#fff',
     },

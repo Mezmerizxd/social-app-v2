@@ -21,7 +21,7 @@ export interface InitialDataProps {
         userId: any;
         email: any;
         avatar: any;
-    }
+    };
 }
 
 export const InitialData: InitialDataProps = {
@@ -46,8 +46,8 @@ export const InitialData: InitialDataProps = {
         username: null,
         userId: null,
         email: null,
-        avatar: null
-    }
+        avatar: null,
+    },
 };
 
 export const Reducer = (state: InitialDataProps, action: any) => {
@@ -134,6 +134,6 @@ export const Reducer = (state: InitialDataProps, action: any) => {
                     email: action.data.email,
                     avatar: action.data.avatar,
                 },
-            }
+            };
     }
 };

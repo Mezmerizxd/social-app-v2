@@ -16,10 +16,10 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
     const [editUsernameValue, setEditUsernameValue] = useState(null);
 
     useEffect(() => {
-        setEditUsernameLocked(true)
-        setEditUsernameValue(null)
-    }, [])
-    
+        setEditUsernameLocked(true);
+        setEditUsernameValue(null);
+    }, []);
+
     const close = () => {
         dispatch({
             type: 'SET_SETTINGS',
@@ -75,13 +75,16 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                                             : { background: '#E36C5A' }
                                     }
                                     onClick={() => {
-                                        setEditUsernameLocked(!editUsernameLocked);
+                                        setEditUsernameLocked(
+                                            !editUsernameLocked
+                                        );
                                     }}
                                 />
                             </i>
                             {editUsernameValue &&
                                 editUsernameLocked === false &&
-                                editUsernameValue !== null && editUsernameValue !== "" && (
+                                editUsernameValue !== null &&
+                                editUsernameValue !== '' && (
                                     <i>
                                         <DoneIcon
                                             style={{ background: '#61B84B' }}

@@ -7,7 +7,7 @@ import Sidebar from './sidebar';
 import Messaging from './messaging';
 import AddFriend from './addFriend';
 import FriendRequests from './friendRequests';
-import Settings from "./settings";
+import Settings from './settings';
 
 export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
@@ -54,11 +54,11 @@ export default function Application() {
                 });
             }
             const account = {
-                username: "test",
+                username: 'test',
                 userId: 10001,
-                email: "test@email.com",
-                avatar: "https://i.pravatar.cc/300"
-            }
+                email: 'test@email.com',
+                avatar: 'https://i.pravatar.cc/300',
+            };
 
             dispatch({
                 type: 'SET_FRIENDS',
