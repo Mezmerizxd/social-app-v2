@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from 'react';
 
-import { InitialData, Reducer } from './reducer';
+import { Reducer, InitialData } from './reducer';
 import './styles.scss';
 
 import Sidebar from './sidebar';

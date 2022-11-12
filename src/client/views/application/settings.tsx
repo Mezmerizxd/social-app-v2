@@ -1,15 +1,10 @@
-import { InitialDataProps } from './reducer';
+import { SettingsPrpos } from './types';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 
 import './styles.scss';
 import { CustomButton, CustomSettingsInputField } from './styles';
 import React, { useState, useEffect } from 'react';
-
-interface SettingsPrpos {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
-}
 
 export default function Settings({ state, dispatch }: SettingsPrpos) {
     const [editUsernameLocked, setEditUsernameLocked] = useState(true);

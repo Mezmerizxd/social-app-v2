@@ -1,28 +1,4 @@
-export interface InitialDataProps {
-    friends: any;
-    messages: any;
-    sidebar: {
-        open: boolean;
-        data: any;
-    };
-    addFriend: {
-        error: any;
-        open: boolean;
-    };
-    friendRequests: {
-        open: boolean;
-        error: any;
-        sent: [{ userId: any; avatar: any; username: any }];
-        received: [{ userId: any; avatar: any; username: any }];
-    };
-    settings: {
-        open: boolean;
-        username: any;
-        userId: any;
-        email: any;
-        avatar: any;
-    };
-}
+import { InitialDataProps } from './types';
 
 export const InitialData: InitialDataProps = {
     friends: null,

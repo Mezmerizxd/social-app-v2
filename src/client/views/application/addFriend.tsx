@@ -1,12 +1,7 @@
-import { InitialDataProps } from './reducer';
+import { AddFriendPrpos } from './types';
 
 import './styles.scss';
 import { CustomTextField, CustomButton } from './styles';
-
-interface AddFriendPrpos {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
-}
 
 export default function AddFriend({ state, dispatch }: AddFriendPrpos) {
     const close = () => {

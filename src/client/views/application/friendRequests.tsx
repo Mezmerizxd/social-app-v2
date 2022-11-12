@@ -2,17 +2,12 @@ import SendIcon from '@mui/icons-material/Send';
 import MailIcon from '@mui/icons-material/Mail';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { InitialDataProps } from './reducer';
+import { FriendRequestsPrpos } from './types';
 import Features from './features';
 
 import './styles.scss';
 import { useState, useEffect } from 'react';
 import { CustomButton } from './styles';
-
-interface FriendRequestsPrpos {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
-}
 
 export default function FriendRequests({
     state,

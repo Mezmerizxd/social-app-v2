@@ -34,7 +34,7 @@ export default new (class Features {
         return friends;
     };
 
-    public getMessages = async () => {
+    public getMessages = async (userId: any) => {
         const messages = [];
         if (this.debugMode) {
             for (let i = 0; i < 100; i++) {

@@ -2,15 +2,9 @@ import AddIcon from '@mui/icons-material/Add';
 import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { InitialDataProps } from './reducer';
+import { SidebarProps } from './types';
 
 import './styles.scss';
-
-interface SidebarProps {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
-    mobileMode: boolean;
-}
 
 export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
     const handleSidebar = () => {
