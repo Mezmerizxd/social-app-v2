@@ -1,14 +1,10 @@
-export default new (class Features {
-    private debugMode: boolean;
+import Api from '../../classes/Api';
 
-    constructor() {
-        process.env.NODE_ENV === 'production'
-            ? (this.debugMode = false)
-            : (this.debugMode = true);
-    }
+export default new (class Features {
+    private debugMode = false;
 
     public getUserData = async () => {
-        let account = {};
+        let account = null;
         if (this.debugMode) {
             account = {
                 username: 'test',
@@ -16,6 +12,18 @@ export default new (class Features {
                 email: 'test@email.com',
                 avatar: 'https://i.pravatar.cc/300',
             };
+        } else {
+            const response = await Api.Post(
+                '/user/get-user-data',
+                {
+                    method: 'authorization',
+                    key: localStorage.getItem('authorization'),
+                },
+                true
+            );
+            if (response && response.success === true) {
+                account = response.data;
+            }
         }
         return account;
     };
@@ -31,7 +39,7 @@ export default new (class Features {
                 });
             }
         }
-        return friends;
+        return friends.length > 0 ? friends : null;
     };
 
     public getMessages = async (userId: any) => {
@@ -50,7 +58,7 @@ export default new (class Features {
                 });
             }
         }
-        return messages;
+        return messages.length > 0 ? messages : null;
     };
 
     public getFriendRequestsSent = async () => {
@@ -64,7 +72,7 @@ export default new (class Features {
                 });
             }
         }
-        return sent;
+        return sent.length > 0 ? sent : null;
     };
 
     public getFriendRequestsReceived = async () => {
@@ -78,7 +86,7 @@ export default new (class Features {
                 });
             }
         }
-        return received;
+        return received.length > 0 ? received : null;
     };
 
     public setDebugMode = (bool: boolean) => {

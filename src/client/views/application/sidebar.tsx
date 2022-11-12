@@ -3,6 +3,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SidebarProps } from './types';
+import Features from './features';
 
 import './styles.scss';
 
@@ -15,6 +16,21 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
             },
         });
     };
+
+    const handleFriend = async (userId: any, username: any) => {
+        const messages = await Features.getMessages(userId);
+        if (messages) {
+            dispatch({
+                type: 'SET_MESSAGES',
+                data: {
+                    messages: messages,
+                    userId: userId,
+                    username: username,
+                },
+            });
+        }
+    };
+
     return (
         <div
             className="Application-sidebar-container"
@@ -68,6 +84,9 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
                                 className="friend"
                                 id={friend.userId}
                                 key={friend.userId}
+                                onClick={() =>
+                                    handleFriend(friend.userId, friend.username)
+                                }
                             >
                                 <img src={friend.avatar} alt={friend.avatar} />
                                 <p>{friend.username}</p>

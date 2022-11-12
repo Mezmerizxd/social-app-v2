@@ -2,6 +2,7 @@ import { InitialDataProps } from './types';
 
 export const InitialData: InitialDataProps = {
     friends: null,
+    selectedFriend: null,
     messages: null,
     sidebar: {
         open: true,
@@ -45,6 +46,10 @@ export const Reducer = (state: InitialDataProps, action: any) => {
             return {
                 ...state,
                 messages: action.data.messages,
+                selectedFriend: {
+                    userId: action.data.userId,
+                    username: action.data.username,
+                },
             };
         case 'SET_ADDFRIEND':
             return {

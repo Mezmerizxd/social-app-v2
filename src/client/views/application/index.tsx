@@ -14,9 +14,12 @@ export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
     const [state, dispatch] = useReducer(Reducer, InitialData);
 
+    setInterval(() => {
+        console.log(state);
+    }, 5000);
+
     useEffect(() => {
         setTimeout(async () => {
-            Features.setDebugMode(true);
             const friends = await Features.getFriends();
             const userData: any = await Features.getUserData();
 
@@ -65,7 +68,7 @@ export default function Application() {
                     />
                 )}
 
-                {state.messages && (
+                {state.selectedFriend !== null && (
                     <Messaging
                         state={state}
                         dispatch={dispatch}

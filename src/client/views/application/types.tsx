@@ -1,6 +1,10 @@
 export interface InitialDataProps {
     friends: any;
     messages: any;
+    selectedFriend: {
+        userId: any;
+        username: any;
+    };
     sidebar: {
         open: boolean;
         data: any;

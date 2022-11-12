@@ -85,7 +85,7 @@ export default function FriendRequests({
                         {context === 'sent' && (
                             <>
                                 {state.friendRequests.sent &&
-                                    state.friendRequests.sent.length > 0 &&
+                                state.friendRequests.sent.length > 0 ? (
                                     state.friendRequests.sent.map((request) => (
                                         <div
                                             className="Popup-basic-friendRequests-request"
@@ -108,8 +108,8 @@ export default function FriendRequests({
                                                 />
                                             </div>
                                         </div>
-                                    ))}
-                                {!state.friendRequests.sent && (
+                                    ))
+                                ) : (
                                     <div className="Popup-basic-friendRequests-notfound">
                                         <p>No Request Sent</p>
                                     </div>
@@ -120,7 +120,7 @@ export default function FriendRequests({
                         {context === 'received' && (
                             <>
                                 {state.friendRequests.received &&
-                                    state.friendRequests.received.length > 0 &&
+                                state.friendRequests.received.length > 0 ? (
                                     state.friendRequests.received.map(
                                         (request) => (
                                             <div
@@ -152,8 +152,8 @@ export default function FriendRequests({
                                                 </div>
                                             </div>
                                         )
-                                    )}
-                                {!state.friendRequests.received && (
+                                    )
+                                ) : (
                                     <div className="Popup-basic-friendRequests-notfound">
                                         <p>No Request Received</p>
                                     </div>
