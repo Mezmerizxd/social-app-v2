@@ -3,9 +3,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { InitialDataProps } from './reducer';
+import Features from './features';
 
 import './styles.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CustomButton } from './styles';
 
 interface FriendRequestsPrpos {
@@ -18,6 +19,18 @@ export default function FriendRequests({
     dispatch,
 }: FriendRequestsPrpos) {
     const [context, setContext] = useState<string>('sent');
+
+    useEffect(() => {
+        setTimeout(async () => {
+            dispatch({
+                type: 'SET_FRIEND_REQUESTS_DATA',
+                data: {
+                    sent: await Features.getFriendRequestsSent(),
+                    received: await Features.getFriendRequestsReceived(),
+                },
+            });
+        });
+    }, []);
 
     const close = () => {
         dispatch({
