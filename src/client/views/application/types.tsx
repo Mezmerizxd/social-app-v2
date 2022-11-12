@@ -10,7 +10,6 @@ export interface InitialDataProps {
         data: any;
     };
     addFriend: {
-        error: any;
         open: boolean;
     };
     friendRequests: {

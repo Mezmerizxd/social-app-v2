@@ -14,10 +14,6 @@ export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
     const [state, dispatch] = useReducer(Reducer, InitialData);
 
-    setInterval(() => {
-        console.log(state);
-    }, 5000);
-
     useEffect(() => {
         setTimeout(async () => {
             const friends = await Features.getFriends();
@@ -78,9 +74,15 @@ export default function Application() {
             </div>
 
             {/* Popups */}
-            <AddFriend state={state} dispatch={dispatch} />
-            <FriendRequests state={state} dispatch={dispatch} />
-            <Settings state={state} dispatch={dispatch} />
+            {state.addFriend.open && (
+                <AddFriend state={state} dispatch={dispatch} />
+            )}
+            {state.friendRequests.open && (
+                <FriendRequests state={state} dispatch={dispatch} />
+            )}
+            {state.settings.open && (
+                <Settings state={state} dispatch={dispatch} />
+            )}
         </div>
     );
 }

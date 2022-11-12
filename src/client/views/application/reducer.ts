@@ -9,7 +9,6 @@ export const InitialData: InitialDataProps = {
         data: null,
     },
     addFriend: {
-        error: null,
         open: false,
     },
     friendRequests: {

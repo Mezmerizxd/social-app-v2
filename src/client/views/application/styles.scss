@@ -443,8 +443,10 @@ $media-breakpoint-mobile: 450px;
                 margin-top: 10px;
                 padding: 5px;
                 background-color: #dc6651;
+                border-radius: 6px;
 
                 p {
+                    font-family: 'Quicksand', sans-serif;
                     font-size: small;
                     color: white;
                     text-align: center;

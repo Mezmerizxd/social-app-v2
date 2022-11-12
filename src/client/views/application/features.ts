@@ -61,8 +61,9 @@ export default new (class Features {
         return messages.length > 0 ? messages : null;
     };
 
-    public getFriendRequestsSent = async () => {
-        const sent = [];
+    public getFriendRequests = async () => {
+        let sent = [];
+        let received = [];
         if (this.debugMode) {
             for (let i = 0; i < 100; i++) {
                 sent.push({
@@ -71,13 +72,6 @@ export default new (class Features {
                     avatar: 'https://i.pravatar.cc/300',
                 });
             }
-        }
-        return sent.length > 0 ? sent : null;
-    };
-
-    public getFriendRequestsReceived = async () => {
-        const received = [];
-        if (this.debugMode) {
             for (let i = 0; i < 100; i++) {
                 received.push({
                     userId: i,
@@ -85,8 +79,21 @@ export default new (class Features {
                     avatar: 'https://i.pravatar.cc/300',
                 });
             }
+        } else {
+            const response = await Api.Post(
+                '/user/get-friend-requests',
+                null,
+                true
+            );
+            if (response && response.success === true) {
+                sent = response.data.sent;
+                received = response.data.received;
+            }
         }
-        return received.length > 0 ? received : null;
+        return {
+            sent: sent.length > 0 ? sent : null,
+            received: received.length > 0 ? received : null,
+        };
     };
 
     public setDebugMode = (bool: boolean) => {
