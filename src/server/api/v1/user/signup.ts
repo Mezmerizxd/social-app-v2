@@ -148,6 +148,7 @@ export default new (class Signup {
                 userId: userId.data,
                 authorization: authorization.data,
                 username: body.username,
+                avatar: 'https://i.pravatar.cc/300',
             };
 
             // Insert account data

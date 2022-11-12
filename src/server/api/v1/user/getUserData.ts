@@ -13,6 +13,13 @@ export default new (class GetUserData {
         Log.debugApi('[V1] [User] GetUserData Started');
         const body: RequestBody = req.body;
 
+        if (
+            (await (
+                await Features.authorize(res, req.headers.authorization)
+            ).authorized) === false
+        )
+            return;
+
         try {
             if (!body.method) {
                 Responder(res, 'error', null, 'A method is required.');
@@ -37,10 +44,9 @@ export default new (class GetUserData {
             } else {
                 Responder(res, 'success', {
                     userId: userData.userId,
-                    username: userData.username
+                    username: userData.username,
                 });
             }
-            
         } catch (error) {
             Responder(res, 'catch', null, `[User] GetUserData, ${error}`);
         }
