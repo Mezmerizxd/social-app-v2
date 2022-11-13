@@ -117,14 +117,14 @@ export default new (class Signup {
             }
 
             // Generate a user id
-            const userId = await Features.GenerateUserId();
+            const userId = await Features.generateUserId();
             if (!userId?.data) {
                 Responder(res, 'error', null, 'Something went wrong.');
                 return;
             }
 
             // Generate a authorization token
-            const authorization = await Features.GenerateAuthorization();
+            const authorization = await Features.generateAuthorization();
             if (!authorization?.data) {
                 Responder(res, 'error', null, 'Something went wrong.');
                 return;
@@ -144,9 +144,11 @@ export default new (class Signup {
                 creation_time_stamp: CreationTimeStamp,
             };
             const NewUserData = {
+                email: body.email,
                 userId: userId.data,
                 authorization: authorization.data,
                 username: body.username,
+                avatar: 'https://i.pravatar.cc/300',
             };
 
             // Insert account data

@@ -1,38 +1,14 @@
-export interface InitialDataProps {
-    friends: any;
-    messages: any;
-    sidebar: {
-        open: boolean;
-        data: any;
-    };
-    addFriend: {
-        error: any;
-        open: boolean;
-    };
-    friendRequests: {
-        open: boolean;
-        error: any;
-        sent: [{ userId: any; avatar: any; username: any }];
-        received: [{ userId: any; avatar: any; username: any }];
-    };
-    settings: {
-        open: boolean;
-        username: any;
-        userId: any;
-        email: any;
-        avatar: any;
-    };
-}
+import { InitialDataProps } from './types';
 
 export const InitialData: InitialDataProps = {
     friends: null,
+    selectedFriend: null,
     messages: null,
     sidebar: {
         open: true,
         data: null,
     },
     addFriend: {
-        error: null,
         open: false,
     },
     friendRequests: {
@@ -69,6 +45,10 @@ export const Reducer = (state: InitialDataProps, action: any) => {
             return {
                 ...state,
                 messages: action.data.messages,
+                selectedFriend: {
+                    userId: action.data.userId,
+                    username: action.data.username,
+                },
             };
         case 'SET_ADDFRIEND':
             return {

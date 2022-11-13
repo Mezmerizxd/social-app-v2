@@ -13,6 +13,7 @@ module.exports = {
     plugins: ['@typescript-eslint'],
     rules: {
         '@typescript-eslint/no-explicit-any': 0,
-        '@typescript-eslint/no-var-requires': 0
+        '@typescript-eslint/no-var-requires': 0,
+        '@typescript-eslint/no-unused-vars': 0
     },
 };

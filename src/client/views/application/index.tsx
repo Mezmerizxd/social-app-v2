@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from 'react';
 
-import { InitialData, Reducer } from './reducer';
+import { Reducer, InitialData } from './reducer';
 import './styles.scss';
 
 import Sidebar from './sidebar';
@@ -8,6 +8,7 @@ import Messaging from './messaging';
 import AddFriend from './addFriend';
 import FriendRequests from './friendRequests';
 import Settings from './settings';
+import Features from './features';
 
 export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
@@ -15,50 +16,8 @@ export default function Application() {
 
     useEffect(() => {
         setTimeout(async () => {
-            const friends = [];
-            const messages = [];
-            const sent = [];
-            const received = [];
-
-            for (let i = 0; i < 100; i++) {
-                friends.push({
-                    userId: i,
-                    username: 'Test ' + i,
-                    avatar: 'https://i.pravatar.cc/300',
-                });
-            }
-            for (let i = 0; i < 100; i++) {
-                messages.push({
-                    messageId: i,
-                    userId: i,
-                    username: 'user' + i,
-                    dateSent: new Date(),
-                    content:
-                        'messagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessage' +
-                        i,
-                    avatar: 'https://i.pravatar.cc/300',
-                });
-            }
-            for (let i = 0; i < 100; i++) {
-                sent.push({
-                    userId: i,
-                    username: 'Test ' + i,
-                    avatar: 'https://i.pravatar.cc/300',
-                });
-            }
-            for (let i = 0; i < 100; i++) {
-                received.push({
-                    userId: i,
-                    username: 'Test ' + i,
-                    avatar: 'https://i.pravatar.cc/300',
-                });
-            }
-            const account = {
-                username: 'test',
-                userId: 10001,
-                email: 'test@email.com',
-                avatar: 'https://i.pravatar.cc/300',
-            };
+            const friends = await Features.getFriends();
+            const userData: any = await Features.getUserData();
 
             dispatch({
                 type: 'SET_FRIENDS',
@@ -67,28 +26,23 @@ export default function Application() {
                 },
             });
             dispatch({
-                type: 'SET_MESSAGES',
-                data: {
-                    messages: messages,
-                },
-            });
-            dispatch({
-                type: 'SET_FRIEND_REQUESTS_DATA',
-                data: {
-                    sent: sent,
-                    received: received,
-                },
-            });
-            dispatch({
                 type: 'SET_SETTINGS_DATA',
                 data: {
-                    username: account.username,
-                    userId: account.userId,
-                    email: account.email,
-                    avatar: account.avatar,
+                    username: userData?.username,
+                    userId: userData?.userId,
+                    email: userData?.email,
+                    avatar: userData?.avatar,
                 },
             });
         });
+    }, []);
+
+    useEffect(() => {
+        if (screen.width < 600) {
+            setMobileMode(true);
+        } else {
+            setMobileMode(false);
+        }
     }, []);
 
     window.addEventListener('resize', () => {
@@ -110,7 +64,7 @@ export default function Application() {
                     />
                 )}
 
-                {state.messages && (
+                {state.selectedFriend !== null && (
                     <Messaging
                         state={state}
                         dispatch={dispatch}
@@ -120,9 +74,15 @@ export default function Application() {
             </div>
 
             {/* Popups */}
-            <AddFriend state={state} dispatch={dispatch} />
-            <FriendRequests state={state} dispatch={dispatch} />
-            <Settings state={state} dispatch={dispatch} />
+            {state.addFriend.open && (
+                <AddFriend state={state} dispatch={dispatch} />
+            )}
+            {state.friendRequests.open && (
+                <FriendRequests state={state} dispatch={dispatch} />
+            )}
+            {state.settings.open && (
+                <Settings state={state} dispatch={dispatch} />
+            )}
         </div>
     );
 }

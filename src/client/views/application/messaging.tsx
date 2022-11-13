@@ -1,15 +1,9 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useEffect } from 'react';
-import { InitialDataProps } from './reducer';
+import { MessagingProps } from './types';
 
 import './styles.scss';
-
-interface MessagingProps {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
-    mobileMode: boolean;
-}
 
 export default function Messaging({
     state,

@@ -14,7 +14,7 @@ services:
             - '80:80'
             - '443:443'
             
-    app:
+    social_app_v2:
         image: social-app-v2
         restart: always
         container_name: 'social-app-v2'

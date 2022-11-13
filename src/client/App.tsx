@@ -18,7 +18,7 @@ export default function App() {
                             Login
                         </button>
                         <button onClick={() => (window.location.href = '/app')}>
-                            View Design
+                            Dev
                         </button>
                     </div>
                     <div className="App-selection-footer">
