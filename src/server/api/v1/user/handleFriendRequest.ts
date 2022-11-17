@@ -5,6 +5,7 @@ import Features from '../features';
 
 type RequestBody = {
     userId: number;
+    type: string;
 };
 
 export default new (class HandleFriendRequest {
@@ -24,6 +25,17 @@ export default new (class HandleFriendRequest {
                 Responder(res, 'error', null, 'User ID is required.');
                 return;
             }
+            if (!body.type) {
+                Responder(res, 'error', null, 'A type is required.');
+                return;
+            }
+            if (
+                body.type.toUpperCase() !== 'ACCEPT' ||
+                body.type.toUpperCase() !== 'DECLINE'
+            ) {
+                Responder(res, 'error', null, 'Invalid type.');
+                return;
+            }
 
             const userData: any = await Features.getUserData(
                 'authorization',
@@ -37,6 +49,14 @@ export default new (class HandleFriendRequest {
             if (friendData?.errror) {
                 Responder(res, 'error', null, 'User does not exist.');
                 return;
+            }
+
+            switch (body.type) {
+                case 'ACCEPT':
+                    break;
+
+                case 'DECLINE':
+                    break;
             }
 
             // Return data
