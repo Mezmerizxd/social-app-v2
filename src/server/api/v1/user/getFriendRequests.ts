@@ -51,7 +51,9 @@ export default new (class GetFriendRequests {
                 const data = await Features.getUserData('userid', userId);
                 sentRequests.push({
                     userId: data.userId,
-                    avatar: data.avatar,
+                    avatar: data.avatar
+                        ? data.avatar
+                        : 'https://i.pravatar.cc/300',
                     username: data.username,
                 });
             }
@@ -60,7 +62,9 @@ export default new (class GetFriendRequests {
                 const data = await Features.getUserData('userid', userId);
                 receivedRequests.push({
                     userId: data.userId,
-                    avatar: data.avatar,
+                    avatar: data.avatar
+                        ? data.avatar
+                        : 'https://i.pravatar.cc/300',
                     username: data.username,
                 });
             }
