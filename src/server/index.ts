@@ -29,5 +29,5 @@ io.on('connection', (socket) => {
 });
 
 http.listen(Cfg.Env().port, async () => {
-    Log.info('[Server] Started.');
+    Log.info(`[Server] Started ::${Cfg.Env().port}.`);
 });

@@ -54,7 +54,7 @@
         "dev": "concurrently \"npx tsc --project tsconfig.server.json --watch\" \"yarn cl_dev\" \"nodemon -q release/server/index.js\"",
         "sv_build": "npx tsc --project tsconfig.server.json",
         "cl_build": "react-app-rewired build",
-        "cl_dev": "set PORT=3000 && react-app-rewired start",
+        "cl_dev": "cross-env PORT=3000 react-app-rewired start",
         "sv_dev": "concurrently \"npx tsc --project tsconfig.server.json --watch\" \"nodemon -q release/server/index.js\"",
         "docker_build": "docker build -t social-app-v2 .",
         "format": "npx prettier --write ./src/server && npx prettier --write ./src/client",

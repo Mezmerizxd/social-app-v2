@@ -9,7 +9,9 @@ export default function Responder(
 ) {
     try {
         Log.debugApi(
-            `[V1] [Responder] Response, Data: ${data} | Error: ${error}`
+            `[V1] [Responder] Response, Data: ${
+                data ? JSON.stringify(data) : 'None'
+            } | Error: ${error ? error : 'None'}`
         );
         type = type.toUpperCase();
         switch (type) {
