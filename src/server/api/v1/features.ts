@@ -3,6 +3,7 @@ import Firebase from '../../data/firebase';
 import * as crypto from 'crypto';
 import { Response } from 'express';
 import Responder from './responder';
+import Cfg from '../../cfg';
 
 type GenerateReturn = {
     data: any;
@@ -30,6 +31,12 @@ type AuthorizeReturn = {
         authorization: any;
     };
     authorized: boolean;
+};
+
+type GetFriendRequestsReturn = {
+    sent?: [];
+    received?: [];
+    error?: any;
 };
 
 export default new (class Features {
@@ -166,5 +173,103 @@ export default new (class Features {
         };
     };
 
-    public combineFriends = async (userId1: any, userId2: any) => {};
+    public getFriendRequests = async (
+        userId: any
+    ): Promise<GetFriendRequestsReturn> => {
+        if (!userId) {
+            return {
+                error: 'No user id',
+            };
+        }
+
+        try {
+            const userData: any = await this.getUserData('userid', userId);
+            if (userData?.error) {
+                return {
+                    error: "Couldn't find user with user id " + userId,
+                };
+            }
+
+            const usersIdSent: any = [];
+            const usersIdReceived: any = [];
+            if (userData?.friendRequests?.sent) {
+                Object.keys(userData.friendRequests.sent).forEach(
+                    async (request) => {
+                        usersIdSent.push(userData.friendRequests.sent[request]);
+                    }
+                );
+            }
+            if (userData?.friendRequests?.received) {
+                Object.keys(userData.friendRequests.received).forEach(
+                    async (request) => {
+                        usersIdReceived.push(
+                            userData.friendRequests.received[request]
+                        );
+                    }
+                );
+            }
+
+            const sentRequests: any = [];
+            const receivedRequests: any = [];
+            for (let i = 0; i < usersIdSent.length; i++) {
+                const userId = usersIdSent[i];
+                const data = await this.getUserData('userid', userId);
+                if (!data.error) {
+                    sentRequests.push({
+                        userId: data.userId,
+                        avatar: data.avatar
+                            ? data.avatar
+                            : 'https://i.pravatar.cc/300',
+                        username: data.username,
+                    });
+                } else {
+                    await Firebase.database
+                        .ref(
+                            `${Cfg.Local().fbDbName}/${
+                                Cfg.Local().fbDbUserData
+                            }/${userData.userId}/friendRequests/sent`
+                        )
+                        .set(
+                            usersIdSent.filter(
+                                (request) => request === data.userId
+                            )
+                        );
+                }
+            }
+            for (let i = 0; i < usersIdReceived.length; i++) {
+                const userId = usersIdReceived[i];
+                const data = await this.getUserData('userid', userId);
+                if (!data.error) {
+                    receivedRequests.push({
+                        userId: data.userId,
+                        avatar: data.avatar
+                            ? data.avatar
+                            : 'https://i.pravatar.cc/300',
+                        username: data.username,
+                    });
+                } else {
+                    await Firebase.database
+                        .ref(
+                            `${Cfg.Local().fbDbName}/${
+                                Cfg.Local().fbDbUserData
+                            }/${userData.userId}/friendRequests/received`
+                        )
+                        .set(
+                            usersIdReceived.filter(
+                                (request) => request === data.userId
+                            )
+                        );
+                }
+            }
+
+            return {
+                sent: sentRequests,
+                received: receivedRequests,
+            };
+        } catch (error) {
+            return {
+                error: error,
+            };
+        }
+    };
 })();

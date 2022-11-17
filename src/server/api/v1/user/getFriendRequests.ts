@@ -23,56 +23,16 @@ export default new (class GetFriendRequests {
                 req.headers.authorization
             );
 
-            const usersIdSent: any = [];
-            if (userData?.friendRequests?.sent) {
-                Object.keys(userData.friendRequests.sent).forEach(
-                    async (request) => {
-                        usersIdSent.push(userData.friendRequests.sent[request]);
-                    }
-                );
-            }
-
-            const usersIdReceived: any = [];
-            if (userData?.friendRequests?.received) {
-                Object.keys(userData.friendRequests.received).forEach(
-                    async (request) => {
-                        usersIdReceived.push(
-                            userData.friendRequests.received[request]
-                        );
-                    }
-                );
-            }
-
-            const sentRequests: any = [];
-            const receivedRequests: any = [];
-
-            for (let i = 0; i < usersIdSent.length; i++) {
-                const userId = usersIdSent[i];
-                const data = await Features.getUserData('userid', userId);
-                sentRequests.push({
-                    userId: data.userId,
-                    avatar: data.avatar
-                        ? data.avatar
-                        : 'https://i.pravatar.cc/300',
-                    username: data.username,
-                });
-            }
-            for (let i = 0; i < usersIdReceived.length; i++) {
-                const userId = usersIdReceived[i];
-                const data = await Features.getUserData('userid', userId);
-                receivedRequests.push({
-                    userId: data.userId,
-                    avatar: data.avatar
-                        ? data.avatar
-                        : 'https://i.pravatar.cc/300',
-                    username: data.username,
-                });
+            const requests = await Features.getFriendRequests(userData.userId);
+            if (requests.error) {
+                Responder(res, 'error', null, 'No friend requests.');
+                return;
             }
 
             // Return data
             Responder(res, 'success', {
-                sent: sentRequests,
-                received: receivedRequests,
+                sent: requests.sent,
+                received: requests.received,
             });
         } catch (error) {
             Responder(res, 'catch', null, `[User] GetFriendRequests, ${error}`);
