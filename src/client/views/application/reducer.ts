@@ -88,10 +88,10 @@ export const Reducer = (state: InitialDataProps, action: any) => {
                 ...state,
                 friendRequests: {
                     ...state.friendRequests,
-                    sent: state.friendRequests.sent.filter(
+                    sent: state?.friendRequests?.sent?.filter(
                         (user) => user.userId !== action.data.userId
                     ),
-                    received: state.friendRequests.received.filter(
+                    received: state?.friendRequests?.received?.filter(
                         (user) => user.userId !== action.data.userId
                     ),
                 },
