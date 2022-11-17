@@ -20,6 +20,25 @@ export default new (class HandleFriendRequest {
             return;
 
         try {
+            if (!body.userId) {
+                Responder(res, 'error', null, 'User ID is required.');
+                return;
+            }
+
+            const userData: any = await Features.getUserData(
+                'authorization',
+                req.headers.authorization
+            );
+            const friendData: any = await Features.getUserData(
+                'userid',
+                body.userId
+            );
+
+            if (friendData?.errror) {
+                Responder(res, 'error', null, 'User does not exist.');
+                return;
+            }
+
             // Return data
             Responder(res, 'success', {});
         } catch (error) {
