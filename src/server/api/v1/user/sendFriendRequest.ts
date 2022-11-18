@@ -61,6 +61,31 @@ export default new (class SendFriendRequest {
                 req.headers.authorization
             );
 
+            // Check if already friends
+            const userFriends: any = [];
+            if (userData?.friends) {
+                Object.keys(userData.friends).forEach(async (friend) => {
+                    userFriends.push(userData.friends[friend]);
+                });
+            }
+            const friendFriends: any = [];
+            if (fbFriendUserData?.friends) {
+                Object.keys(fbFriendUserData.friends).forEach(
+                    async (friend) => {
+                        friendFriends.push(fbFriendUserData.friends[friend]);
+                    }
+                );
+            }
+
+            if (userFriends.includes(fbFriendUserData.userId)) {
+                Responder(res, 'error', null, 'You are already friends.');
+                return;
+            }
+            if (friendFriends.includes(userData.userId)) {
+                Responder(res, 'error', null, 'You are already friends.');
+                return;
+            }
+
             // Get friends friend requests
             let alreadyReceived = false;
             const friendReceived: any = [];
