@@ -8,6 +8,7 @@ import Features from './features';
 import './styles.scss';
 import { useState, useEffect } from 'react';
 import { CustomButton } from './styles';
+import Api from '../../classes/Api';
 
 export default function FriendRequests({
     state,
@@ -37,21 +38,41 @@ export default function FriendRequests({
         });
     };
 
-    const accept = (id: any) => {
-        dispatch({
-            type: 'FRIEND_REQUESTS_REMOVE',
-            data: {
+    const accept = async (id: any) => {
+        const response = await Api.Post(
+            '/user/handle-friend-request',
+            {
+                type: 'accept',
                 userId: id,
             },
-        });
+            true
+        );
+        if (!response?.error) {
+            dispatch({
+                type: 'FRIEND_REQUESTS_REMOVE',
+                data: {
+                    userId: id,
+                },
+            });
+        }
     };
-    const decline = (id: any) => {
-        dispatch({
-            type: 'FRIEND_REQUESTS_REMOVE',
-            data: {
+    const decline = async (id: any) => {
+        const response = await Api.Post(
+            '/user/handle-friend-request',
+            {
+                type: 'decline',
                 userId: id,
             },
-        });
+            true
+        );
+        if (!response?.error) {
+            dispatch({
+                type: 'FRIEND_REQUESTS_REMOVE',
+                data: {
+                    userId: id,
+                },
+            });
+        }
     };
 
     return (
