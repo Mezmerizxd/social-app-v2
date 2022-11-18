@@ -29,7 +29,7 @@ export default new (class Features {
     };
 
     public getFriends = async () => {
-        const friends = [];
+        let friends = [];
         if (this.debugMode) {
             for (let i = 0; i < 40; i++) {
                 friends.push({
@@ -37,6 +37,11 @@ export default new (class Features {
                     username: 'Test ' + i,
                     avatar: 'https://i.pravatar.cc/300',
                 });
+            }
+        } else {
+            const response = await Api.Post('/user/get-friends', null, true);
+            if (response && response.success === true) {
+                friends = response.data.friends;
             }
         }
         return friends.length > 0 ? friends : null;
