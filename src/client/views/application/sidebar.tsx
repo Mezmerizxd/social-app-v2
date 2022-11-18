@@ -57,7 +57,7 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
                     }
                 />
                 <h1>Friends</h1>
-                {mobileMode && (
+                {mobileMode && state.selectedFriend !== null && (
                     <ArrowBackIcon
                         onClick={handleSidebar}
                         id="arrow"
