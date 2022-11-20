@@ -23,9 +23,10 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
             dispatch({
                 type: 'SET_MESSAGES',
                 data: {
-                    messages: messages,
+                    messages: messages.messages,
                     userId: userId,
                     username: username,
+                    messagesGroupId: messages.messagingGroupId,
                 },
             });
         }

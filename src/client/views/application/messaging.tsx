@@ -1,7 +1,8 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { MessagingProps } from './types';
+import Socket from '../../classes/Socket';
 
 import './styles.scss';
 
@@ -10,9 +11,30 @@ export default function Messaging({
     dispatch,
     mobileMode,
 }: MessagingProps) {
+    const [socket, setSocket] = useState(null);
+    const [message, setMessage] = useState<string>('');
+
     useEffect(() => {
         document.getElementById('autoscroll').scrollIntoView(false);
     }, [state.messages]);
+
+    useEffect(() => {
+        const socket = Socket.New();
+        socket.on(
+            `handleReceiveFriendMessage_${state.selectedFriend.messagesGroupId}`,
+            (data) => {
+                console.log(data);
+                dispatch({
+                    type: 'ADD_MESSAGE',
+                    data: data,
+                });
+            }
+        );
+        setSocket(socket);
+        return () => {
+            socket.close();
+        };
+    }, []);
 
     const handleSidebar = () => {
         dispatch({
@@ -21,6 +43,17 @@ export default function Messaging({
                 open: !state.sidebar.open,
             },
         });
+    };
+
+    const handleSend = () => {
+        // if (message && message !== '') {
+        socket.emit('handleSendFriendMessage', {
+            authorization: localStorage.getItem('authorization'),
+            userId: state.selectedFriend.userId,
+            content: message,
+        });
+        //}
+        setMessage('');
     };
 
     return (
@@ -51,7 +84,7 @@ export default function Messaging({
                 ) : (
                     <ArrowForwardIcon onClick={handleSidebar} />
                 )}
-                <h1>User</h1>
+                <h1>{state.selectedFriend.username}</h1>
             </div>
             <div className="Application-messaging-messages">
                 {!state.messages && (
@@ -83,7 +116,21 @@ export default function Messaging({
                 <div id="autoscroll"></div>
             </div>
             <div className="Application-messaging-input">
-                <input type="text" placeholder="Type message here" />
+                <input
+                    id="message_input"
+                    key="message_input"
+                    type="text"
+                    placeholder="Type message here"
+                    onChange={(e) => {
+                        setMessage(e.target.value);
+                    }}
+                    value={message}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleSend();
+                        }
+                    }}
+                />
             </div>
         </div>
     );

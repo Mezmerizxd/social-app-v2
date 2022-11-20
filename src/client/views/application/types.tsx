@@ -1,9 +1,25 @@
 export interface InitialDataProps {
-    friends: any;
-    messages: any;
+    friends: [
+        {
+            userId: any;
+            username: any;
+            avatar: any;
+        }
+    ];
+    messages: [
+        {
+            avatar: any;
+            content: any;
+            dateSent: any;
+            messageId: any;
+            userId: any;
+            username: any;
+        }
+    ];
     selectedFriend: {
         userId: any;
         username: any;
+        messagesGroupId: any;
     };
     sidebar: {
         open: boolean;

@@ -2,6 +2,7 @@ import * as socketio from 'socket.io';
 import Log from '../../utils/Log';
 
 import Tests from './tests/io';
+import Messaging from './messaging/io';
 
 export default class Io {
     private io: socketio.Server;
@@ -12,10 +13,11 @@ export default class Io {
         this.io = io;
 
         new Tests(this.io, this.socket);
+        new Messaging(this.io, this.socket);
         socket.on('disconnect', this.disconnect);
     }
 
     private disconnect = () => {
-        Log.debugApi('[V1] [IO] Connection to socket destroyed.');
+        Log.debug('[IO/V1] Connection to socket destroyed.');
     };
 }

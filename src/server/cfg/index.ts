@@ -39,6 +39,7 @@ type LocalReturn = {
     fbDbName: string;
     fbDbUserAcccount: string;
     fbDbUserData: string;
+    fbDbMessages: string;
 };
 
 type UserApiReturn = {
@@ -92,6 +93,7 @@ export default new (class Cfg {
             fbDbName: 'social_app_v2',
             fbDbUserAcccount: 'user_account',
             fbDbUserData: 'user_data',
+            fbDbMessages: 'messages',
         };
     };
 

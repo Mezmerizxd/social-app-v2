@@ -48,7 +48,13 @@ export const Reducer = (state: InitialDataProps, action: any) => {
                 selectedFriend: {
                     userId: action.data.userId,
                     username: action.data.username,
+                    messagesGroupId: action.data.messagesGroupId,
                 },
+            };
+        case 'ADD_MESSAGE':
+            return {
+                ...state,
+                messages: [...state.messages, action.data],
             };
         case 'SET_ADDFRIEND':
             return {

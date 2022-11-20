@@ -24,7 +24,7 @@ app.use('/api/v1', v1);
 Data.Initialize();
 
 io.on('connection', (socket) => {
-    Log.debug('[Server] [IO] Connection to socket created.');
+    Log.debug('[IO/V1] Connection to socket created.');
     new Io(io, socket);
 });
 
