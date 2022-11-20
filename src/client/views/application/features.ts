@@ -1,3 +1,4 @@
+import { response } from 'express';
 import Api from '../../classes/Api';
 
 export default new (class Features {
@@ -48,7 +49,8 @@ export default new (class Features {
     };
 
     public getMessages = async (userId: any) => {
-        const messages = [];
+        let messages = [];
+        let messagingGroupId = null;
         if (this.debugMode) {
             for (let i = 0; i < 100; i++) {
                 messages.push({
@@ -62,8 +64,23 @@ export default new (class Features {
                     avatar: 'https://i.pravatar.cc/300',
                 });
             }
+        } else {
+            const response = await Api.Post(
+                '/messaging/get-messages',
+                {
+                    userId: userId,
+                },
+                true
+            );
+            if (response && response.success === true) {
+                messages = response.data.messages;
+                messagingGroupId = response.data.messagingGroupId;
+            }
         }
-        return messages.length > 0 ? messages : null;
+        return {
+            messages: messages,
+            messagingGroupId: messagingGroupId,
+        };
     };
 
     public getFriendRequests = async () => {

@@ -49,18 +49,24 @@ export default new (class Features {
         let created = false;
         let id: number = 0;
         let attempts = 0;
-        while (!created) {
-            id = Math.floor(Math.random() * this.generators_max_id_size);
-            if (attempts === this.generators_max_attempts) {
-                Log.error('[Generator] UserId - max attempts');
-                return { data: null };
+        try {
+            while (!created) {
+                id = Math.floor(Math.random() * this.generators_max_id_size);
+                if (attempts === this.generators_max_attempts) {
+                    Log.error('[Generator] UserId - max attempts');
+                    return { data: null };
+                }
+                const fbUserAccount = Firebase.database.ref(
+                    `${Cfg.Local().fbDbName}/${
+                        Cfg.Local().fbDbUserAcccount
+                    }/${id}`
+                );
+                const fbUserDataResp = (await fbUserAccount.get()).toJSON();
+                if (!fbUserDataResp) created = true;
+                attempts += 1;
             }
-            const fbUserAccount = Firebase.database.ref(
-                `social_app_v2/user_accounts/${id}`
-            );
-            const fbUserDataResp = (await fbUserAccount.get()).toJSON();
-            if (!fbUserDataResp) created = true;
-            attempts += 1;
+        } catch (error) {
+            Log.error('[API] [V1] [Features] GenerateUserId,', error);
         }
         Log.debug('[API] [V1] [Features] GenerateUserId - finished');
         return { data: id };
@@ -71,26 +77,60 @@ export default new (class Features {
         let created = false;
         let token: string = '';
         let attempts = 0;
-        while (!created) {
-            token = crypto
-                .randomBytes(this.generators_max_token_byte)
-                .toString('hex');
-            if (attempts === this.generators_max_attempts) {
-                Log.error('[Generator] AuthorizationToken - max attempts');
-                return { data: null };
+        try {
+            while (!created) {
+                token = crypto
+                    .randomBytes(this.generators_max_token_byte)
+                    .toString('hex');
+                if (attempts === this.generators_max_attempts) {
+                    Log.error('[Generator] AuthorizationToken - max attempts');
+                    return { data: null };
+                }
+                const fbUserData = Firebase.database
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbUserData)
+                    .orderByChild('authorization')
+                    .equalTo(token)
+                    .limitToFirst(1);
+                const fbUserDataResp = (await fbUserData.get()).toJSON();
+                if (!fbUserDataResp) created = true;
+                attempts += 1;
             }
-            const fbUserData = Firebase.database
-                .ref(`social_app_v2/`)
-                .child('user_data')
-                .orderByChild('authorization')
-                .equalTo(token)
-                .limitToFirst(1);
-            const fbUserDataResp = (await fbUserData.get()).toJSON();
-            if (!fbUserDataResp) created = true;
-            attempts += 1;
+        } catch (error) {
+            Log.error('[API] [V1] [Features] GenerateAuthorization,', error);
         }
         Log.debug('[API] [V1] [Features] GenerateAuthorization - finished');
         return { data: token };
+    };
+
+    public generateMessageId = async (): Promise<GenerateReturn> => {
+        Log.debug('[API] [V1] [Features] GenerateMessageId - started');
+        let created = false;
+        let id: number = 0;
+        let attempts = 0;
+        try {
+            while (!created) {
+                id = Math.floor(Math.random() * this.generators_max_id_size);
+                if (attempts === this.generators_max_attempts) {
+                    Log.error('[Generator] MessageId - max attempts');
+                    return { data: null };
+                }
+                const fbMessages = Firebase.database
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbMessages)
+                    .child('messages')
+                    .orderByChild('messageId')
+                    .equalTo(id)
+                    .limitToFirst(1);
+                const fbUserDataResp = (await fbMessages.get()).toJSON();
+                if (!fbUserDataResp) created = true;
+                attempts += 1;
+            }
+        } catch (error) {
+            Log.error('[API] [V1] [Features] GenerateMessageId,', error);
+        }
+        Log.debug('[API] [V1] [Features] GenerateMessageId - finished');
+        return { data: id };
     };
 
     public getUserData = async (
@@ -102,16 +142,16 @@ export default new (class Features {
         switch (method) {
             case 'AUTHORIZATION':
                 fbUserData = Firebase.database
-                    .ref(`social_app_v2/`)
-                    .child('user_data')
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbUserData)
                     .orderByChild('authorization')
                     .equalTo(key)
                     .limitToFirst(1);
                 break;
             case 'USERID':
                 fbUserData = Firebase.database
-                    .ref(`social_app_v2/`)
-                    .child('user_data')
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbUserData)
                     .orderByChild('userId')
                     .equalTo(key)
                     .limitToFirst(1);
