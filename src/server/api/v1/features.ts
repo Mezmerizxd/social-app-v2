@@ -57,7 +57,9 @@ export default new (class Features {
                     return { data: null };
                 }
                 const fbUserAccount = Firebase.database.ref(
-                    `social_app_v2/user_accounts/${id}`
+                    `${Cfg.Local().fbDbName}/${
+                        Cfg.Local().fbDbUserAcccount
+                    }/${id}`
                 );
                 const fbUserDataResp = (await fbUserAccount.get()).toJSON();
                 if (!fbUserDataResp) created = true;
@@ -85,8 +87,8 @@ export default new (class Features {
                     return { data: null };
                 }
                 const fbUserData = Firebase.database
-                    .ref(`social_app_v2/`)
-                    .child('user_data')
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbUserData)
                     .orderByChild('authorization')
                     .equalTo(token)
                     .limitToFirst(1);
@@ -114,8 +116,8 @@ export default new (class Features {
                     return { data: null };
                 }
                 const fbMessages = Firebase.database
-                    .ref(`social_app_v2/`)
-                    .child('messages')
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbMessages)
                     .child('messages')
                     .orderByChild('messageId')
                     .equalTo(id)
@@ -140,16 +142,16 @@ export default new (class Features {
         switch (method) {
             case 'AUTHORIZATION':
                 fbUserData = Firebase.database
-                    .ref(`social_app_v2/`)
-                    .child('user_data')
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbUserData)
                     .orderByChild('authorization')
                     .equalTo(key)
                     .limitToFirst(1);
                 break;
             case 'USERID':
                 fbUserData = Firebase.database
-                    .ref(`social_app_v2/`)
-                    .child('user_data')
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbUserData)
                     .orderByChild('userId')
                     .equalTo(key)
                     .limitToFirst(1);
