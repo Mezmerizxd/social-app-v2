@@ -217,10 +217,13 @@ $media-breakpoint-mobile: 450px;
                     word-wrap: break-word;
                     margin-top: 10px;
                     margin-bottom: 10px;
-                    width: 100%;
                     display: flex;
                     font-family: 'Quicksand', sans-serif;
-
+                    border-radius: 6px;
+                    width: fit-content;
+                    padding-right: 10px;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
                     .message-avatar {
                         img {
                             padding: 5px;
