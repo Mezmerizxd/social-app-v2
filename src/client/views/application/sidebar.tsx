@@ -88,6 +88,18 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
                                 onClick={() =>
                                     handleFriend(friend.userId, friend.username)
                                 }
+                                style={
+                                    friend?.userId ===
+                                    state?.selectedFriend?.userId
+                                        ? {
+                                              background:
+                                                  'rgba(35, 35, 35, 0.6)',
+                                          }
+                                        : {
+                                              background:
+                                                  'rgba(35, 35, 35, 0.4)',
+                                          }
+                                }
                             >
                                 <img src={friend.avatar} alt={friend.avatar} />
                                 <p>{friend.username}</p>
