@@ -219,8 +219,8 @@ $media-breakpoint-mobile: 450px;
                     display: flex;
                     font-family: 'Quicksand', sans-serif;
                     border-radius: 6px;
+                    max-width: 100%;
                     width: fit-content;
-                    padding-right: 10px;
                     padding-top: 5px;
                     padding-bottom: 5px;
                     .message-avatar {
@@ -235,7 +235,7 @@ $media-breakpoint-mobile: 450px;
                     }
 
                     .message-content {
-                        width: calc(100% - 60px);
+                        max-width: calc(100% - 60px);
                         .message-content-details {
                             display: flex;
                             #username {
@@ -246,6 +246,7 @@ $media-breakpoint-mobile: 450px;
                                 font-size: smaller;
                                 color: rgba(255, 255, 255, 0.667);
                                 padding-top: 3px;
+                                padding-right: 10px;
                             }
                         }
 
@@ -261,6 +262,10 @@ $media-breakpoint-mobile: 450px;
                             font-weight: lighter;
                             font-size: 1rem;
                             user-select: text;
+                            padding-right: 10px;
+                            word-wrap: break-word;
+                            max-width: calc(100% - 20px);
+                            width: fit-content;
                         }
                     }
                 }
