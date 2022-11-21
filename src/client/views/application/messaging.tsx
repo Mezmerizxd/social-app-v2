@@ -3,6 +3,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useEffect, useState } from 'react';
 import { MessagingProps } from './types';
 import Socket from '../../classes/Socket';
+import Utils from '../../classes/Utils';
 
 import './styles.scss';
 
@@ -95,7 +96,15 @@ export default function Messaging({
                 {state.messages &&
                     state.messages.length > 0 &&
                     state.messages.map((message) => (
-                        <div className="message" key={message.messageId}>
+                        <div
+                            className="message"
+                            key={message.messageId}
+                            style={
+                                message.userId === state.settings.userId
+                                    ? { background: 'rgba(255, 54, 245, 0.2)' }
+                                    : { background: 'rgba(200, 200, 200, 0.2)' }
+                            }
+                        >
                             <div className="message-avatar">
                                 <img
                                     src={message.avatar}
@@ -106,7 +115,9 @@ export default function Messaging({
                                 <div className="message-content-details">
                                     <p id="username">{message.username}</p>
                                     <p id="date">
-                                        {JSON.stringify(message.dateSent)}
+                                        {Utils.TimeAgo(
+                                            JSON.parse(message.dateSent)
+                                        )}
                                     </p>
                                 </div>
                                 <p id="message">{message.content}</p>
