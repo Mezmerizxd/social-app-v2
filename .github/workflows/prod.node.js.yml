@@ -21,4 +21,4 @@ jobs:
                   image: mezmerizxd/social-app-v2
                   registry: docker.io
                   username: ${{ secrets.DOCKER_USERNAME }}
-                  passwords: ${{ secrets.DOCKER_PASSWORD }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
