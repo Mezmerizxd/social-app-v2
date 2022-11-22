@@ -19,6 +19,14 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'yarn'
-            - run: yarn --production=true
-            - run: yarn build
-            - run: yarn format
+
+            - name: Docker build & push
+            - uses: mr-smithers-excellent/docker-build-push@v4
+            - with:
+                  - image: mezmerizxd/social-app-v2
+                  - registry: docker.io
+                  - username: ${{ secrets.DOCKER_USERNAME }}
+                  - passwords: ${{ secrets.DOCKER_PASSWORD }}
+            # - run: yarn --production=true
+            # - run: yarn build
+            # - run: yarn format
