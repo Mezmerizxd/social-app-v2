@@ -51,9 +51,7 @@ type UserApiReturn = {
 
 export default new (class Cfg {
     public Env = (): EnvReturn => {
-        if (process.env.PORT === null) {
-            dotenv.config({ path: path.join(__dirname, '../../../.env') });
-        }
+        dotenv.config({ path: path.join(__dirname, '../../../.env') });
         return {
             port: process.env.PORT,
             socketPort: process.env.SOCKET_PORT,
