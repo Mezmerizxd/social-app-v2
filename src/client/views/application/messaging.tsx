@@ -47,13 +47,13 @@ export default function Messaging({
     };
 
     const handleSend = () => {
-        // if (message && message !== '') {
-        socket.emit('handleSendFriendMessage', {
-            authorization: localStorage.getItem('authorization'),
-            userId: state.selectedFriend.userId,
-            content: message,
-        });
-        //}
+        if (message && message !== '') {
+            socket.emit('handleSendFriendMessage', {
+                authorization: localStorage.getItem('authorization'),
+                userId: state.selectedFriend.userId,
+                content: message,
+            });
+        }
         setMessage('');
     };
 
