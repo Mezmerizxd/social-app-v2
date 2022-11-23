@@ -57,7 +57,8 @@
         "cl_dev": "cross-env PORT=3000 react-app-rewired start",
         "sv_dev": "concurrently \"npx tsc --project tsconfig.server.json --watch\" \"nodemon -q release/server/index.js\"",
         "format": "npx prettier --write ./src/server && npx prettier --write ./src/client",
-        "lint:fix": "eslint --fix ./src/**/*.ts && eslint --fix ./src/**/*.tsx"
+        "lint:fix": "eslint --fix ./src/**/*.ts && eslint --fix ./src/**/*.tsx",
+        "deploy_beta": "docker build -t mezmerizxd/social-app-v2:beta . && docker push mezmerizxd/social-app-v2:beta"
     },
     "browserslist": {
         "production": [
