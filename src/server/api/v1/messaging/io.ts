@@ -26,6 +26,10 @@ export default class Messaging {
     private SendFriendMessage = async (data: SendFriendMessageType) => {
         Log.debug('[IO/V1] [Messaging] SendFriendMessage Started');
 
+        if (data?.content === null || data?.content === '') {
+            return;
+        }
+
         try {
             const userData: any = await Features.getUserData(
                 'authorization',
