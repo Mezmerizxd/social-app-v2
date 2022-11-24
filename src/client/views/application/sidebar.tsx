@@ -29,6 +29,9 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
                     messagesGroupId: messages.messagingGroupId,
                 },
             });
+            if (mobileMode) {
+                handleSidebar();
+            }
         }
     };
 
