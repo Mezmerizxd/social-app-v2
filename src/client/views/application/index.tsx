@@ -55,6 +55,7 @@ export default function Application() {
 
     return (
         <div className="Application-container">
+            <title>Social App V2</title>
             <div className="Application">
                 {state.sidebar.open === true && (
                     <Sidebar
