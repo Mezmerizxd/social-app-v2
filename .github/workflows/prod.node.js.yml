@@ -16,15 +16,6 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            # - name: Docker build & push
-            #   uses: mr-smithers-excellent/docker-build-push@v4
-            #   with:
-            #       image: mezmerizxd/social-app-v2
-            #       tags: beta
-            #       registry: docker.io
-            #       username: ${{ secrets.DOCKER_USERNAME }}
-            #       password: ${{ secrets.DOCKER_PASSWORD }}
-
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v3
               with:
@@ -36,3 +27,12 @@ jobs:
               run: yarn build
             - name: Format with Prettier
               run: yarn format
+
+            - name: Docker build & push
+              uses: mr-smithers-excellent/docker-build-push@v4
+              with:
+                  image: mezmerizxd/social-app-v2
+                  tags: beta
+                  registry: docker.io
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}

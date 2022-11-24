@@ -10,20 +10,22 @@ export default new (class Firebase {
 
     constructor() {
         if (Cfg.Env().firebaseEnabled === 'true') {
-            this.firebaseKey = {
-                type: Cfg.Env().firebaseType,
-                project_id: Cfg.Env().firebaseProjectId,
-                private_key_id: Cfg.Env().firebasePrivateKeyId,
-                private_key: Cfg.Env().firebasePrivateKey,
-                client_email: Cfg.Env().firebaseClientEmail,
-                client_id: Cfg.Env().firebaseClientId,
-                auth_uri: Cfg.Env().firebaseAuthUri,
-                token_uri: Cfg.Env().firebaseTokenUri,
-                auth_provider_x509_cert_url:
-                    Cfg.Env().firebaseAuthProviderCertUrl,
-                client_x509_cert_url: Cfg.Env().firebaseClientCertUrl,
-            };
             try {
+                this.firebaseKey = {
+                    type: `${Cfg.Env().firebaseType}`,
+                    project_id: `${Cfg.Env().firebaseProjectId}`,
+                    private_key_id: `${Cfg.Env().firebasePrivateKeyId}`,
+                    private_key: `${Cfg.Env().firebasePrivateKey}`,
+                    client_email: `${Cfg.Env().firebaseClientEmail}`,
+                    client_id: `${Cfg.Env().firebaseClientId}`,
+                    auth_uri: `${Cfg.Env().firebaseAuthUri}`,
+                    token_uri: `${Cfg.Env().firebaseTokenUri}`,
+                    auth_provider_x509_cert_url: `${
+                        Cfg.Env().firebaseAuthProviderCertUrl
+                    }`,
+                    client_x509_cert_url: `${Cfg.Env().firebaseClientCertUrl}`,
+                };
+
                 this.firebase = firebaseAdmin.initializeApp({
                     credential: firebaseAdmin.credential.cert(this.firebaseKey),
                     databaseURL: Cfg.Env().firebaseDbUrl,
