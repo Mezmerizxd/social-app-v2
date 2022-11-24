@@ -1,7 +1,7 @@
 name: Development Node.js CI
 
 on:
-    pull_request:
+    push:
         branches: development
 
 jobs:

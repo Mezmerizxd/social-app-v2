@@ -77,7 +77,9 @@ export default new (class Cfg {
             firebaseType: process.env.FIREBASE_TYPE,
             firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
             firebasePrivateKeyId: process.env.FIREBASE_PRIVATE_KEY_ID,
-            firebasePrivateKey: process.env.FIREBASE_PRIVATE_KEY,
+            firebasePrivateKey: process.env.FIREBASE_PRIVATE_KEY
+                ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/gm, '\n')
+                : undefined,
             firebaseClientEmail: process.env.FIREBASE_CLIENT_EMAIL,
             firebaseClientId: process.env.FIREBASE_CLIENT_ID,
             firebaseAuthUri: process.env.FIREBASE_AUTH_URI,
