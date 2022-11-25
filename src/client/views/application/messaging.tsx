@@ -7,10 +7,12 @@ import Utils from '../../classes/Utils';
 import './styles.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { addMessage, toggleSidebar } from './reducer';
+import LoadingDefault from '../../components/loading/default';
 
 export default function Messaging({ mobileMode }: MessagingProps) {
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(true);
 
     const state = useAppSelector((state) => state.application);
     const dispatch = useAppDispatch();
@@ -25,10 +27,6 @@ export default function Messaging({ mobileMode }: MessagingProps) {
             `handleReceiveFriendMessage_${state.selectedFriend.messagesGroupId}`,
             (data) => {
                 console.log(data);
-                // dispatch({
-                //     type: 'ADD_MESSAGE',
-                //     data: data,
-                // });
                 dispatch(addMessage(data));
             }
         );
@@ -84,6 +82,11 @@ export default function Messaging({ mobileMode }: MessagingProps) {
                 <h1>{state.selectedFriend.username}</h1>
             </div>
             <div className="Application-messaging-messages">
+                <LoadingDefault
+                    isLoading={!state.messages.length ? false : isLoading}
+                    name="messaging"
+                    style={{ width: 'calc(100% - 20px)' }}
+                />
                 {!state.messages && (
                     <div className="no-messages">
                         <h1>No messages found</h1>
@@ -91,7 +94,7 @@ export default function Messaging({ mobileMode }: MessagingProps) {
                 )}
                 {state.messages &&
                     state.messages.length > 0 &&
-                    state.messages.map((message) => (
+                    state.messages.map((message, i) => (
                         <div
                             className="message"
                             key={message.messageId}
@@ -100,6 +103,11 @@ export default function Messaging({ mobileMode }: MessagingProps) {
                                     ? { background: 'rgba(255, 54, 245, 0.2)' }
                                     : { background: 'rgba(200, 200, 200, 0.2)' }
                             }
+                            onLoad={() => {
+                                if (i + 1 === state.messages.length) {
+                                    setIsLoading(false);
+                                }
+                            }}
                         >
                             <div className="message-avatar">
                                 <img
