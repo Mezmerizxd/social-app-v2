@@ -1,41 +1,26 @@
-import { useEffect, useReducer, useState } from 'react';
-
-import { Reducer, InitialData } from './reducer';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import './styles.scss';
-
 import Sidebar from './sidebar';
 import Messaging from './messaging';
 import AddFriend from './addFriend';
 import FriendRequests from './friendRequests';
 import Settings from './settings';
 import Features from './features';
+import { setUserData, setFriends } from './reducer';
 
 export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
-    const [state, dispatch] = useReducer(Reducer, InitialData);
+
+    const state = useAppSelector((state) => state.application);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setTimeout(async () => {
-            const friends = await Features.getFriends();
-            const userData: any = await Features.getUserData();
-
-            dispatch({
-                type: 'SET_FRIENDS',
-                data: {
-                    friends: friends,
-                },
-            });
-            dispatch({
-                type: 'SET_SETTINGS_DATA',
-                data: {
-                    username: userData?.username,
-                    userId: userData?.userId,
-                    email: userData?.email,
-                    avatar: userData?.avatar,
-                },
-            });
+            dispatch(setFriends(await Features.getFriends()));
+            dispatch(setUserData(await Features.getUserData()));
         });
-    }, []);
+    }, [state.friendRequestsPopup, state.addFriendPopup]);
 
     useEffect(() => {
         if (screen.width < 600) {
@@ -58,32 +43,18 @@ export default function Application() {
             <title>Social App V2</title>
             <div className="Application">
                 {state.sidebar.open === true && (
-                    <Sidebar
-                        state={state}
-                        dispatch={dispatch}
-                        mobileMode={mobileMode}
-                    />
+                    <Sidebar mobileMode={mobileMode} />
                 )}
 
-                {state.selectedFriend !== null && (
-                    <Messaging
-                        state={state}
-                        dispatch={dispatch}
-                        mobileMode={mobileMode}
-                    />
+                {state.selectedFriend.messagesGroupId !== null && (
+                    <Messaging mobileMode={mobileMode} />
                 )}
             </div>
 
             {/* Popups */}
-            {state.addFriend.open && (
-                <AddFriend state={state} dispatch={dispatch} />
-            )}
-            {state.friendRequests.open && (
-                <FriendRequests state={state} dispatch={dispatch} />
-            )}
-            {state.settings.open && (
-                <Settings state={state} dispatch={dispatch} />
-            )}
+            {state.addFriendPopup.open && <AddFriend />}
+            {state.friendRequestsPopup.open && <FriendRequests />}
+            {state.settingsPopup.open && <Settings />}
         </div>
     );
 }

@@ -1,125 +1,99 @@
-import { InitialDataProps } from './types';
+import { InitialStateProps } from './types';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const InitialData: InitialDataProps = {
-    friends: null,
-    selectedFriend: null,
-    messages: null,
-    sidebar: {
-        open: true,
-        data: null,
-    },
-    addFriend: {
-        open: false,
-    },
-    friendRequests: {
-        open: false,
-        error: null,
-        sent: null,
-        received: null,
-    },
-    settings: {
-        open: false,
-        username: null,
+export const InitialState: InitialStateProps = {
+    user: {
         userId: null,
+        username: null,
         email: null,
         avatar: null,
     },
+    friends: null,
+    messages: null,
+    selectedFriend: {
+        userId: null,
+        username: null,
+        messagesGroupId: null,
+    },
+    sidebar: {
+        open: true,
+    },
+    addFriendPopup: {
+        open: false,
+    },
+    friendRequestsPopup: {
+        open: false,
+        sent: null,
+        received: null,
+        error: null,
+    },
+    settingsPopup: {
+        open: null,
+    },
 };
 
-export const Reducer = (state: InitialDataProps, action: any) => {
-    switch (action.type) {
-        case 'SET_SIDEBAR_OPEN':
-            return {
-                ...state,
-                sidebar: {
-                    ...state.sidebar,
-                    open: action.data.open,
-                },
-            };
-        case 'SET_FRIENDS':
-            return {
-                ...state,
-                friends: action.data.friends,
-            };
-        case 'SET_MESSAGES':
-            return {
-                ...state,
-                messages: action.data.messages,
-                selectedFriend: {
-                    userId: action.data.userId,
-                    username: action.data.username,
-                    messagesGroupId: action.data.messagesGroupId,
-                },
-            };
-        case 'ADD_MESSAGE':
-            return {
-                ...state,
-                messages: [...state.messages, action.data],
-            };
-        case 'SET_ADDFRIEND':
-            return {
-                ...state,
-                addFriend: {
-                    ...state.addFriend,
-                    open: action.data.open,
-                },
-            };
-        case 'SET_ADDFRIEND_ERROR':
-            return {
-                ...state,
-                addFriend: {
-                    ...state.addFriend,
-                    error: action.data.error,
-                },
-            };
-        case 'SET_FRIEND_REQUESTS':
-            return {
-                ...state,
-                friendRequests: {
-                    ...state.friendRequests,
-                    open: action.data.open,
-                },
-            };
-        case 'SET_FRIEND_REQUESTS_DATA':
-            return {
-                ...state,
-                friendRequests: {
-                    ...state.friendRequests,
-                    sent: action.data.sent,
-                    received: action.data.received,
-                },
-            };
-        case 'FRIEND_REQUESTS_REMOVE':
-            return {
-                ...state,
-                friendRequests: {
-                    ...state.friendRequests,
-                    sent: state?.friendRequests?.sent?.filter(
-                        (user) => user.userId !== action.data.userId
-                    ),
-                    received: state?.friendRequests?.received?.filter(
-                        (user) => user.userId !== action.data.userId
-                    ),
-                },
-            };
-        case 'SET_SETTINGS':
-            return {
-                ...state,
-                settings: {
-                    ...state.settings,
-                    open: action.data.open,
-                },
-            };
-        case 'SET_SETTINGS_DATA':
-            return {
-                ...state,
-                settings: {
-                    ...state.settings,
-                    username: action.data.username,
-                    userId: action.data.userId,
-                    email: action.data.email,
-                    avatar: action.data.avatar,
-                },
-            };
-    }
-};
+export const ApplicationSlice = createSlice({
+    name: 'auth',
+    initialState: InitialState,
+    reducers: {
+        setUserData: (state, action) => {
+            state.user = action.payload;
+        },
+        setFriends: (state, action) => {
+            state.friends = action.payload;
+        },
+        setMessages: (state, action) => {
+            state.messages = action.payload.messages;
+            state.selectedFriend.userId = action.payload.userId;
+            state.selectedFriend.username = action.payload.username;
+            state.selectedFriend.messagesGroupId =
+                action.payload.messagesGroupId;
+        },
+        addMessage: (state, action) => {
+            state.messages.push(action.payload);
+        },
+        toggleSidebar: (state) => {
+            state.sidebar.open = !state.sidebar.open;
+        },
+        toggleAddFriendPopup: (state) => {
+            state.addFriendPopup.open = !state.addFriendPopup.open;
+        },
+        toggleFriendRequestsPopup: (state) => {
+            state.friendRequestsPopup.open = !state.friendRequestsPopup.open;
+        },
+        setFriendRequestsPopupData: (state, action) => {
+            state.friendRequestsPopup.sent = action.payload.sent;
+            state.friendRequestsPopup.received = action.payload.received;
+        },
+        rmFriendRequestsPopupRequest: (state, action) => {
+            const sent: any = [];
+            const received: any = [];
+            state?.friendRequestsPopup?.sent?.map((user) => {
+                if (user.userId !== action.payload) sent.push(user.userId);
+            });
+            state?.friendRequestsPopup?.received?.map((user) => {
+                if (user.userId !== action.payload) sent.push(user.userId);
+            });
+            state.friendRequestsPopup.sent = sent;
+            state.friendRequestsPopup.received = received;
+        },
+        toggleSettingsPopup: (state) => {
+            state.settingsPopup.open = !state.settingsPopup.open;
+        },
+    },
+});
+
+export const {
+    setUserData,
+    setFriends,
+    toggleAddFriendPopup,
+    setFriendRequestsPopupData,
+    toggleFriendRequestsPopup,
+    rmFriendRequestsPopupRequest,
+    toggleSidebar,
+    toggleSettingsPopup,
+    setMessages,
+    addMessage,
+} = ApplicationSlice.actions;
+
+export default ApplicationSlice.reducer;

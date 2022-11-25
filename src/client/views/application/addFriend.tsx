@@ -1,21 +1,18 @@
-import { AddFriendPrpos } from './types';
-
 import './styles.scss';
 import { CustomTextField, CustomButton } from './styles';
 import { useState } from 'react';
 import Api from '../../classes/Api';
+import { useAppDispatch } from '../../hooks/reduxHooks';
+import { toggleAddFriendPopup } from './reducer';
 
-export default function AddFriend({ state, dispatch }: AddFriendPrpos) {
+export default function AddFriend() {
     const [usernameValue, setUsernameValue] = useState(null);
     const [error, setError] = useState(null);
 
+    const dispatch = useAppDispatch();
+
     const close = () => {
-        dispatch({
-            type: 'SET_ADDFRIEND',
-            data: {
-                open: false,
-            },
-        });
+        dispatch(toggleAddFriendPopup());
     };
 
     const send = async () => {
@@ -50,6 +47,7 @@ export default function AddFriend({ state, dispatch }: AddFriendPrpos) {
                         onChange={(e) => {
                             setUsernameValue(e.target.value);
                         }}
+                        value={usernameValue}
                     />
                 </div>
                 {error && (

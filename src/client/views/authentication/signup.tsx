@@ -6,18 +6,20 @@ import './styles.scss';
 import { CustomTextField, CustomButton, CustomCheckBox } from './styles';
 import Api from '../../classes/Api';
 import { useEffect, useState } from 'react';
-
+import { useAppDispatch } from '../../hooks/reduxHooks';
+import { setContext } from './reducer';
 interface SignupProps {
-    dispatch: React.Dispatch<any>;
     contexts: any;
 }
 
-export default function Signup({ contexts, dispatch }: SignupProps) {
+export default function Signup({ contexts }: SignupProps) {
     const [emailValue, setEmailValue] = useState<string>(null);
     const [usernameValue, setUsernameValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
     const [errorValue, setErrorValue] = useState<string>(null);
     const [remember, setRemember] = useState<boolean>(false);
+
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (localStorage.getItem('remember') === 'true')
@@ -62,6 +64,7 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
                 }}
                 variant="outlined"
                 onChange={(e) => setEmailValue(e.target.value)}
+                value={emailValue}
             />
 
             <CustomTextField
@@ -78,6 +81,7 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
                 }}
                 variant="outlined"
                 onChange={(e) => setUsernameValue(e.target.value)}
+                value={usernameValue}
             />
 
             <CustomTextField
@@ -94,6 +98,7 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
                 }}
                 variant="outlined"
                 onChange={(e) => setPassowrdValue(e.target.value)}
+                value={passwordValue}
             />
 
             <CustomCheckBox
@@ -106,14 +111,7 @@ export default function Signup({ contexts, dispatch }: SignupProps) {
 
             <CustomButton onClick={handleSignup}>Signup</CustomButton>
 
-            <p
-                onClick={() =>
-                    dispatch({
-                        type: 'SET_CONTEXT',
-                        data: { context: contexts.login },
-                    })
-                }
-            >
+            <p onClick={() => dispatch(setContext(contexts.login))}>
                 Login with existing account
             </p>
         </div>

@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { MessagingProps } from './types';
 import Socket from '../../classes/Socket';
 import Utils from '../../classes/Utils';
-
 import './styles.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { addMessage, toggleSidebar } from './reducer';
 
-export default function Messaging({
-    state,
-    dispatch,
-    mobileMode,
-}: MessagingProps) {
+export default function Messaging({ mobileMode }: MessagingProps) {
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState<string>('');
+
+    const state = useAppSelector((state) => state.application);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         document.getElementById('autoscroll').scrollIntoView(false);
@@ -25,10 +25,11 @@ export default function Messaging({
             `handleReceiveFriendMessage_${state.selectedFriend.messagesGroupId}`,
             (data) => {
                 console.log(data);
-                dispatch({
-                    type: 'ADD_MESSAGE',
-                    data: data,
-                });
+                // dispatch({
+                //     type: 'ADD_MESSAGE',
+                //     data: data,
+                // });
+                dispatch(addMessage(data));
             }
         );
         setSocket(socket);
@@ -38,12 +39,7 @@ export default function Messaging({
     }, []);
 
     const handleSidebar = () => {
-        dispatch({
-            type: 'SET_SIDEBAR_OPEN',
-            data: {
-                open: !state.sidebar.open,
-            },
-        });
+        dispatch(toggleSidebar());
     };
 
     const handleSend = () => {
@@ -100,7 +96,7 @@ export default function Messaging({
                             className="message"
                             key={message.messageId}
                             style={
-                                message.userId === state.settings.userId
+                                message.userId === state.user.userId
                                     ? { background: 'rgba(255, 54, 245, 0.2)' }
                                     : { background: 'rgba(200, 200, 200, 0.2)' }
                             }
