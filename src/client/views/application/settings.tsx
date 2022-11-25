@@ -48,7 +48,14 @@ export default function Settings() {
                     <div className="Settings-content-profile">
                         <div className="Settings-content-profile-image">
                             <EditIcon style={{ background: '#61B84B' }} />
-                            <img src="https://i.pravatar.cc/300" alt="" />
+                            <img
+                                src={
+                                    state.user.avatar
+                                        ? state.user.avatar
+                                        : 'https://i.pravatar.cc/300'
+                                }
+                                alt=""
+                            />
                         </div>
                         {editUsernameLocked === true && (
                             <CustomSettingsInputField
