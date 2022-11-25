@@ -550,6 +550,18 @@ $media-breakpoint-mobile: 450px;
                     }
                 }
 
+                .username-error {
+                    text-align: center;
+                    margin-top: 10px;
+                    padding: 5px;
+                    background-color: #dc6651;
+                    border-radius: 6px;
+                    font-family: 'Quicksand', sans-serif;
+                    font-size: medium;
+                    color: white;
+                    text-align: center;
+                }
+
                 .Settings-content-account {
                     margin-top: 10px;
                 }

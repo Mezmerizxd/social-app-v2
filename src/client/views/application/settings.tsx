@@ -1,6 +1,7 @@
 import { SettingsPrpos } from './types';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
+import Features from './features';
 
 import './styles.scss';
 import { CustomButton, CustomSettingsInputField } from './styles';
@@ -9,6 +10,7 @@ import React, { useState, useEffect } from 'react';
 export default function Settings({ state, dispatch }: SettingsPrpos) {
     const [editUsernameLocked, setEditUsernameLocked] = useState(true);
     const [editUsernameValue, setEditUsernameValue] = useState(null);
+    const [editUsernameError, setEditUsernameError] = useState(null);
 
     useEffect(() => {
         setEditUsernameLocked(true);
@@ -22,6 +24,20 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                 open: false,
             },
         });
+    };
+
+    const changeUsername = async () => {
+        setEditUsernameError(null);
+        const response = await Features.changeAccountUsername(
+            editUsernameValue
+        );
+        if (response && response.success === true) {
+            setEditUsernameLocked(!editUsernameLocked);
+            // TODO: update the entire state
+            window.location.href = '/app';
+        } else {
+            setEditUsernameError(response.error);
+        }
     };
 
     return (
@@ -81,14 +97,15 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                                     <DoneIcon
                                         style={{ background: '#61B84B' }}
                                         onClick={() => {
-                                            setEditUsernameLocked(
-                                                !editUsernameLocked
-                                            );
+                                            changeUsername();
                                         }}
                                     />
                                 </i>
                             )}
                     </div>
+                    {editUsernameError && (
+                        <p className="username-error">{editUsernameError}</p>
+                    )}
                     <div className="Settings-content-account">
                         <CustomSettingsInputField
                             label={`Email: ${state.settings.email}`}
