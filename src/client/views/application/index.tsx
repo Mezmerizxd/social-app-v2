@@ -42,9 +42,9 @@ export default function Application() {
         <div className="Application-container">
             <title>Social App V2</title>
             <div className="Application">
-                {state.sidebar.open === true && (
-                    <Sidebar mobileMode={mobileMode} />
-                )}
+                {/* {state.sidebar.open === true && ( */}
+                <Sidebar mobileMode={mobileMode} />
+                {/* )} */}
 
                 {state.selectedFriend.messagesGroupId !== null && (
                     <Messaging mobileMode={mobileMode} />

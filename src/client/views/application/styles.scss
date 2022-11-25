@@ -41,6 +41,7 @@ $media-breakpoint-mobile: 450px;
             width: 300px;
             overflow: hidden;
             user-select: none;
+            transition: 0.4s;
 
             @media (max-width: $media-breakpoint-mobile) {
                 position: absolute;
@@ -168,6 +169,7 @@ $media-breakpoint-mobile: 450px;
             width: calc(100% - 300px);
             height: calc(100% - 120px);
             user-select: none;
+            transition: 0.4s;
 
             .Application-messaging-titlebar {
                 background: rgba(35, 35, 35, 0.4);

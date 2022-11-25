@@ -58,19 +58,21 @@ export default function Sidebar({ mobileMode }: SidebarProps) {
                     onClick={() => dispatch(toggleAddFriendPopup())}
                 />
                 <h1>Friends</h1>
-                {mobileMode && state.selectedFriend !== null && (
-                    <ArrowBackIcon
-                        onClick={handleSidebar}
-                        id="arrow"
-                        style={
-                            mobileMode
-                                ? state.sidebar.open
-                                    ? { right: '2vw' }
+                {state.sidebar.open === true &&
+                    mobileMode &&
+                    state.selectedFriend !== null && (
+                        <ArrowBackIcon
+                            onClick={handleSidebar}
+                            id="arrow"
+                            style={
+                                mobileMode
+                                    ? state.sidebar.open
+                                        ? { right: '2vw' }
+                                        : {}
                                     : {}
-                                : {}
-                        }
-                    />
-                )}
+                            }
+                        />
+                    )}
             </div>
             <div className="Application-sidebar">
                 <div className="Application-sidebar-friendslist">
