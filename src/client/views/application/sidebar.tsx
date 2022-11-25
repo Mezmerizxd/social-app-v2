@@ -4,31 +4,35 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SidebarProps } from './types';
 import Features from './features';
-
 import './styles.scss';
+import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
+import {
+    setMessages,
+    toggleAddFriendPopup,
+    toggleFriendRequestsPopup,
+    toggleSettingsPopup,
+    toggleSidebar,
+} from './reducer';
 
-export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
+export default function Sidebar({ mobileMode }: SidebarProps) {
+    const state = useAppSelector((state) => state.application);
+    const dispatch = useAppDispatch();
+
     const handleSidebar = () => {
-        dispatch({
-            type: 'SET_SIDEBAR_OPEN',
-            data: {
-                open: !state.sidebar.open,
-            },
-        });
+        dispatch(toggleSidebar());
     };
 
     const handleFriend = async (userId: any, username: any) => {
         const messages = await Features.getMessages(userId);
         if (messages) {
-            dispatch({
-                type: 'SET_MESSAGES',
-                data: {
+            dispatch(
+                setMessages({
                     messages: messages.messages,
                     userId: userId,
                     username: username,
                     messagesGroupId: messages.messagingGroupId,
-                },
-            });
+                })
+            );
             if (mobileMode) {
                 handleSidebar();
             }
@@ -51,14 +55,7 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
             <div className="Application-sidebar-title">
                 <AddIcon
                     id="add"
-                    onClick={() =>
-                        dispatch({
-                            type: 'SET_ADDFRIEND',
-                            data: {
-                                open: true,
-                            },
-                        })
-                    }
+                    onClick={() => dispatch(toggleAddFriendPopup())}
                 />
                 <h1>Friends</h1>
                 {mobileMode && state.selectedFriend !== null && (
@@ -111,26 +108,12 @@ export default function Sidebar({ state, mobileMode, dispatch }: SidebarProps) {
                 </div>
                 <div className="Application-sidebar-actionbar">
                     <SettingsIcon
-                        onClick={() =>
-                            dispatch({
-                                type: 'SET_SETTINGS',
-                                data: {
-                                    open: true,
-                                },
-                            })
-                        }
+                        onClick={() => dispatch(toggleSettingsPopup())}
                     />
                     <PeopleIcon
-                        onClick={() =>
-                            dispatch({
-                                type: 'SET_FRIEND_REQUESTS',
-                                data: {
-                                    open: true,
-                                },
-                            })
-                        }
+                        onClick={() => dispatch(toggleFriendRequestsPopup())}
                     />
-                    <p>{state.settings.username}</p>
+                    <p>{state.user.username}</p>
                 </div>
             </div>
         </div>

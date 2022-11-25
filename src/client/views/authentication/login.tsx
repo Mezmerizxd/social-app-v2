@@ -6,19 +6,23 @@ import './styles.scss';
 import { CustomTextField, CustomButton, CustomCheckBox } from './styles';
 import { useEffect, useState } from 'react';
 import Api from '../../classes/Api';
+import { useAppDispatch } from '../../hooks/reduxHooks';
+import { setContext } from './reducer';
 
 interface LoginProps {
-    dispatch: React.Dispatch<any>;
     contexts: any;
 }
 
-export default function Login({ contexts, dispatch }: LoginProps) {
+export default function Login({ contexts }: LoginProps) {
     const [emailValue, setEmailValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
     const [errorValue, setErrorValue] = useState<string>(null);
     const [remember, setRemember] = useState<boolean>(false);
 
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
+        // TODO: create a proper solution
         if (localStorage.getItem('remember') === 'true')
             window.location.href = '/app';
     }, []);
@@ -60,6 +64,7 @@ export default function Login({ contexts, dispatch }: LoginProps) {
                 }}
                 variant="outlined"
                 onChange={(e) => setEmailValue(e.target.value)}
+                value={emailValue}
             />
 
             <CustomTextField
@@ -76,6 +81,7 @@ export default function Login({ contexts, dispatch }: LoginProps) {
                 }}
                 variant="outlined"
                 onChange={(e) => setPassowrdValue(e.target.value)}
+                value={passwordValue}
             />
 
             <CustomCheckBox
@@ -88,14 +94,7 @@ export default function Login({ contexts, dispatch }: LoginProps) {
 
             <CustomButton onClick={handleLogin}>Login</CustomButton>
 
-            <p
-                onClick={() =>
-                    dispatch({
-                        type: 'SET_CONTEXT',
-                        data: { context: contexts.signup },
-                    })
-                }
-            >
+            <p onClick={() => dispatch(setContext(contexts.signup))}>
                 Create an Account
             </p>
         </div>

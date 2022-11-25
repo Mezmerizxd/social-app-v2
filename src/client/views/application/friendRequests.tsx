@@ -2,40 +2,38 @@ import SendIcon from '@mui/icons-material/Send';
 import MailIcon from '@mui/icons-material/Mail';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { FriendRequestsPrpos } from './types';
 import Features from './features';
-
 import './styles.scss';
 import { useState, useEffect } from 'react';
 import { CustomButton } from './styles';
 import Api from '../../classes/Api';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import {
+    rmFriendRequestsPopupRequest,
+    setFriendRequestsPopupData,
+    toggleFriendRequestsPopup,
+} from './reducer';
 
-export default function FriendRequests({
-    state,
-    dispatch,
-}: FriendRequestsPrpos) {
+export default function FriendRequests() {
     const [context, setContext] = useState<string>('sent');
+
+    const state = useAppSelector((state) => state.application);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setTimeout(async () => {
             const response = await Features.getFriendRequests();
-            dispatch({
-                type: 'SET_FRIEND_REQUESTS_DATA',
-                data: {
+            dispatch(
+                setFriendRequestsPopupData({
                     sent: response.sent,
                     received: response.received,
-                },
-            });
+                })
+            );
         });
     }, []);
 
     const close = () => {
-        dispatch({
-            type: 'SET_FRIEND_REQUESTS',
-            data: {
-                open: false,
-            },
-        });
+        dispatch(toggleFriendRequestsPopup());
     };
 
     const accept = async (id: any) => {
@@ -48,12 +46,7 @@ export default function FriendRequests({
             true
         );
         if (!response?.error) {
-            dispatch({
-                type: 'FRIEND_REQUESTS_REMOVE',
-                data: {
-                    userId: id,
-                },
-            });
+            dispatch(rmFriendRequestsPopupRequest(id));
         }
     };
     const decline = async (id: any) => {
@@ -66,12 +59,7 @@ export default function FriendRequests({
             true
         );
         if (!response?.error) {
-            dispatch({
-                type: 'FRIEND_REQUESTS_REMOVE',
-                data: {
-                    userId: id,
-                },
-            });
+            dispatch(rmFriendRequestsPopupRequest(id));
         }
     };
 
@@ -102,25 +90,27 @@ export default function FriendRequests({
                 <div className="Popup-basic-friendRequests">
                     {context === 'sent' && (
                         <>
-                            {state.friendRequests.sent &&
-                            state.friendRequests.sent.length > 0 ? (
-                                state.friendRequests.sent.map((request) => (
-                                    <div
-                                        className="Popup-basic-friendRequests-request"
-                                        key={request.userId}
-                                    >
-                                        <img src={request.avatar} alt="" />
-                                        <p>{request.username}</p>
-                                        <div className="Popup-basic-friendRequests-request-actions">
-                                            <CancelIcon
-                                                id="decline"
-                                                onClick={() =>
-                                                    decline(request.userId)
-                                                }
-                                            />
+                            {state.friendRequestsPopup.sent &&
+                            state.friendRequestsPopup.sent.length > 0 ? (
+                                state.friendRequestsPopup.sent.map(
+                                    (request) => (
+                                        <div
+                                            className="Popup-basic-friendRequests-request"
+                                            key={request.userId}
+                                        >
+                                            <img src={request.avatar} alt="" />
+                                            <p>{request.username}</p>
+                                            <div className="Popup-basic-friendRequests-request-actions">
+                                                <CancelIcon
+                                                    id="decline"
+                                                    onClick={() =>
+                                                        decline(request.userId)
+                                                    }
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                ))
+                                    )
+                                )
                             ) : (
                                 <div className="Popup-basic-friendRequests-notfound">
                                     <p>No Request Sent</p>
@@ -131,31 +121,33 @@ export default function FriendRequests({
 
                     {context === 'received' && (
                         <>
-                            {state.friendRequests.received &&
-                            state.friendRequests.received.length > 0 ? (
-                                state.friendRequests.received.map((request) => (
-                                    <div
-                                        className="Popup-basic-friendRequests-request"
-                                        key={request.userId}
-                                    >
-                                        <img src={request.avatar} alt="" />
-                                        <p>{request.username}</p>
-                                        <div className="Popup-basic-friendRequests-request-actions">
-                                            <CancelIcon
-                                                id="decline"
-                                                onClick={() =>
-                                                    decline(request.userId)
-                                                }
-                                            />
-                                            <CheckCircleIcon
-                                                id="accept"
-                                                onClick={() =>
-                                                    accept(request.userId)
-                                                }
-                                            />
+                            {state.friendRequestsPopup.received &&
+                            state.friendRequestsPopup.received.length > 0 ? (
+                                state.friendRequestsPopup.received.map(
+                                    (request) => (
+                                        <div
+                                            className="Popup-basic-friendRequests-request"
+                                            key={request.userId}
+                                        >
+                                            <img src={request.avatar} alt="" />
+                                            <p>{request.username}</p>
+                                            <div className="Popup-basic-friendRequests-request-actions">
+                                                <CancelIcon
+                                                    id="decline"
+                                                    onClick={() =>
+                                                        decline(request.userId)
+                                                    }
+                                                />
+                                                <CheckCircleIcon
+                                                    id="accept"
+                                                    onClick={() =>
+                                                        accept(request.userId)
+                                                    }
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                ))
+                                    )
+                                )
                             ) : (
                                 <div className="Popup-basic-friendRequests-notfound">
                                     <p>No Request Received</p>

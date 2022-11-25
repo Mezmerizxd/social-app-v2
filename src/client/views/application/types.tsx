@@ -1,4 +1,10 @@
-export interface InitialDataProps {
+export interface InitialStateProps {
+    user: {
+        userId: any;
+        username: any;
+        email: any;
+        avatar: any;
+    };
     friends: [
         {
             userId: any;
@@ -23,49 +29,25 @@ export interface InitialDataProps {
     };
     sidebar: {
         open: boolean;
-        data: any;
     };
-    addFriend: {
+    addFriendPopup: {
         open: boolean;
     };
-    friendRequests: {
+    friendRequestsPopup: {
         open: boolean;
         error: any;
         sent: [{ userId: any; avatar: any; username: any }];
         received: [{ userId: any; avatar: any; username: any }];
     };
-    settings: {
+    settingsPopup: {
         open: boolean;
-        username: any;
-        userId: any;
-        email: any;
-        avatar: any;
     };
 }
 
 export interface SidebarProps {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
     mobileMode: boolean;
-}
-
-export interface SettingsPrpos {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
 }
 
 export interface MessagingProps {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
     mobileMode: boolean;
-}
-
-export interface FriendRequestsPrpos {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
-}
-
-export interface AddFriendPrpos {
-    state: InitialDataProps;
-    dispatch: React.Dispatch<any>;
 }

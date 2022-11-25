@@ -1,16 +1,19 @@
-import { SettingsPrpos } from './types';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import Features from './features';
-
 import './styles.scss';
 import { CustomButton, CustomSettingsInputField } from './styles';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
+import { toggleSettingsPopup } from './reducer';
 
-export default function Settings({ state, dispatch }: SettingsPrpos) {
+export default function Settings() {
     const [editUsernameLocked, setEditUsernameLocked] = useState(true);
     const [editUsernameValue, setEditUsernameValue] = useState(null);
     const [editUsernameError, setEditUsernameError] = useState(null);
+
+    const state = useAppSelector((state) => state.application);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setEditUsernameLocked(true);
@@ -18,12 +21,7 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
     }, []);
 
     const close = () => {
-        dispatch({
-            type: 'SET_SETTINGS',
-            data: {
-                open: false,
-            },
-        });
+        dispatch(toggleSettingsPopup());
     };
 
     const changeUsername = async () => {
@@ -54,7 +52,7 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                         </div>
                         {editUsernameLocked === true && (
                             <CustomSettingsInputField
-                                label={state.settings.username}
+                                label={state.user.username}
                                 disabled={true}
                                 type="text"
                                 id="username"
@@ -65,7 +63,7 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                         )}
                         {editUsernameLocked === false && (
                             <CustomSettingsInputField
-                                label={state.settings.username}
+                                label={state.user.username}
                                 disabled={false}
                                 type="text"
                                 id="username"
@@ -75,6 +73,7 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                                 onChange={(e) =>
                                     setEditUsernameValue(e.target.value)
                                 }
+                                value={editUsernameValue}
                             />
                         )}
                         <i>
@@ -108,7 +107,7 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                     )}
                     <div className="Settings-content-account">
                         <CustomSettingsInputField
-                            label={`Email: ${state.settings.email}`}
+                            label={`Email: ${state.user.email}`}
                             disabled={true}
                             type="text"
                             id="email"
@@ -116,7 +115,7 @@ export default function Settings({ state, dispatch }: SettingsPrpos) {
                             name="email"
                         />
                         <CustomSettingsInputField
-                            label={`User ID: ${state.settings.userId}`}
+                            label={`User ID: ${state.user.userId}`}
                             disabled={true}
                             type="text"
                             id="userid"

@@ -1,6 +1,6 @@
 {
     "name": "social-app-v2",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "Social App version 2",
     "main": "release/server/index.js",
     "repository": "https://github.com/mezmerizxd/social-app-v2",
@@ -12,6 +12,7 @@
         "@emotion/styled": "^11.10.5",
         "@mui/icons-material": "^5.10.9",
         "@mui/material": "^5.10.11",
+        "@reduxjs/toolkit": "^1.9.0",
         "cors": "^2.8.5",
         "cross-env": "^7.0.3",
         "dotenv": "^16.0.3",
@@ -25,6 +26,7 @@
         "react": "^18.2.0",
         "react-app-rewired": "^2.2.1",
         "react-dom": "^18.2.0",
+        "react-redux": "^8.0.5",
         "react-router-dom": "^6.4.2",
         "react-scripts": "^5.0.1",
         "sass": "^1.55.0",
