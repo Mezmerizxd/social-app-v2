@@ -53,7 +53,7 @@ export default new (class Features {
             while (!created) {
                 id = Math.floor(Math.random() * this.generators_max_id_size);
                 if (attempts === this.generators_max_attempts) {
-                    Log.error('[Generator] UserId - max attempts');
+                    Log.error('[API] [V1] [Features] UserId - max attempts');
                     return { data: null };
                 }
                 const fbUserAccount = Firebase.database.ref(
@@ -83,7 +83,9 @@ export default new (class Features {
                     .randomBytes(this.generators_max_token_byte)
                     .toString('hex');
                 if (attempts === this.generators_max_attempts) {
-                    Log.error('[Generator] AuthorizationToken - max attempts');
+                    Log.error(
+                        '[API] [V1] [Features] AuthorizationToken - max attempts'
+                    );
                     return { data: null };
                 }
                 const fbUserData = Firebase.database
@@ -112,7 +114,7 @@ export default new (class Features {
             while (!created) {
                 id = Math.floor(Math.random() * this.generators_max_id_size);
                 if (attempts === this.generators_max_attempts) {
-                    Log.error('[Generator] MessageId - max attempts');
+                    Log.error('[API] [V1] [Features] MessageId - max attempts');
                     return { data: null };
                 }
                 const fbMessages = Firebase.database
@@ -311,5 +313,32 @@ export default new (class Features {
                 error: error,
             };
         }
+    };
+
+    public changeUsername = async (
+        userId: number,
+        username: string
+    ): Promise<boolean> => {
+        const fbUserDataRef = Firebase.database
+            .ref(Cfg.Local().fbDbName)
+            .child(Cfg.Local().fbDbUserData)
+            .orderByChild('username')
+            .equalTo(username)
+            .limitToFirst(1);
+        const fbUserData = await fbUserDataRef.get();
+
+        // If user data exists return error
+        if (fbUserData.toJSON()) {
+            return false;
+        } else {
+            await Firebase.database
+                .ref(
+                    `${Cfg.Local().fbDbName}/${
+                        Cfg.Local().fbDbUserData
+                    }/${userId}/username`
+                )
+                .set(username);
+        }
+        return true;
     };
 })();
