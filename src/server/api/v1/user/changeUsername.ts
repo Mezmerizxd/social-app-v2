@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
 import Features from '../features';
+import Cfg from '../../../cfg';
 
 type RequestBody = {
     username: string;
@@ -18,6 +19,20 @@ export default new (class ChangeUsername {
             ).authorized) === false
         )
             return;
+
+        if (
+            Cfg.UserApi().illegalUsernameCharacters.some((char: string) =>
+                body.username.includes(char)
+            )
+        ) {
+            Responder(
+                res,
+                'error',
+                null,
+                'Username contains illegaal characters.'
+            );
+            return;
+        }
 
         try {
             const userData: any = await Features.getUserData(
