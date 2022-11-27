@@ -10,7 +10,7 @@ type RequestBody = {
 
 export default new (class ChangeUsername {
     public perform = async (req: Request, res: Response) => {
-        Log.debugApi('[V1] [User] GetFriendRequests Started');
+        Log.debugApi('[V1] [User] ChangeUsername Started');
         const body: RequestBody = req.body;
 
         if (
