@@ -39,6 +39,20 @@ export const ApplicationSlice = createSlice({
         setUserData: (state, action) => {
             state.user = action.payload;
         },
+        editUserData: (state, action) => {
+            state.user.userId = action.payload.userId
+                ? action.payload.userId
+                : state.user.userId;
+            state.user.username = action.payload.username
+                ? action.payload.username
+                : state.user.username;
+            state.user.email = action.payload.email
+                ? action.payload.email
+                : state.user.email;
+            state.user.avatar = action.payload.avatar
+                ? action.payload.avatar
+                : state.user.avatar;
+        },
         setFriends: (state, action) => {
             state.friends = action.payload;
         },
@@ -85,6 +99,7 @@ export const ApplicationSlice = createSlice({
 
 export const {
     setUserData,
+    editUserData,
     setFriends,
     toggleAddFriendPopup,
     setFriendRequestsPopupData,

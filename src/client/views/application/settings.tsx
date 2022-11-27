@@ -5,12 +5,14 @@ import './styles.scss';
 import { CustomButton, CustomSettingsInputField } from './styles';
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
-import { toggleSettingsPopup } from './reducer';
+import { editUserData, toggleSettingsPopup } from './reducer';
 
 export default function Settings() {
     const [editUsernameLocked, setEditUsernameLocked] = useState(true);
     const [editUsernameValue, setEditUsernameValue] = useState(null);
-    const [editUsernameError, setEditUsernameError] = useState(null);
+    const [error, setError] = useState(null);
+    const [editAvatar, setEditAvatar] = useState(false);
+    const [editAvatarValue, setEditAvatarValue] = useState(null);
 
     const state = useAppSelector((state) => state.application);
     const dispatch = useAppDispatch();
@@ -25,16 +27,34 @@ export default function Settings() {
     };
 
     const changeUsername = async () => {
-        setEditUsernameError(null);
+        setError(null);
         const response = await Features.changeAccountUsername(
             editUsernameValue
         );
         if (response && response.success === true) {
             setEditUsernameLocked(!editUsernameLocked);
-            // TODO: update the entire state
-            window.location.href = '/app';
+            dispatch(
+                editUserData({
+                    username: editUsernameValue,
+                })
+            );
         } else {
-            setEditUsernameError(response.error);
+            setError(response.error);
+        }
+    };
+
+    const changeAvatar = async () => {
+        setError(null);
+        const response = await Features.changeAccountAvatar(editAvatarValue);
+        if (response && response.success === true) {
+            setEditAvatar(!editAvatar);
+            dispatch(
+                editUserData({
+                    avatar: editAvatarValue,
+                })
+            );
+        } else {
+            setError(response.error);
         }
     };
 
@@ -47,7 +67,22 @@ export default function Settings() {
                 <div className="Popup-settings-content">
                     <div className="Settings-content-profile">
                         <div className="Settings-content-profile-image">
-                            <EditIcon style={{ background: '#61B84B' }} />
+                            {editAvatar === false && (
+                                <EditIcon
+                                    style={{ background: '#61B84B' }}
+                                    onClick={() => {
+                                        setEditAvatar(true);
+                                    }}
+                                />
+                            )}
+                            {editAvatar === true && (
+                                <DoneIcon
+                                    style={{ background: '#61B84B' }}
+                                    onClick={() => {
+                                        changeAvatar();
+                                    }}
+                                />
+                            )}
                             <img
                                 src={
                                     state.user.avatar
@@ -109,10 +144,22 @@ export default function Settings() {
                                 </i>
                             )}
                     </div>
-                    {editUsernameError && (
-                        <p className="username-error">{editUsernameError}</p>
-                    )}
+                    {error && <p className="username-error">{error}</p>}
                     <div className="Settings-content-account">
+                        {editAvatar === true && (
+                            <CustomSettingsInputField
+                                label={`Example: https://i.pravatar.cc/300`}
+                                disabled={editAvatar ? false : true}
+                                type="url"
+                                id="avatar"
+                                key="avatar"
+                                name="avatar"
+                                value={editAvatarValue}
+                                onChange={(e) =>
+                                    setEditAvatarValue(e.target.value)
+                                }
+                            />
+                        )}
                         <CustomSettingsInputField
                             label={`Email: ${state.user.email}`}
                             disabled={true}
