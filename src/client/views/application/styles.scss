@@ -41,6 +41,7 @@ $media-breakpoint-mobile: 450px;
             width: 300px;
             overflow: hidden;
             user-select: none;
+            transition: 0.4s;
 
             @media (max-width: $media-breakpoint-mobile) {
                 position: absolute;
@@ -168,6 +169,7 @@ $media-breakpoint-mobile: 450px;
             width: calc(100% - 300px);
             height: calc(100% - 120px);
             user-select: none;
+            transition: 0.4s;
 
             .Application-messaging-titlebar {
                 background: rgba(35, 35, 35, 0.4);
@@ -192,7 +194,8 @@ $media-breakpoint-mobile: 450px;
                 background: rgba(35, 35, 35, 0.4);
                 box-shadow: 0px 0px 2px 0px rgba(35, 35, 35, 0.75);
                 margin: 10px;
-                padding: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
                 height: 100%;
                 overflow-y: auto;
                 border-radius: 6px;
@@ -216,6 +219,8 @@ $media-breakpoint-mobile: 450px;
                     word-wrap: break-word;
                     margin-top: 10px;
                     margin-bottom: 10px;
+                    margin-left: 10px;
+                    margin-right: 10px;
                     display: flex;
                     font-family: 'Quicksand', sans-serif;
                     border-radius: 6px;

@@ -8,6 +8,7 @@ import HandleFriendRequest from './handleFriendRequest';
 import GetFriendRequests from './getFriendRequests';
 import GetFriends from './getFriends';
 import ChangeUsername from './changeUsername';
+import ChangeAvatar from './changeAvatar';
 
 const r = Router();
 
@@ -19,5 +20,6 @@ r.post('/handle-friend-request', HandleFriendRequest.perform);
 r.post('/send-friend-request', SendFriendRequest.perform);
 r.post('/get-friends', GetFriends.perform);
 r.post('/change-username', ChangeUsername.perform);
+r.post('/change-avatar', ChangeAvatar.perform);
 
 export default r;

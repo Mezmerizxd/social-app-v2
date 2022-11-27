@@ -143,6 +143,31 @@ export default new (class Features {
         };
     };
 
+    public changeAccountAvatar = async (avatar: string) => {
+        let success = false;
+        let error = null;
+        if (!this.debugMode) {
+            const response = await Api.Post(
+                '/user/change-avatar',
+                {
+                    avatar: avatar,
+                },
+                true
+            );
+            if (response && response.success === true) {
+                success = true;
+            } else {
+                error = response.error;
+            }
+        } else {
+            error = 'Debug mode is active';
+        }
+        return {
+            success: success,
+            error: error ? error : null,
+        };
+    };
+
     public setDebugMode = (bool: boolean) => {
         this.debugMode = bool;
     };

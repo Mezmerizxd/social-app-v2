@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
 import Features from '../features';
+import Cfg from '../../../cfg';
 
 type RequestBody = {
     username: string;
@@ -9,7 +10,7 @@ type RequestBody = {
 
 export default new (class ChangeUsername {
     public perform = async (req: Request, res: Response) => {
-        Log.debugApi('[V1] [User] GetFriendRequests Started');
+        Log.debugApi('[V1] [User] ChangeUsername Started');
         const body: RequestBody = req.body;
 
         if (
@@ -18,6 +19,20 @@ export default new (class ChangeUsername {
             ).authorized) === false
         )
             return;
+
+        if (
+            Cfg.UserApi().illegalUsernameCharacters.some((char: string) =>
+                body.username.includes(char)
+            )
+        ) {
+            Responder(
+                res,
+                'error',
+                null,
+                'Username contains illegaal characters.'
+            );
+            return;
+        }
 
         try {
             const userData: any = await Features.getUserData(
