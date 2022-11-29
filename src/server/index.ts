@@ -8,8 +8,6 @@ import Data from './data';
 import v1 from './api/v1';
 import Io from './api/v1/io';
 
-Log.info(`[Server] Starting ${Cfg.Node().name} v${Cfg.Node().version}`);
-
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(Cfg.Env().socketPort, {

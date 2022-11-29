@@ -1,19 +1,19 @@
-import { useEffect } from 'react';
-import Api from './classes/Api';
-import { useAppSelector, useAppDispatch } from './hooks/reduxHooks';
-import { setInfo } from './reducer';
+import { useEffect, useState } from 'react';
 import './styles.scss';
 
 export default function App() {
-    const state = useAppSelector((state) => state.source);
-    const dispatch = useAppDispatch();
+    const [state, setState] = useState(null);
 
     useEffect(() => {
         setTimeout(async () => {
-            const response = await Api.Post('/info', null, true);
-            if (response.success === true) {
-                dispatch(setInfo(response.data));
-            }
+            const r = await fetch(
+                'https://raw.githubusercontent.com/Mezmerizxd/social-app-v2/main/package.json'
+            )
+                .then((res) => res.json())
+                .then((res) => {
+                    return res;
+                });
+            setState(r);
         });
     }, []);
 
@@ -24,9 +24,9 @@ export default function App() {
                 <div className="App-selection">
                     <div className="App-selection-title">
                         <h1>Social App v2</h1>
-                        <a href={state.repository}>
+                        <a href={state?.repository}>
                             <p>
-                                {state.name} - v{state.version}
+                                {state?.name} - v{state?.version}
                             </p>
                         </a>
                     </div>
@@ -53,7 +53,7 @@ export default function App() {
                                     )
                                 }
                             >
-                                {state.author}
+                                {state?.author}
                             </span>
                         </p>
                     </div>
