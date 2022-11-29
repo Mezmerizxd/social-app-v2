@@ -1,13 +1,5 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import {
-    version,
-    name,
-    description,
-    repository,
-    author,
-    license,
-} from '../../../package.json';
 
 type EnvReturn = {
     port: any;
@@ -41,15 +33,6 @@ type EnvReturn = {
     firebaseTokenUri: any;
     firebaseAuthProviderCertUrl: any;
     firebaseClientCertUrl: any;
-};
-
-type NodeReturn = {
-    name: any;
-    version: any;
-    description: any;
-    repository: any;
-    author: any;
-    license: any;
 };
 
 type LocalReturn = {
@@ -104,17 +87,6 @@ export default new (class Cfg {
             firebaseAuthProviderCertUrl:
                 process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
             firebaseClientCertUrl: process.env.FIREBASE_CLIENT_X509_CERT_URL,
-        };
-    };
-
-    public Node = (): NodeReturn => {
-        return {
-            name: name,
-            version: version,
-            description: description,
-            repository: repository,
-            author: author,
-            license: license,
         };
     };
 
