@@ -21,12 +21,17 @@
 
             .App-selection-title {
                 text-align: center;
-
+                font-family: 'Quicksand', sans-serif;
                 h1 {
-                    font-family: 'Quicksand', sans-serif;
                     font-weight: lighter;
                     font-size: 3rem;
                     color: white;
+                }
+
+                p {
+                    font-weight: bold;
+                    font-size: 1rem;
+                    color: rgba(255, 255, 255, 0.6);
                 }
             }
 
