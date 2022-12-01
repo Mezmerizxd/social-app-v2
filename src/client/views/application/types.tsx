@@ -22,6 +22,10 @@ export interface InitialStateProps {
             username: any;
         }
     ];
+    selectedMessage: {
+        isHovering: boolean;
+        messageId: any;
+    };
     selectedFriend: {
         userId: any;
         username: any;
@@ -40,6 +44,9 @@ export interface InitialStateProps {
         received: [{ userId: any; avatar: any; username: any }];
     };
     settingsPopup: {
+        open: boolean;
+    };
+    deleteMessagePopup: {
         open: boolean;
     };
 }

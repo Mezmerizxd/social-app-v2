@@ -200,6 +200,14 @@ $media-breakpoint-mobile: 450px;
                 overflow-y: auto;
                 border-radius: 6px;
 
+                .option {
+                    position: relative;
+                    background: none;
+                    margin: 0;
+                    padding: 0;
+                    margin-right: 10px;
+                }
+
                 .no-messages {
                     display: flex;
                     flex-direction: column;
@@ -327,6 +335,17 @@ $media-breakpoint-mobile: 450px;
                     font-weight: lighter;
                     font-size: 1.5rem;
                     color: white;
+                }
+            }
+
+            .Popup-basic-content {
+                p {
+                    font-family: 'Quicksand', sans-serif;
+                    text-align: center;
+                    color: white;
+                    font-size: 1.2rem;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
                 }
             }
 

@@ -10,6 +10,10 @@ export const InitialState: InitialStateProps = {
     },
     friends: null,
     messages: null,
+    selectedMessage: {
+        isHovering: false,
+        messageId: null,
+    },
     selectedFriend: {
         userId: null,
         username: null,
@@ -28,7 +32,10 @@ export const InitialState: InitialStateProps = {
         error: null,
     },
     settingsPopup: {
-        open: null,
+        open: false,
+    },
+    deleteMessagePopup: {
+        open: false,
     },
 };
 
@@ -63,6 +70,12 @@ export const ApplicationSlice = createSlice({
             state.selectedFriend.messagesGroupId =
                 action.payload.messagesGroupId;
         },
+        setSelectedMessage: (state, action) => {
+            state.selectedMessage.isHovering = action.payload.isHovering;
+            state.selectedMessage.messageId = action.payload.messageId
+                ? action.payload.messageId
+                : state.selectedMessage.messageId;
+        },
         addMessage: (state, action) => {
             state.messages.push(action.payload);
         },
@@ -94,6 +107,17 @@ export const ApplicationSlice = createSlice({
         toggleSettingsPopup: (state) => {
             state.settingsPopup.open = !state.settingsPopup.open;
         },
+        toggleDeleteMessagePopup: (state) => {
+            state.deleteMessagePopup.open = !state.deleteMessagePopup.open;
+        },
+        rmMessage: (state) => {
+            const messages: any = [];
+            state?.messages?.map((message) => {
+                if (message.messageId !== state.selectedMessage.messageId)
+                    messages.push(message);
+            });
+            state.messages = messages;
+        },
     },
 });
 
@@ -101,6 +125,7 @@ export const {
     setUserData,
     editUserData,
     setFriends,
+    setSelectedMessage,
     toggleAddFriendPopup,
     setFriendRequestsPopupData,
     toggleFriendRequestsPopup,
@@ -109,6 +134,8 @@ export const {
     toggleSettingsPopup,
     setMessages,
     addMessage,
+    toggleDeleteMessagePopup,
+    rmMessage,
 } = ApplicationSlice.actions;
 
 export default ApplicationSlice.reducer;
