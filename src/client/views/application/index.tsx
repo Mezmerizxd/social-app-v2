@@ -4,6 +4,7 @@ import './styles.scss';
 import Sidebar from './sidebar';
 import Messaging from './messaging';
 import AddFriend from './addFriend';
+import DeleteMessage from './deleteMessage';
 import FriendRequests from './friendRequests';
 import Settings from './settings';
 import Features from './features';
@@ -55,6 +56,7 @@ export default function Application() {
             {state.addFriendPopup.open && <AddFriend />}
             {state.friendRequestsPopup.open && <FriendRequests />}
             {state.settingsPopup.open && <Settings />}
+            {state.deleteMessagePopup.open && <DeleteMessage />}
         </div>
     );
 }

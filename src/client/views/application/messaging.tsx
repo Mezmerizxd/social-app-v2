@@ -1,12 +1,19 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ReplyIcon from '@mui/icons-material/Reply';
 import { useEffect, useState } from 'react';
 import { MessagingProps } from './types';
 import Socket from '../../classes/Socket';
 import Utils from '../../classes/Utils';
 import './styles.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { addMessage, toggleSidebar } from './reducer';
+import {
+    addMessage,
+    setSelectedMessage,
+    toggleDeleteMessagePopup,
+    toggleSidebar,
+} from './reducer';
 import LoadingDefault from '../../components/loading/default';
 
 export default function Messaging({ mobileMode }: MessagingProps) {
@@ -26,7 +33,6 @@ export default function Messaging({ mobileMode }: MessagingProps) {
         socket.on(
             `handleReceiveFriendMessage_${state.selectedFriend.messagesGroupId}`,
             (data) => {
-                console.log(data);
                 dispatch(addMessage(data));
             }
         );
@@ -49,6 +55,10 @@ export default function Messaging({ mobileMode }: MessagingProps) {
             });
         }
         setMessage('');
+    };
+
+    const handleReply = () => {
+        console.log('Reply message');
     };
 
     return (
@@ -108,6 +118,21 @@ export default function Messaging({ mobileMode }: MessagingProps) {
                                     setIsLoading(false);
                                 }
                             }}
+                            onMouseEnter={() =>
+                                dispatch(
+                                    setSelectedMessage({
+                                        isHovering: true,
+                                        messageId: message.messageId,
+                                    })
+                                )
+                            }
+                            onMouseLeave={() =>
+                                dispatch(
+                                    setSelectedMessage({
+                                        isHovering: false,
+                                    })
+                                )
+                            }
                         >
                             <div className="message-avatar">
                                 <img
@@ -123,6 +148,27 @@ export default function Messaging({ mobileMode }: MessagingProps) {
                                             JSON.parse(message.dateSent)
                                         )}
                                     </p>
+                                    {state.selectedMessage.isHovering &&
+                                        message.userId === state.user.userId &&
+                                        state.selectedMessage.messageId ===
+                                            message.messageId && (
+                                            <div>
+                                                <DeleteIcon
+                                                    className="option"
+                                                    onClick={() =>
+                                                        dispatch(
+                                                            toggleDeleteMessagePopup()
+                                                        )
+                                                    }
+                                                />
+                                                <ReplyIcon
+                                                    className="option"
+                                                    onClick={() =>
+                                                        handleReply()
+                                                    }
+                                                />
+                                            </div>
+                                        )}
                                 </div>
                                 <p id="message">{message.content}</p>
                             </div>
