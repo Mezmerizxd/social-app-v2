@@ -19,7 +19,7 @@ export default function DeleteMessage() {
         const response = await Api.Post(
             '/messaging/delete-message',
             {
-                messageID: state.selectedMessage.messageId,
+                messageId: state.selectedMessage.messageId,
                 messagesGroupId: state.selectedFriend.messagesGroupId,
             },
             true
