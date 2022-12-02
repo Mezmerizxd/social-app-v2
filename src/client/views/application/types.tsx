@@ -25,6 +25,7 @@ export interface InitialStateProps {
     selectedMessage: {
         isHovering: boolean;
         messageId: any;
+        content: any;
     };
     selectedFriend: {
         userId: any;
@@ -47,6 +48,9 @@ export interface InitialStateProps {
         open: boolean;
     };
     deleteMessagePopup: {
+        open: boolean;
+    };
+    editMessagePopup: {
         open: boolean;
     };
 }

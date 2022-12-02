@@ -8,11 +8,12 @@ import Firebase from '../../../data/firebase';
 type RequestBody = {
     messageId: any;
     messagesGroupId: any;
+    content: any;
 };
 
-export default new (class DeleteMessage {
+export default new (class EditMessage {
     public perform = async (req: Request, res: Response) => {
-        Log.debugApi('[V1] [Messaging] DeleteMessage Started');
+        Log.debugApi('[V1] [Messaging] EditMessage Started');
         const body: RequestBody = req.body;
 
         if (
@@ -29,6 +30,10 @@ export default new (class DeleteMessage {
             }
             if (!body.messagesGroupId) {
                 Responder(res, 'error', null, 'Invalid message group id.');
+                return;
+            }
+            if (!body.content) {
+                Responder(res, 'error', null, 'No content found.');
                 return;
             }
 
@@ -80,18 +85,14 @@ export default new (class DeleteMessage {
                 if (fbMessages?.messages) {
                     Object.keys(fbMessages.messages).forEach((message: any) => {
                         if (
+                            fbMessages.messages[message].messageId ===
+                                body.messageId &&
                             fbMessages.messages[message].userId ===
-                            userData.userId
+                                userData.userId
                         ) {
-                            if (
-                                fbMessages.messages[message].messageId !==
-                                body.messageId
-                            ) {
-                                messages.push(fbMessages.messages[message]);
-                            }
-                        } else {
-                            messages.push(fbMessages.messages[message]);
+                            fbMessages.messages[message].content = body.content;
                         }
+                        messages.push(fbMessages.messages[message]);
                     });
                 }
             });
@@ -107,13 +108,8 @@ export default new (class DeleteMessage {
             // Return data
             Responder(res, 'success', {});
         } catch (error) {
-            Responder(
-                res,
-                'catch',
-                null,
-                `[Messaging] DeleteMessage, ${error}`
-            );
+            Responder(res, 'catch', null, `[Messaging] EditMessage, ${error}`);
         }
-        Log.debugApi('[V1] [Messaging] DeleteMessage Finished');
+        Log.debugApi('[V1] [Messaging] EditMessage Finished');
     };
 })();
