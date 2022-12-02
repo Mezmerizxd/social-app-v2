@@ -13,6 +13,7 @@ export const InitialState: InitialStateProps = {
     selectedMessage: {
         isHovering: false,
         messageId: null,
+        content: null,
     },
     selectedFriend: {
         userId: null,
@@ -35,6 +36,9 @@ export const InitialState: InitialStateProps = {
         open: false,
     },
     deleteMessagePopup: {
+        open: false,
+    },
+    editMessagePopup: {
         open: false,
     },
 };
@@ -75,6 +79,9 @@ export const ApplicationSlice = createSlice({
             state.selectedMessage.messageId = action.payload.messageId
                 ? action.payload.messageId
                 : state.selectedMessage.messageId;
+            state.selectedMessage.content = action.payload.content
+                ? action.payload.content
+                : state.selectedMessage.content;
         },
         addMessage: (state, action) => {
             state.messages.push(action.payload);
@@ -118,6 +125,16 @@ export const ApplicationSlice = createSlice({
             });
             state.messages = messages;
         },
+        toggleEditMessagePopup: (state) => {
+            state.editMessagePopup.open = !state.editMessagePopup.open;
+        },
+        editMessage: (state, action) => {
+            state.messages.filter((message) => {
+                if (message.messageId === state.selectedMessage.messageId) {
+                    message.content = action.payload.content;
+                }
+            });
+        },
     },
 });
 
@@ -136,6 +153,8 @@ export const {
     addMessage,
     toggleDeleteMessagePopup,
     rmMessage,
+    toggleEditMessagePopup,
+    editMessage,
 } = ApplicationSlice.actions;
 
 export default ApplicationSlice.reducer;

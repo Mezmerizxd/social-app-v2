@@ -6,6 +6,7 @@ import Messaging from './messaging';
 import AddFriend from './addFriend';
 import DeleteMessage from './deleteMessage';
 import FriendRequests from './friendRequests';
+import EditMessage from './editMessage';
 import Settings from './settings';
 import Features from './features';
 import { setUserData, setFriends } from './reducer';
@@ -57,6 +58,7 @@ export default function Application() {
             {state.friendRequestsPopup.open && <FriendRequests />}
             {state.settingsPopup.open && <Settings />}
             {state.deleteMessagePopup.open && <DeleteMessage />}
+            {state.editMessagePopup.open && <EditMessage />}
         </div>
     );
 }
