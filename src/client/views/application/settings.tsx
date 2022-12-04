@@ -45,6 +45,14 @@ export default function Settings() {
 
     const changeAvatar = async () => {
         setError(null);
+        if (
+            editAvatarValue === state.user.avatar ||
+            editAvatarValue === '' ||
+            editAvatarValue === null
+        ) {
+            setEditAvatar(!editAvatar);
+            return;
+        }
         const response = await Features.changeAccountAvatar(editAvatarValue);
         if (response && response.success === true) {
             setEditAvatar(!editAvatar);
