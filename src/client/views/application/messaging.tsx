@@ -1,7 +1,6 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ReplyIcon from '@mui/icons-material/Reply';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
 import { MessagingProps } from './types';
@@ -58,10 +57,6 @@ export default function Messaging({ mobileMode }: MessagingProps) {
         }
         setMessage('');
     };
-
-    // const handleReply = () => {
-    //     console.log('Reply message');
-    // };
 
     return (
         <div
