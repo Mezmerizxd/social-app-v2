@@ -44,7 +44,7 @@ export default new (class Features {
                 friends = response.data.friends;
             }
         }
-        return friends.length > 0 ? friends : null;
+        return friends;
     };
 
     public getMessages = async (userId: any) => {
@@ -112,8 +112,8 @@ export default new (class Features {
             }
         }
         return {
-            sent: sent.length > 0 ? sent : null,
-            received: received.length > 0 ? received : null,
+            sent: sent,
+            received: received,
         };
     };
 

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import Features from '../features';
 import Cfg from '../../../cfg';
+import User from '../../../features/user';
 
 type RequestBody = {
     username: string;
@@ -13,12 +13,11 @@ export default new (class ChangeUsername {
         Log.debugApi('[V1] [User] ChangeUsername Started');
         const body: RequestBody = req.body;
 
-        if (
-            (await (
-                await Features.authorize(res, req.headers.authorization)
-            ).authorized) === false
-        )
+        const user = new User(req.headers.authorization, 'authorization');
+        await user.init();
+        if (!(await user.authorize(res))) {
             return;
+        }
 
         if (
             Cfg.UserApi().illegalUsernameCharacters.some((char: string) =>
@@ -35,17 +34,10 @@ export default new (class ChangeUsername {
         }
 
         try {
-            const userData: any = await Features.getUserData(
-                'authorization',
-                req.headers.authorization
-            );
+            const username = await user.setUsername(body.username);
 
-            const changeUsername = await Features.changeUsername(
-                userData.userId,
-                body.username
-            );
-            if (!changeUsername) {
-                Responder(res, 'error', null, 'Username already taken');
+            if (username.success === false) {
+                Responder(res, 'error', null, username.error);
                 return;
             }
 

@@ -11,4 +11,12 @@ export default new (class Utils {
         );
         return !!urlPattern.test(url);
     };
+
+    public removeItemFromArray = <T>(arr: Array<T>, value: T): Array<T> => {
+        const index = arr.indexOf(value);
+        if (index > -1) {
+            arr.splice(index, 1);
+        }
+        return arr;
+    };
 })();

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import Features from '../features';
+import User from '../../../features/user';
 
 type RequestBody = {
     method: string;
@@ -13,12 +13,11 @@ export default new (class GetUserData {
         Log.debugApi('[V1] [User] GetUserData Started');
         const body: RequestBody = req.body;
 
-        if (
-            (await (
-                await Features.authorize(res, req.headers.authorization)
-            ).authorized) === false
-        )
+        const user = new User(req.headers.authorization, 'authorization');
+        await user.init();
+        if (!(await user.authorize(res))) {
             return;
+        }
 
         try {
             if (!body.method) {
@@ -31,20 +30,19 @@ export default new (class GetUserData {
                 return;
             }
 
-            const userData = await Features.getUserData(body.method, body.key);
-
-            if (userData.error) {
+            if (!user.data()) {
                 Responder(res, 'error', null, 'No user found.');
                 return;
             }
 
             // Return data, send all the data if the requeter is requesting their own account.
-            if (req.headers.authorization === userData.authorization) {
-                Responder(res, 'success', userData);
+            if (req.headers.authorization === user.data().authorization) {
+                Responder(res, 'success', user.data());
             } else {
                 Responder(res, 'success', {
-                    userId: userData.userId,
-                    username: userData.username,
+                    userId: user.data().userId,
+                    username: user.data().username,
+                    avatar: user.data().avatar,
                 });
             }
         } catch (error) {

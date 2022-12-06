@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import Features from '../features';
 import Cfg from '../../../cfg';
-import Firebase from '../../../data/firebase';
+import User from '../../../features/user';
 
 type RequestBody = {
     username: string;
@@ -14,12 +13,11 @@ export default new (class SendFriendRequest {
         Log.debugApi('[V1] [User] SendFriendRequest Started');
         const body: RequestBody = req.body;
 
-        if (
-            (await (
-                await Features.authorize(res, req.headers.authorization)
-            ).authorized) === false
-        )
+        const user = new User(req.headers.authorization, 'authorization');
+        await user.init();
+        if (!(await user.authorize(res))) {
             return;
+        }
 
         try {
             if (!body.username) {
@@ -38,112 +36,43 @@ export default new (class SendFriendRequest {
                 return;
             }
 
-            // Make sure user exists
-            const fbFriendUserDataRef = Firebase.database
-                .ref(Cfg.Local().fbDbName)
-                .child(Cfg.Local().fbDbUserData)
-                .orderByChild('username')
-                .equalTo(body.username)
-                .limitToFirst(1);
-            let fbFriendUserData: any = null;
-            await (
-                await fbFriendUserDataRef.get()
-            ).forEach((child) => {
-                fbFriendUserData = child.toJSON();
+            const receiver = new User(body.username, 'username');
+            await receiver.init();
+
+            if (user.isFriendsWith(receiver.data())) {
+                Responder(res, 'error', null, 'You are already friends.');
+                return;
+            }
+
+            // Check if user has sent a request
+            if (
+                user.hasUserSentFriendRequest(receiver.data()) &&
+                receiver.hasUserReceivedFriendRequest(user.data())
+            ) {
+                Responder(
+                    res,
+                    'error',
+                    null,
+                    'You have already sent a request.'
+                );
+                return;
+            }
+
+            const sent: any = [];
+            const received: any = [];
+
+            sent.push(receiver.data().userId);
+            user.data()?.friendRequests?.sent?.map((user) => {
+                sent.push(user.userId);
             });
-            if (!fbFriendUserData) {
-                Responder(res, 'error', null, 'User does not exist.');
-                return;
-            }
 
-            const userData: any = await Features.getUserData(
-                'authorization',
-                req.headers.authorization
-            );
+            received.push(user.data().userId);
+            receiver.data()?.friendRequests?.received?.map((user) => {
+                received.push(user.userId);
+            });
 
-            // Check if already friends
-            const userFriends: any = [];
-            if (userData?.friends) {
-                Object.keys(userData.friends).forEach(async (friend) => {
-                    userFriends.push(userData.friends[friend]);
-                });
-            }
-            const friendFriends: any = [];
-            if (fbFriendUserData?.friends) {
-                Object.keys(fbFriendUserData.friends).forEach(
-                    async (friend) => {
-                        friendFriends.push(fbFriendUserData.friends[friend]);
-                    }
-                );
-            }
-
-            if (userFriends.includes(fbFriendUserData.userId)) {
-                Responder(res, 'error', null, 'You are already friends.');
-                return;
-            }
-            if (friendFriends.includes(userData.userId)) {
-                Responder(res, 'error', null, 'You are already friends.');
-                return;
-            }
-
-            // Get friends friend requests
-            let alreadyReceived = false;
-            const friendReceived: any = [];
-            if (fbFriendUserData?.friendRequests?.received) {
-                Object.keys(fbFriendUserData.friendRequests.received).forEach(
-                    (request) => {
-                        if (
-                            fbFriendUserData.friendRequests.received[
-                                request
-                            ] === userData.userId
-                        ) {
-                            alreadyReceived = true;
-                        }
-                        friendReceived.push(
-                            fbFriendUserData.friendRequests.received[request]
-                        );
-                    }
-                );
-            }
-
-            // Get users frind requests
-            let alreadySent = false;
-            const usersSent: any = [];
-            if (userData?.friendRequests?.sent) {
-                Object.keys(userData.friendRequests.sent).forEach((request) => {
-                    if (
-                        userData.friendRequests.sent[request] ===
-                        fbFriendUserData.userId
-                    ) {
-                        alreadySent = true;
-                    }
-                    usersSent.push(userData.friendRequests.sent[request]);
-                });
-            }
-
-            if (alreadyReceived && alreadySent) {
-                Responder(res, 'error', null, 'Friend Request already sent.');
-                return;
-            }
-
-            // Send requests
-            usersSent.push(fbFriendUserData.userId);
-            friendReceived.push(userData.userId);
-
-            await Firebase.database
-                .ref(
-                    `${Cfg.Local().fbDbName}/${Cfg.Local().fbDbUserData}/${
-                        userData.userId
-                    }/friendRequests/sent`
-                )
-                .set(usersSent);
-            await Firebase.database
-                .ref(
-                    `${Cfg.Local().fbDbName}/${Cfg.Local().fbDbUserData}/${
-                        fbFriendUserData.userId
-                    }/friendRequests/received`
-                )
-                .set(friendReceived);
+            await user.setSentFriendRequests(sent);
+            await receiver.setReceivedFriendRequests(received);
 
             // Return data
             Responder(res, 'success', null);
