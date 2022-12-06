@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import Features from '../features';
-import Firebase from '../../../data/firebase';
-import Cfg from '../../../cfg';
+import User from '../../../features/user';
+import Utils from '../../../utils';
 
 type RequestBody = {
     userId: number;
@@ -15,12 +14,11 @@ export default new (class HandleFriendRequest {
         Log.debugApi('[V1] [User] HandleFriendRequest Started');
         const body: RequestBody = req.body;
 
-        if (
-            (await (
-                await Features.authorize(res, req.headers.authorization)
-            ).authorized) === false
-        )
+        const user = new User(req.headers.authorization, 'authorization');
+        await user.init();
+        if (!(await user.authorize(res))) {
             return;
+        }
 
         try {
             if (!body.userId) {
@@ -32,175 +30,110 @@ export default new (class HandleFriendRequest {
                 return;
             }
 
-            const userData: any = await Features.getUserData(
-                'authorization',
-                req.headers.authorization
-            );
-            const friendData: any = await Features.getUserData(
-                'userid',
-                body.userId
-            );
-
-            if (friendData?.errror) {
+            const friend = new User(body.userId, 'userId');
+            await friend.init();
+            if (!friend) {
                 Responder(res, 'error', null, 'User does not exist.');
                 return;
             }
 
-            const userFriends: any = [];
-            const userRequestsReceived: any = [];
-            const userRequestsSent: any = [];
-            if (userData?.friends) {
-                Object.keys(userData.friends).forEach(async (friend) => {
-                    userFriends.push(userData.friends[friend]);
-                });
-                Object.keys(userData.friendRequests?.received).forEach(
-                    async (request) => {
-                        userRequestsReceived.push(
-                            userData.friendRequests?.received[request]
-                        );
-                    }
-                );
-                Object.keys(userData.friendRequests?.sent).forEach(
-                    async (request) => {
-                        userRequestsSent.push(
-                            userData.friendRequests?.sent[request]
-                        );
-                    }
-                );
+            // Check if their already friends
+            if (
+                user.isFriendsWith(friend.data()) &&
+                friend.isFriendsWith(user.data())
+            ) {
+                Responder(res, 'error', null, 'You are already friends.');
+                return;
             }
 
-            const friendFriends: any = [];
-            const friendRequestsSent: any = [];
-            const friendRequestsReceived: any = [];
-            if (friendData?.friends) {
-                Object.keys(friendData.friends).forEach(async (friend) => {
-                    friendFriends.push(friendData.friends[friend]);
-                });
-                Object.keys(friendData.friendRequests?.sent).forEach(
-                    async (request) => {
-                        friendRequestsSent.push(
-                            friendData.friendRequests?.sent[request]
-                        );
-                    }
-                );
-                Object.keys(friendData.friendRequests?.received).forEach(
-                    async (request) => {
-                        friendRequestsReceived.push(
-                            friendData.friendRequests?.received[request]
-                        );
-                    }
-                );
-            }
+            // Get sent & received friend requests
+            const userSent: any = [];
+            const userReceived: any = [];
+            const friendSent: any = [];
+            const friendReceived: any = [];
+
+            user.data()?.friendRequests?.sent?.map((user) => {
+                userSent.push(user.userId);
+            });
+            user.data()?.friendRequests?.received?.map((user) => {
+                userReceived.push(user.userId);
+            });
+            friend.data()?.friendRequests?.sent?.map((user) => {
+                friendSent.push(user.userId);
+            });
+            friend.data()?.friendRequests?.received?.map((user) => {
+                friendReceived.push(user.userId);
+            });
 
             switch (body.type.toUpperCase()) {
                 case 'ACCEPT':
-                    // if user does not have userId in friends continue
-                    if (userFriends.includes(friendData.userId)) {
-                        Responder(
-                            res,
-                            'error',
-                            null,
-                            'You are already friends.'
-                        );
-                        return;
-                    }
-                    // if friend does not have user userId in friends continue
-                    if (friendFriends.includes(userData.userId)) {
-                        Responder(
-                            res,
-                            'error',
-                            null,
-                            'You are already friends.'
-                        );
-                        return;
-                    }
+                    const userFriends: any = [];
+                    const friendFriends: any = [];
 
-                    userFriends.push(friendData.userId);
-                    friendFriends.push(userData.userId);
+                    user.data()?.friends?.map((user) => {
+                        userFriends.push(user.userId);
+                    });
+                    friend.data()?.friends?.map((user) => {
+                        friendFriends.push(user.userId);
+                    });
 
-                    // Remove from received
-                    await Firebase.database
-                        .ref(
-                            `${Cfg.Local().fbDbName}/${
-                                Cfg.Local().fbDbUserData
-                            }/${userData.userId}/friendRequests/received`
+                    userFriends.push(friend.data().userId);
+                    friendFriends.push(user.data().userId);
+
+                    // Remove request from friendRequest.received on both accounts
+                    await user.setReceivedFriendRequests(
+                        userReceived.filter(
+                            (request) => request === friend.data().userId
                         )
-                        .set(
-                            userRequestsReceived.filter(
-                                (request) => request === friendData.userId
-                            )
-                        );
-                    // Remove from sent
-                    await Firebase.database
-                        .ref(
-                            `${Cfg.Local().fbDbName}/${
-                                Cfg.Local().fbDbUserData
-                            }/${friendData.userId}/friendRequests/sent`
+                    );
+                    await friend.setReceivedFriendRequests(
+                        friendReceived.filter(
+                            (request) => request === user.data().userId
                         )
-                        .set(
-                            friendRequestsSent.filter(
-                                (request) => request === userData.userId
-                            )
-                        );
-                    // Add friend to user
-                    await Firebase.database
-                        .ref(
-                            `${Cfg.Local().fbDbName}/${
-                                Cfg.Local().fbDbUserData
-                            }/${userData.userId}/friends`
+                    );
+
+                    // Remove request from friendRequest.sent on both accounts
+                    await user.setSentFriendRequests(
+                        userSent.filter(
+                            (request) => request === friend.data().userId
                         )
-                        .set(userFriends);
-                    await Firebase.database
-                        .ref(
-                            `${Cfg.Local().fbDbName}/${
-                                Cfg.Local().fbDbUserData
-                            }/${friendData.userId}/friends`
+                    );
+                    await friend.setSentFriendRequests(
+                        friendSent.filter(
+                            (request) => request === user.data().userId
                         )
-                        .set(friendFriends);
+                    );
+
+                    // Add user to friend friendslist
+                    await user.setFriends(userFriends);
+
+                    // Add friend to user friendslist
+                    await friend.setFriends(friendFriends);
                     break;
 
                 case 'DECLINE':
-                    friendRequestsReceived.filter(
-                        (request) => request === userData.userId
+                    // Remove request from friendRequest.received on both accounts
+                    Utils.removeItemFromArray(userSent, friend.data().userId);
+                    Utils.removeItemFromArray(
+                        userReceived,
+                        friend.data().userId
                     );
-                    friendRequestsSent.filter(
-                        (request) => request === userData.userId
-                    );
-                    userRequestsSent.filter(
-                        (request) => request === friendData.userId
-                    );
-                    userRequestsReceived.filter(
-                        (request) => request === friendData.userId
-                    );
-                    await Firebase.database
-                        .ref(
-                            `${Cfg.Local().fbDbName}/${
-                                Cfg.Local().fbDbUserData
-                            }/${friendData.userId}/friendRequests/sent`
-                        )
-                        .set(friendRequestsSent);
-                    await Firebase.database
-                        .ref(
-                            `${Cfg.Local().fbDbName}/${
-                                Cfg.Local().fbDbUserData
-                            }/${friendData.userId}/friendRequests/received`
-                        )
-                        .set(friendRequestsReceived);
 
-                    await Firebase.database
-                        .ref(
-                            `${Cfg.Local().fbDbName}/${
-                                Cfg.Local().fbDbUserData
-                            }/${userData.userId}/friendRequests/sent`
-                        )
-                        .set(userRequestsSent);
-                    await Firebase.database
-                        .ref(
-                            `${Cfg.Local().fbDbName}/${
-                                Cfg.Local().fbDbUserData
-                            }/${userData.userId}/friendRequests/received`
-                        )
-                        .set(userRequestsReceived);
+                    // Remove request from friendRequest.sent on both accounts
+                    Utils.removeItemFromArray(friendSent, user.data().userId);
+                    Utils.removeItemFromArray(
+                        friendReceived,
+                        user.data().userId
+                    );
+
+                    // Set user data
+                    await user.setSentFriendRequests(userSent);
+                    await user.setReceivedFriendRequests(userReceived);
+
+                    // Set friend data
+                    await friend.setSentFriendRequests(friendSent);
+                    await friend.setReceivedFriendRequests(friendReceived);
+
                     break;
 
                 default:

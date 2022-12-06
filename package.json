@@ -1,6 +1,6 @@
 {
     "name": "social-app-v2",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "description": "Social App version 2",
     "main": "release/server/index.js",
     "repository": "https://github.com/mezmerizxd/social-app-v2",

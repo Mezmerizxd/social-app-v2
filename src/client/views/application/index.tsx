@@ -18,10 +18,14 @@ export default function Application() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        setTimeout(async () => {
-            dispatch(setFriends(await Features.getFriends()));
-            dispatch(setUserData(await Features.getUserData()));
-        });
+        if (localStorage.getItem('authorization') !== null) {
+            setTimeout(async () => {
+                dispatch(setFriends(await Features.getFriends()));
+                dispatch(setUserData(await Features.getUserData()));
+            });
+        } else {
+            window.location.href = '/authentication';
+        }
     }, [state.friendRequestsPopup, state.addFriendPopup]);
 
     useEffect(() => {

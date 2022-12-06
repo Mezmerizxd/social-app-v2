@@ -1,10 +1,8 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import Features from '../features';
 import Utils from '../../../utils';
-import Firebase from '../../../data/firebase';
-import Cfg from '../../../cfg';
+import User from '../../../features/user';
 
 type RequestBody = {
     avatar: string;
@@ -15,12 +13,11 @@ export default new (class ChangeAvatar {
         Log.debugApi('[V1] [User] ChangeAvatar Started');
         const body: RequestBody = req.body;
 
-        if (
-            (await (
-                await Features.authorize(res, req.headers.authorization)
-            ).authorized) === false
-        )
+        const user = new User(req.headers.authorization, 'authorization');
+        await user.init();
+        if (!(await user.authorize(res))) {
             return;
+        }
 
         if (!Utils.isValidUrl(body.avatar)) {
             Responder(res, 'error', null, 'Invalid Url.');
@@ -28,18 +25,7 @@ export default new (class ChangeAvatar {
         }
 
         try {
-            const userData: any = await Features.getUserData(
-                'authorization',
-                req.headers.authorization
-            );
-
-            await Firebase.database
-                .ref(
-                    `${Cfg.Local().fbDbName}/${Cfg.Local().fbDbUserData}/${
-                        userData.userId
-                    }/avatar`
-                )
-                .set(body.avatar);
+            await user.setAvatarUrl(body.avatar);
 
             // Return data
             Responder(res, 'success', {});

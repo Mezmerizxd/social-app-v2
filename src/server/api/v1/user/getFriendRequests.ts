@@ -1,38 +1,27 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import Features from '../features';
-
-type RequestBody = {};
+import User from '../../../features/user';
 
 export default new (class GetFriendRequests {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [User] GetFriendRequests Started');
-        const body: RequestBody = req.body;
 
-        if (
-            (await (
-                await Features.authorize(res, req.headers.authorization)
-            ).authorized) === false
-        )
+        const user = new User(req.headers.authorization, 'authorization');
+        await user.init();
+        if (!(await user.authorize(res))) {
             return;
+        }
 
         try {
-            const userData: any = await Features.getUserData(
-                'authorization',
-                req.headers.authorization
-            );
-
-            const requests = await Features.getFriendRequests(userData.userId);
-            if (requests.error) {
+            if (!user.data().friendRequests) {
                 Responder(res, 'error', null, 'No friend requests.');
                 return;
             }
-
             // Return data
             Responder(res, 'success', {
-                sent: requests.sent,
-                received: requests.received,
+                sent: user.data().friendRequests.sent,
+                received: user.data().friendRequests.received,
             });
         } catch (error) {
             Responder(res, 'catch', null, `[User] GetFriendRequests, ${error}`);
