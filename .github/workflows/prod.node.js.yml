@@ -44,7 +44,7 @@ jobs:
 
             - name: Configure docker client
               run: |-
-                  gloud auth configure-docker --quiet
+                  gcloud auth configure-docker --quiet
 
             - name: Push docker image to GCR
               env:
