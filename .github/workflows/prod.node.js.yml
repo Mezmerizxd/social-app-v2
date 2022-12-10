@@ -32,47 +32,15 @@ jobs:
             - name: Format with Prettier
               run: yarn format
 
-            - name: Authenticate with google cloud
-              uses: 'google-github-actions/auth@v1'
+            - name: Get package version
+              id: pkg_version
+              uses: martinbeentjes/npm-get-version-action@main
+
+            - name: Docker build & push
+              uses: mr-smithers-excellent/docker-build-push@v4
               with:
-                  credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
-
-            - name: Build docker image
-              run: docker build -t $IMAGE_NAME:latest .
-
-            - name: Automatic Tagging of Releases
-              id: increment-git-tag
-              run: |
-                  bash ./scripts/git_update.sh -v major
-
-            - name: Configure docker client
-              run: |-
-                  gcloud auth configure-docker --quiet
-                  gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
-
-            - name: Push docker image to GCR
-              env:
-                  GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
-              run: |-
-                  docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-                  docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
-                  docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-                  docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
-
-            - name: Push Docker Image to Artifact Registry
-              env:
-                  GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
-              run: |-
-                  docker tag $IMAGE_NAME:latest us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
-                  docker tag $IMAGE_NAME:latest us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
-                  docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
-                  docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
-
-            # - name: Docker build & push
-            #   uses: mr-smithers-excellent/docker-build-push@v4
-            #   with:
-            #       image: mezmerizxd/social-app-v2
-            #       tag: beta
-            #       registry: docker.io
-            #       username: ${{ secrets.DOCKER_USERNAME }}
-            #       password: ${{ secrets.DOCKER_PASSWORD }}
+                  image: mezmerizxd/social-app-v2
+                  tags: ${{ steps.pkg_version.outputs.current-version}}, latest
+                  registry: docker.io
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
