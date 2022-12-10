@@ -17,20 +17,20 @@ jobs:
                 node-version: [16.x]
 
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
+            # - name: Checkout
+            #   uses: actions/checkout@v3
 
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: 'yarn'
-            - name: Install dependencies
-              run: yarn --production=true
-            - name: Production build
-              run: yarn build
-            - name: Format with Prettier
-              run: yarn format
+            # - name: Use Node.js ${{ matrix.node-version }}
+            #   uses: actions/setup-node@v3
+            #   with:
+            #       node-version: ${{ matrix.node-version }}
+            #       cache: 'yarn'
+            # - name: Install dependencies
+            #   run: yarn --production=true
+            # - name: Production build
+            #   run: yarn build
+            # - name: Format with Prettier
+            #   run: yarn format
 
             - name: Authenticate with google cloud
               uses: google-github-actions/setup-gcloud@v1
