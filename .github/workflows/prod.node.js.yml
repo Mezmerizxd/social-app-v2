@@ -33,7 +33,7 @@ jobs:
               run: yarn format
 
             - name: Push image to google cloud
-              uses: google-github-actions/setup-gcloud@master
+              uses: google-github-actions/setup-gcloud@main
               with:
                   service_account_key: 4{{ secrets.SERVICE_ACCOUNT_KEY }}
                   project_id: 4{{ secrets.env.PROJECT_ID }}
