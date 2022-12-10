@@ -8,6 +8,10 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
+        env:
+            IMAGE_NAME: social-app-v2
+            PROJECT_ID: pro-hour-350721
+
         strategy:
             matrix:
                 node-version: [16.x]
@@ -28,11 +32,34 @@ jobs:
             - name: Format with Prettier
               run: yarn format
 
-            - name: Docker build & push
-              uses: mr-smithers-excellent/docker-build-push@v4
+            - name: Push image to google cloud
+              uses: google-github-actions/setup-gcloud@master
               with:
-                  image: mezmerizxd/social-app-v2
-                  tag: beta
-                  registry: docker.io
-                  username: ${{ secrets.DOCKER_USERNAME }}
-                  password: ${{ secrets.DOCKER_PASSWORD }}
+                  service_account_key: 4{{ secrets.SERVICE_ACCOUNT_KEY }}
+                  project_id: 4{{ secrets.env.PROJECT_ID }}
+                  export_default_credentials: true
+
+            - name: Build docker image
+              run: docker build -t $IMAGE_NAME:latest .
+
+            - name: Configure docker client
+              run: |-
+                  gloud auth configure-docker --quiet
+
+            - name: Push docker image to GCR
+              env:
+                  GIT_TAG: v0.1.0
+              run: |-
+                  docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+                  docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+                  docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+                  docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+
+            # - name: Docker build & push
+            #   uses: mr-smithers-excellent/docker-build-push@v4
+            #   with:
+            #       image: mezmerizxd/social-app-v2
+            #       tag: beta
+            #       registry: docker.io
+            #       username: ${{ secrets.DOCKER_USERNAME }}
+            #       password: ${{ secrets.DOCKER_PASSWORD }}
