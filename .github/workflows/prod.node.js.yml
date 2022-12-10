@@ -37,7 +37,7 @@ jobs:
               uses: martinbeentjes/npm-get-version-action@main
 
             - name: Docker build & push
-              uses: mr-smithers-excellent/docker-build-push@v4
+              uses: mr-smithers-excellent/docker-build-push@v5
               with:
                   image: mezmerizxd/social-app-v2
                   tags: ${{ steps.pkg_version.outputs.current-version}}, latest
