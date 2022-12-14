@@ -81,28 +81,22 @@ export default new (class HandleFriendRequest {
                     friendFriends.push(user.data().userId);
 
                     // Remove request from friendRequest.received on both accounts
-                    await user.setReceivedFriendRequests(
-                        userReceived.filter(
-                            (request) => request === friend.data().userId
-                        )
+                    Utils.removeItemFromArray(userSent, friend.data().userId);
+                    Utils.removeItemFromArray(
+                        userReceived,
+                        friend.data().userId
                     );
-                    await friend.setReceivedFriendRequests(
-                        friendReceived.filter(
-                            (request) => request === user.data().userId
-                        )
+                    Utils.removeItemFromArray(friendSent, user.data().userId);
+                    Utils.removeItemFromArray(
+                        friendReceived,
+                        user.data().userId
                     );
 
-                    // Remove request from friendRequest.sent on both accounts
-                    await user.setSentFriendRequests(
-                        userSent.filter(
-                            (request) => request === friend.data().userId
-                        )
-                    );
-                    await friend.setSentFriendRequests(
-                        friendSent.filter(
-                            (request) => request === user.data().userId
-                        )
-                    );
+                    // Set user data
+                    await user.setSentFriendRequests(userSent);
+                    await user.setReceivedFriendRequests(userReceived);
+                    await friend.setSentFriendRequests(friendSent);
+                    await friend.setReceivedFriendRequests(friendReceived);
 
                     // Add user to friend friendslist
                     await user.setFriends(userFriends);
@@ -118,8 +112,6 @@ export default new (class HandleFriendRequest {
                         userReceived,
                         friend.data().userId
                     );
-
-                    // Remove request from friendRequest.sent on both accounts
                     Utils.removeItemFromArray(friendSent, user.data().userId);
                     Utils.removeItemFromArray(
                         friendReceived,
