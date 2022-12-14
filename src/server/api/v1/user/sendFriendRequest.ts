@@ -20,6 +20,15 @@ export default new (class SendFriendRequest {
         }
 
         try {
+            if (body.username === user.data().username) {
+                Responder(
+                    res,
+                    'error',
+                    null,
+                    'You cannot send a request to yourself.'
+                );
+                return;
+            }
             if (!body.username) {
                 Responder(res, 'error', null, 'A username is required.');
                 return;
