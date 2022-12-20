@@ -1,6 +1,6 @@
 # Social App V2
 
-#### Video Demo: <URL HERE>
+#### Video Demo: [YouTube Video](https://youtu.be/jbLXTxT0sYk)
 
 #### Description: This is a simple messaging application that allows you to chat with your friends. Features: Add Friend, Friend Requests, Edit Profile and a lot more. The stack, TypeScript/Express/React/Docker.
 
