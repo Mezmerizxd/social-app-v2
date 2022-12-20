@@ -48,6 +48,12 @@ export default new (class SendFriendRequest {
             const receiver = new User(body.username, 'username');
             await receiver.init();
 
+            // Check if user exists
+            if (!receiver.data()) {
+                Responder(res, 'error', null, 'User does not exist.');
+                return;
+            }
+
             if (user.isFriendsWith(receiver.data())) {
                 Responder(res, 'error', null, 'You are already friends.');
                 return;
