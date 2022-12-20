@@ -3,7 +3,7 @@ import Responder from '../responder';
 import Log from '../../../utils/Log';
 import Cfg from '../../../cfg';
 import Firebase from '../../../data/firebase';
-import User from '../../../features/user';
+import User from '../features/user';
 
 type RequestBody = {
     messageId: any;

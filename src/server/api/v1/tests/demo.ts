@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Log from '../../../utils/Log';
-import User from '../../../features/user';
+import User from '../features/user';
 
 export default new (class Demo {
     public Perform = async (req: Request, res: Response) => {
