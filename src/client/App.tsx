@@ -44,7 +44,7 @@ export default function App() {
                     </div>
                     <div className="App-selection-footer">
                         <p>
-                            Made by{' '}
+                            🇬🇧 Made by{' '}
                             <span
                                 onClick={() =>
                                     window.open(
