@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Responder from '../responder';
 import Firebase from '../../../data/firebase';
 import * as sjcl from 'sjcl';
-import Features from '../features';
+import Features from '../generators';
 import Cfg from '../../../cfg';
 import Log from '../../../utils/Log';
 

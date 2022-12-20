@@ -1,9 +1,9 @@
-import Firebase from '../data/firebase';
-import Cfg from '../cfg';
-import Log from '../utils/Log';
+import Firebase from '../../../data/firebase';
+import Cfg from '../../../cfg';
+import Log from '../../../utils/Log';
 import { ProcessedUserData, PublicUserData, DatabaseReturn } from './types';
 import { Response } from 'express';
-import Responder from '../api/v1/responder';
+import Responder from '../responder';
 
 export default class User {
     private key: any;

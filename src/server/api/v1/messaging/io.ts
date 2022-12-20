@@ -1,8 +1,9 @@
 import * as socketio from 'socket.io';
 import Log from '../../../utils/Log';
-import Features from '../features';
+import Features from '../generators';
 import Firebase from '../../../data/firebase';
 import Cfg from '../../../cfg';
+import User from '../features/user';
 
 type SendFriendMessageType = {
     authorization: any;
@@ -31,14 +32,12 @@ export default class Messaging {
         }
 
         try {
-            const userData: any = await Features.getUserData(
-                'authorization',
-                data.authorization
-            );
+            const user = new User(data.authorization, 'authorization');
+            await user.init();
 
             const fbMessagesGroupRef = Firebase.database.ref(
                 `${Cfg.Local().fbDbName}/${Cfg.Local().fbDbMessages}/${
-                    data.userId + userData.userId
+                    data.userId + user.data().userId
                 }`
             );
             let fbMessagesGroup: any = await (
@@ -57,12 +56,12 @@ export default class Messaging {
 
                 const newMessage = {
                     messageId: messageId.data,
-                    userId: userData.userId,
-                    username: userData.username,
+                    userId: user.data().userId,
+                    username: user.data().username,
                     dateSent: JSON.stringify(new Date()),
                     content: data.content,
-                    avatar: userData.avatar
-                        ? userData.avatar
+                    avatar: user.data().avatar
+                        ? user.data().avatar
                         : 'https://i.pravatar.cc/300',
                 };
 
@@ -76,7 +75,7 @@ export default class Messaging {
                 await Firebase.database
                     .ref(
                         `${Cfg.Local().fbDbName}/${Cfg.Local().fbDbMessages}/${
-                            data.userId + userData.userId
+                            data.userId + user.data().userId
                         }/messages`
                     )
                     .set(fbMessages);
