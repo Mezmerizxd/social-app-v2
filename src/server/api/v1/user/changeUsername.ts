@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
 import Cfg from '../../../cfg';
-import User from '../../../features/user';
+import User from '../features/user';
 
 type RequestBody = {
     username: string;

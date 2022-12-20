@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import Features from '../features';
 import Cfg from '../../../cfg';
 import Firebase from '../../../data/firebase';
+import User from '../../../features/user';
 
 type RequestBody = {
     messageId: any;
@@ -15,12 +15,11 @@ export default new (class DeleteMessage {
         Log.debugApi('[V1] [Messaging] DeleteMessage Started');
         const body: RequestBody = req.body;
 
-        if (
-            (await (
-                await Features.authorize(res, req.headers.authorization)
-            ).authorized) === false
-        )
+        const user = new User(req.headers.authorization, 'authorization');
+        await user.init();
+        if (!(await user.authorize(res))) {
             return;
+        }
 
         try {
             if (!body.messageId) {
@@ -31,11 +30,6 @@ export default new (class DeleteMessage {
                 Responder(res, 'error', null, 'Invalid message group id.');
                 return;
             }
-
-            const userData: any = await Features.getUserData(
-                'authorization',
-                req.headers.authorization
-            );
 
             const users: any = [];
             const fbMessageGroupRef: any = await (
@@ -57,7 +51,7 @@ export default new (class DeleteMessage {
                 return;
             }
 
-            if (users.includes(userData.userId)) {
+            if (users.includes(user.data().userId)) {
                 Responder(
                     res,
                     'error',
@@ -81,7 +75,7 @@ export default new (class DeleteMessage {
                     Object.keys(fbMessages.messages).forEach((message: any) => {
                         if (
                             fbMessages.messages[message].userId ===
-                            userData.userId
+                            user.data().userId
                         ) {
                             if (
                                 fbMessages.messages[message].messageId !==

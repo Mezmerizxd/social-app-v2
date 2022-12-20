@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import Features from '../features';
 import Firebase from '../../../data/firebase';
 import Cfg from '../../../cfg';
+import User from '../features/user';
 
 type RequestBody = {
     userId: any;
@@ -14,12 +14,11 @@ export default new (class GetMessages {
         Log.debugApi('[V1] [Messaging] GetMessages Started');
         const body: RequestBody = req.body;
 
-        if (
-            (await (
-                await Features.authorize(res, req.headers.authorization)
-            ).authorized) === false
-        )
+        const user = new User(req.headers.authorization, 'authorization');
+        await user.init();
+        if (!(await user.authorize(res))) {
             return;
+        }
 
         try {
             if (!body.userId) {
@@ -27,20 +26,14 @@ export default new (class GetMessages {
                 return;
             }
 
-            const userData: any = await Features.getUserData(
-                'authorization',
-                req.headers.authorization
-            );
-            const friendData: any = await Features.getUserData(
-                'userid',
-                body.userId
-            );
-            if (friendData.error) {
-                Responder(res, 'error', null, 'User does not exist.');
+            const friend = new User(body.userId, 'userId');
+            await friend.init();
+            if (!(await friend.authorize(res))) {
+                Responder(res, 'error', null, 'Friend does not exist.');
                 return;
             }
 
-            if (body.userId === userData.userId) {
+            if (body.userId === user.data().userId) {
                 Responder(
                     res,
                     'error',
@@ -50,7 +43,7 @@ export default new (class GetMessages {
                 return;
             }
 
-            const messagesGroupId = friendData.userId + userData.userId;
+            const messagesGroupId = friend.data().userId + user.data().userId;
             const messages: any = [];
 
             const fbMessagesRef = Firebase.database
@@ -78,7 +71,7 @@ export default new (class GetMessages {
                     .set({
                         messagesGroupId: messagesGroupId,
                         messages: messages,
-                        users: [userData.userId, friendData.userId],
+                        users: [user.data().userId, friend.data().userId],
                     });
             }
 

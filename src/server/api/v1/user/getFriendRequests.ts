@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Responder from '../responder';
 import Log from '../../../utils/Log';
-import User from '../../../features/user';
+import User from '../features/user';
 
 export default new (class GetFriendRequests {
     public perform = async (req: Request, res: Response) => {
