@@ -129,7 +129,6 @@ export default class User {
     public init = async (): Promise<void> => {
         if (this.key !== null) {
             const data = await this.getUser(this.key, this.method);
-            console.log(data);
             if (data !== null) {
                 this.userData = data;
                 this.authorized = true;
