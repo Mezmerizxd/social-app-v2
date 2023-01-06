@@ -129,9 +129,12 @@ export default class User {
     public init = async (): Promise<void> => {
         if (this.key !== null) {
             const data = await this.getUser(this.key, this.method);
-            if (data) {
+            console.log(data);
+            if (data !== null) {
                 this.userData = data;
                 this.authorized = true;
+            } else {
+                this.authorized = false;
             }
         }
     };
@@ -148,7 +151,7 @@ export default class User {
             }
             return false;
         }
-        if (this.authorized !== null || this.authorized === false) {
+        if (this.authorized === false) {
             Responder(response, 'error', null, 'You are not authorized.');
             return false;
         }
