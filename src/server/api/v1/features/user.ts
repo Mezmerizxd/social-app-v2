@@ -148,7 +148,7 @@ export default class User {
             }
             return false;
         }
-        if (this.authorized === false) {
+        if (this.authorized !== null || this.authorized === false) {
             Responder(response, 'error', null, 'You are not authorized.');
             return false;
         }
