@@ -2,7 +2,7 @@
 
 #### Video Demo: [YouTube Video](https://youtu.be/jbLXTxT0sYk)
 
-#### Description: This is a simple messaging application that allows you to chat with your friends. Features: Add Friend, Friend Requests, Edit Profile and a lot more. The stack, TypeScript/Express/React/Docker.
+#### Description: This is a simple messaging application that allows you to chat with your friends. Features: Add Friend, Friend Requests, Edit Profile and a lot more. The stack, TypeScript/Express/React/Docker. I am very proud of this web application as its the first one that actually works and I am able to expand on it. There are many more things I would like to add to this project in the future.
 
 # Screenshots
 

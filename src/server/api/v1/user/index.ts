@@ -1,14 +1,14 @@
 import { Router } from 'express';
 
-import Login from './login';
-import Signup from './signup';
-import GetUserData from './getUserData';
-import SendFriendRequest from './sendFriendRequest';
-import HandleFriendRequest from './handleFriendRequest';
-import GetFriendRequests from './getFriendRequests';
-import GetFriends from './getFriends';
-import ChangeUsername from './changeUsername';
-import ChangeAvatar from './changeAvatar';
+import Login from './Login';
+import Signup from './Signup';
+import GetUserData from './GetUserData';
+import SendFriendRequest from './SendFriendRequest';
+import HandleFriendRequest from './HandleFriendRequest';
+import GetFriendRequests from './GetFriendRequests';
+import GetFriends from './GetFriends';
+import ChangeUsername from './ChangeUsername';
+import ChangeAvatar from './ChangeAvatar';
 
 const r = Router();
 

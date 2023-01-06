@@ -15,6 +15,10 @@ export type ProcessedUserData = {
         sent?: PublicUserData[];
         received?: PublicUserData[];
     };
+    accountCreationDate: string;
+    lastLoggedInDate: string;
+    verifiedEmail: boolean;
+    verifiedUser: boolean;
 };
 
 export type DatabaseReturn = {

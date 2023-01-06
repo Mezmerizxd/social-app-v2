@@ -33,6 +33,10 @@ type EnvReturn = {
     firebaseTokenUri: any;
     firebaseAuthProviderCertUrl: any;
     firebaseClientCertUrl: any;
+    // Email
+    emailService: any;
+    emailUser: any;
+    emailPass: any;
 };
 
 type LocalReturn = {
@@ -87,6 +91,10 @@ export default new (class Cfg {
             firebaseAuthProviderCertUrl:
                 process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
             firebaseClientCertUrl: process.env.FIREBASE_CLIENT_X509_CERT_URL,
+            // Email
+            emailService: process.env.EMAIL_SERVICE,
+            emailUser: process.env.EMAIL_USERNAME,
+            emailPass: process.env.EMAIL_PASSWORD,
         };
     };
 
@@ -102,15 +110,15 @@ export default new (class Cfg {
     public UserApi = (): UserApiReturn => {
         return {
             maxUsernameLength: 12,
-            minUsernameLength: 1,
+            minUsernameLength: 2,
             minPasswordLength: 6,
             illegalUsernameCharacters: [
                 '<',
                 '>',
                 '?',
-                '.',
+                // '.',
                 ',',
-                "'",
+                // "'",
                 '"',
                 ';',
                 ':',
@@ -120,8 +128,8 @@ export default new (class Cfg {
                 '}',
                 '+',
                 '=',
-                '-',
-                '_',
+                // '-',
+                // '_',
                 '(',
                 ')',
                 '*',

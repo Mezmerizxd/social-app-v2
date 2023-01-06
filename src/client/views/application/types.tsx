@@ -1,4 +1,5 @@
 export interface InitialStateProps {
+    error: any;
     user: {
         userId: any;
         username: any;

@@ -2,6 +2,7 @@ import { InitialStateProps } from './types';
 import { createSlice } from '@reduxjs/toolkit';
 
 export const InitialState: InitialStateProps = {
+    error: null,
     user: {
         userId: null,
         username: null,
@@ -47,6 +48,9 @@ export const ApplicationSlice = createSlice({
     name: 'auth',
     initialState: InitialState,
     reducers: {
+        setError: (state, action) => {
+            state.error = action.payload;
+        },
         setUserData: (state, action) => {
             state.user = action.payload;
         },
@@ -139,6 +143,7 @@ export const ApplicationSlice = createSlice({
 });
 
 export const {
+    setError,
     setUserData,
     editUserData,
     setFriends,

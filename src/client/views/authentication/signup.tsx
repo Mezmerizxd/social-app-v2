@@ -86,7 +86,7 @@ export default function Signup({ contexts }: SignupProps) {
 
             <CustomTextField
                 id="password"
-                label="Password"
+                label="Password (USE FAKE PASSWORD)"
                 key="password"
                 type="password"
                 InputProps={{

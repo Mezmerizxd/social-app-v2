@@ -303,6 +303,22 @@ $media-breakpoint-mobile: 450px;
         }
     }
 
+    .Application-error {
+        text-align: center;
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: lighter;
+            font-size: 2rem;
+            color: white;
+        }
+        p {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: lighter;
+            font-size: 1.2rem;
+            color: white;
+        }
+    }
+
     .Popup-container {
         position: absolute;
         display: flex;

@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import GetMessages from './getMessages';
-import DeleteMessage from './deleteMessage';
-import EditMessage from './editMessage';
+import GetMessages from './GetMessages';
+import DeleteMessage from './DeleteMessage';
+import EditMessage from './EditMessage';
 
 const r = Router();
 

@@ -10,6 +10,7 @@ type GenerateReturn = {
 export default new (class Features {
     private generators_max_id_size = 999999999999999;
     private generators_max_token_byte = 64;
+    private generators_max_verification_code_byte = 40;
     private generators_max_attempts = 5;
 
     public generateUserId = async (): Promise<GenerateReturn> => {
@@ -101,5 +102,38 @@ export default new (class Features {
         }
         Log.debug('[API] [V1] [Features] GenerateMessageId - finished');
         return { data: id };
+    };
+
+    public generateVerificationCode = async (): Promise<GenerateReturn> => {
+        Log.debug('[API] [V1] [Features] GenerateVerificationCode - started');
+        let created = false;
+        let code: string = '';
+        let attempts = 0;
+        try {
+            while (!created) {
+                code = crypto
+                    .randomBytes(this.generators_max_verification_code_byte)
+                    .toString('hex');
+                if (attempts === this.generators_max_attempts) {
+                    Log.error(
+                        '[API] [V1] [Features] VerificationCode - max attempts'
+                    );
+                    return { data: null };
+                }
+                const fbUserData = Firebase.database
+                    .ref(`${Cfg.Local().fbDbName}/`)
+                    .child(Cfg.Local().fbDbUserAcccount)
+                    .orderByChild('verificationCode')
+                    .equalTo(code)
+                    .limitToFirst(1);
+                const fbUserDataResp = (await fbUserData.get()).toJSON();
+                if (!fbUserDataResp) created = true;
+                attempts += 1;
+            }
+        } catch (error) {
+            Log.error('[API] [V1] [Features] GenerateVerificationCode,', error);
+        }
+        Log.debug('[API] [V1] [Features] GenerateVerificationCode - finished');
+        return { data: code };
     };
 })();

@@ -9,7 +9,8 @@ import FriendRequests from './friendRequests';
 import EditMessage from './editMessage';
 import Settings from './settings';
 import Features from './features';
-import { setUserData, setFriends } from './reducer';
+import { setUserData, setFriends, setError } from './reducer';
+import Api from '../../classes/Api';
 
 export default function Application() {
     const [mobileMode, setMobileMode] = useState(false);
@@ -20,8 +21,20 @@ export default function Application() {
     useEffect(() => {
         if (localStorage.getItem('authorization') !== null) {
             setTimeout(async () => {
-                dispatch(setFriends(await Features.getFriends()));
-                dispatch(setUserData(await Features.getUserData()));
+                const response = await Api.Post(
+                    '/user/get-user-data',
+                    {
+                        method: 'authorization',
+                        key: localStorage.getItem('authorization'),
+                    },
+                    true
+                );
+                if (response && response.success === true) {
+                    dispatch(setUserData(response.data));
+                    dispatch(setFriends(await Features.getFriends()));
+                } else {
+                    dispatch(setError(response.error));
+                }
             });
         } else {
             window.location.href = '/authentication';
@@ -47,15 +60,23 @@ export default function Application() {
     return (
         <div className="Application-container">
             <title>Social App V2</title>
-            <div className="Application">
-                {/* {state.sidebar.open === true && ( */}
-                <Sidebar mobileMode={mobileMode} />
-                {/* )} */}
 
-                {state.selectedFriend.messagesGroupId !== null && (
-                    <Messaging mobileMode={mobileMode} />
-                )}
-            </div>
+            {state.error !== null ? (
+                <div className="Application-error">
+                    <h1>There was an error!</h1>
+                    <p>{state.error}</p>
+                </div>
+            ) : (
+                <div className="Application">
+                    {/* {state.sidebar.open === true && ( */}
+                    <Sidebar mobileMode={mobileMode} />
+                    {/* )} */}
+
+                    {state.selectedFriend.messagesGroupId !== null && (
+                        <Messaging mobileMode={mobileMode} />
+                    )}
+                </div>
+            )}
 
             {/* Popups */}
             {state.addFriendPopup.open && <AddFriend />}

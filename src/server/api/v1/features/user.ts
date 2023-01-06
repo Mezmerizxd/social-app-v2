@@ -118,6 +118,14 @@ export default class User {
             .set(friends);
     };
 
+    public setIsEmailVerified = async (bool: boolean): Promise<void> => {
+        await Firebase.database
+            .ref(
+                `${this.firebaseShortcut}/${this.userData.userId}/verifiedEmail`
+            )
+            .set(bool);
+    };
+
     public init = async (): Promise<void> => {
         if (this.key !== null) {
             const data = await this.getUser(this.key, this.method);
@@ -142,6 +150,15 @@ export default class User {
         }
         if (this.authorized === false) {
             Responder(response, 'error', null, 'You are not authorized.');
+            return false;
+        }
+        if (this.data().verifiedEmail === false) {
+            Responder(
+                response,
+                'error',
+                null,
+                'You must verify your email before you can use this feature.'
+            );
             return false;
         }
         return true;

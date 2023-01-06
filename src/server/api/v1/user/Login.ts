@@ -80,6 +80,11 @@ export default new (class Login {
                 return;
             }
 
+            // Update last logged in date
+            await fbUserDataRef.update({
+                lastLoggedInDate: JSON.stringify(new Date()),
+            });
+
             // Get user data
             let userData: any = fbUserData.toJSON();
 

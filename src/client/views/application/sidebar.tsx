@@ -115,7 +115,7 @@ export default function Sidebar({ mobileMode }: SidebarProps) {
                     <PeopleIcon
                         onClick={() => dispatch(toggleFriendRequestsPopup())}
                     />
-                    <p>{state.user.username}</p>
+                    <p>{state?.user?.username}</p>
                 </div>
             </div>
         </div>

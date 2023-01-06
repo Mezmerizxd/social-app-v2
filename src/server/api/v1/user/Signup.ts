@@ -5,6 +5,7 @@ import * as sjcl from 'sjcl';
 import Features from '../generators';
 import Cfg from '../../../cfg';
 import Log from '../../../utils/Log';
+import Email from '../../../utils/email';
 
 type RequestBody = {
     email: string;
@@ -135,13 +136,22 @@ export default new (class Signup {
                 sjcl.hash.sha256.hash(body.password)
             );
 
+            // create 40 character verification code
+            const verificationCode = await Features.generateVerificationCode();
+            if (!verificationCode?.data) {
+                Responder(res, 'error', null, 'Something went wrong.');
+                return;
+            } else {
+                Email.EmailVerification(body.email, verificationCode.data);
+            }
+
             // Set data
-            const CreationTimeStamp = new Date();
+            const CreationTimeStamp = JSON.stringify(new Date());
             const NewAccountData = {
                 userId: userId.data,
                 email: body.email,
                 password: encryptedPassword,
-                creation_time_stamp: CreationTimeStamp,
+                verificationCode: verificationCode.data,
             };
             const NewUserData = {
                 email: body.email,
@@ -149,6 +159,10 @@ export default new (class Signup {
                 authorization: authorization.data,
                 username: body.username,
                 avatar: 'https://i.pravatar.cc/300',
+                accountCreationDate: CreationTimeStamp,
+                lastLoggedInDate: CreationTimeStamp,
+                verifiedEmail: false,
+                verifiedUser: false,
             };
 
             // Insert account data

@@ -1,6 +1,6 @@
 {
     "name": "social-app-v2",
-    "version": "0.5.3",
+    "version": "0.6.0",
     "description": "Social App version 2",
     "main": "release/server/index.js",
     "repository": "https://github.com/mezmerizxd/social-app-v2",
@@ -22,6 +22,7 @@
         "firebase-admin": "^11.2.0",
         "mongodb": "^4.11.0",
         "mysql2": "^2.3.3",
+        "nodemailer": "^6.8.0",
         "prettier": "^2.7.1",
         "react": "^18.2.0",
         "react-app-rewired": "^2.2.1",
