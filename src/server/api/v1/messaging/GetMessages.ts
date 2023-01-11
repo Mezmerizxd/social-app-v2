@@ -5,14 +5,10 @@ import Firebase from '../../../data/firebase';
 import Cfg from '../../../cfg';
 import User from '../features/user';
 
-type RequestBody = {
-    userId: any;
-};
-
 export default new (class GetMessages {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [Messaging] GetMessages Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.Messaging.Req.GetMessages = req.body;
 
         const user = new User(req.headers.authorization, 'authorization');
         await user.init();

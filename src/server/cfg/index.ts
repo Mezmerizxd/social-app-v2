@@ -1,60 +1,8 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-type EnvReturn = {
-    port: any;
-    socketPort: any;
-    // MySql
-    mySqlEnabled: any;
-    mySqlHost: any;
-    mySqlDevHost: any;
-    mySqlUser: any;
-    mySqlDevUser: any;
-    mySqlPaswd: any;
-    mySqlDevPaswd: any;
-    mySqlDb: any;
-    mySqlDevDb: any;
-    // MongoDb
-    mongoDbEnabled: any;
-    mongoDbHost: any;
-    mongoDbDevHost: any;
-    mongoDbDb: any;
-    mongoDbDevDb: any;
-    // Firebase
-    firebaseEnabled: any;
-    firebaseDbUrl: any;
-    firebaseType: any;
-    firebaseProjectId: any;
-    firebasePrivateKeyId: any;
-    firebasePrivateKey: any;
-    firebaseClientEmail: any;
-    firebaseClientId: any;
-    firebaseAuthUri: any;
-    firebaseTokenUri: any;
-    firebaseAuthProviderCertUrl: any;
-    firebaseClientCertUrl: any;
-    // Email
-    emailService: any;
-    emailUser: any;
-    emailPass: any;
-};
-
-type LocalReturn = {
-    fbDbName: string;
-    fbDbUserAcccount: string;
-    fbDbUserData: string;
-    fbDbMessages: string;
-};
-
-type UserApiReturn = {
-    maxUsernameLength: number;
-    minUsernameLength: number;
-    minPasswordLength: number;
-    illegalUsernameCharacters: string[];
-};
-
 export default new (class Cfg {
-    public Env = (): EnvReturn => {
+    public Env = (): Server.Cfg.Env => {
         dotenv.config({ path: path.join(__dirname, '../../../.env') });
         return {
             port: process.env.PORT,
@@ -98,7 +46,7 @@ export default new (class Cfg {
         };
     };
 
-    public Local = (): LocalReturn => {
+    public Local = (): Server.Cfg.Local => {
         return {
             fbDbName: 'social_app_v2',
             fbDbUserAcccount: 'user_account',
@@ -107,7 +55,7 @@ export default new (class Cfg {
         };
     };
 
-    public UserApi = (): UserApiReturn => {
+    public UserApi = (): Server.Cfg.UserApi => {
         return {
             maxUsernameLength: 12,
             minUsernameLength: 2,

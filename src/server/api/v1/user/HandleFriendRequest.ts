@@ -4,15 +4,10 @@ import Log from '../../../utils/Log';
 import User from '../features/user';
 import Utils from '../../../utils';
 
-type RequestBody = {
-    userId: number;
-    type: string;
-};
-
 export default new (class HandleFriendRequest {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [User] HandleFriendRequest Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.User.Req.HandleFriendRequest = req.body;
 
         const user = new User(req.headers.authorization, 'authorization');
         await user.init();

@@ -3,15 +3,10 @@ import Responder from '../responder';
 import Log from '../../../utils/Log';
 import User from '../features/user';
 
-type RequestBody = {
-    method: string;
-    key: any;
-};
-
 export default new (class GetUserData {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [User] GetUserData Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.User.Req.GetUserData = req.body;
 
         const user = new User(req.headers.authorization, 'authorization');
         await user.init();

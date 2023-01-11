@@ -5,15 +5,10 @@ import Cfg from '../../../cfg';
 import Firebase from '../../../data/firebase';
 import User from '../features/user';
 
-type RequestBody = {
-    messageId: any;
-    messagesGroupId: any;
-};
-
 export default new (class DeleteMessage {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [Messaging] DeleteMessage Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.Messaging.Req.DeleteMessage = req.body;
 
         const user = new User(req.headers.authorization, 'authorization');
         await user.init();

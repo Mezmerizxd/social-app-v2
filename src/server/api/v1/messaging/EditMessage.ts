@@ -5,16 +5,10 @@ import Cfg from '../../../cfg';
 import Firebase from '../../../data/firebase';
 import User from '../features/user';
 
-type RequestBody = {
-    messageId: any;
-    messagesGroupId: any;
-    content: any;
-};
-
 export default new (class EditMessage {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [Messaging] EditMessage Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.Messaging.Req.EditMessage = req.body;
 
         const user = new User(req.headers.authorization, 'authorization');
         await user.init();

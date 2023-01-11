@@ -4,14 +4,10 @@ import Log from '../../../utils/Log';
 import Cfg from '../../../cfg';
 import User from '../features/user';
 
-type RequestBody = {
-    username: string;
-};
-
 export default new (class ChangeUsername {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [User] ChangeUsername Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.User.Req.ChangeUsername = req.body;
 
         const user = new User(req.headers.authorization, 'authorization');
         await user.init();

@@ -7,16 +7,10 @@ import Cfg from '../../../cfg';
 import Log from '../../../utils/Log';
 import Email from '../../../utils/email';
 
-type RequestBody = {
-    email: string;
-    username: string;
-    password: string;
-};
-
 export default new (class Signup {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [User] [Signup] Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.User.Req.Signup = req.body;
 
         // Email value checks
         if (!body.email) {

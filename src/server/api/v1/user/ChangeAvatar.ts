@@ -4,14 +4,10 @@ import Log from '../../../utils/Log';
 import Utils from '../../../utils';
 import User from '../features/user';
 
-type RequestBody = {
-    avatar: string;
-};
-
 export default new (class ChangeAvatar {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [User] ChangeAvatar Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.User.Req.ChangeAvatar = req.body;
 
         const user = new User(req.headers.authorization, 'authorization');
         await user.init();

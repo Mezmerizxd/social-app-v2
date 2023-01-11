@@ -5,12 +5,10 @@ import Firebase from '../../../data/firebase';
 import Cfg from '../../../cfg';
 import User from '../features/user';
 
-type RequestBody = {};
-
 export default new (class VerifyEmail {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [Account] VerifyEmail Started');
-        const body: RequestBody = req.body;
+        const body = req.body;
         const code: any = req.query.code;
 
         // check url parameter code

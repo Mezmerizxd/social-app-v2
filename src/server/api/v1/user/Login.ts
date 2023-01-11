@@ -5,15 +5,10 @@ import * as sjcl from 'sjcl';
 import Cfg from '../../../cfg';
 import Log from '../../../utils/Log';
 
-type RequestBody = {
-    email: string;
-    password: string;
-};
-
 export default new (class Login {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [User] [Login] Started');
-        const body: RequestBody = req.body;
+        const body: Server.V1.User.Req.Login = req.body;
 
         // Email value checks
         if (!body.email) {

@@ -7,7 +7,8 @@
         "baseUrl": ".",
         "paths": {
             "*": ["node_modules/*"]
-        }
+        },
+        "types": ["@types/node"]
     },
     "include": ["src/server/*"]
 }

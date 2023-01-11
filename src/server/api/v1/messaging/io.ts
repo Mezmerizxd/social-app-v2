@@ -5,12 +5,6 @@ import Firebase from '../../../data/firebase';
 import Cfg from '../../../cfg';
 import User from '../features/user';
 
-type SendFriendMessageType = {
-    authorization: any;
-    userId: any;
-    content: any;
-};
-
 export default class Messaging {
     private io: socketio.Server;
     private socket: socketio.Socket;
@@ -24,7 +18,9 @@ export default class Messaging {
         );
     }
 
-    private SendFriendMessage = async (data: SendFriendMessageType) => {
+    private SendFriendMessage = async (
+        data: Server.V1.Messaging.IO.SendFriendMessage
+    ) => {
         Log.debug('[IO/V1] [Messaging] SendFriendMessage Started');
 
         if (data?.content === null || data?.content === '') {

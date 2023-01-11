@@ -1,14 +1,13 @@
 import Firebase from '../../../data/firebase';
 import Cfg from '../../../cfg';
 import Log from '../../../utils/Log';
-import { ProcessedUserData, PublicUserData, DatabaseReturn } from './types';
 import { Response } from 'express';
 import Responder from '../responder';
 
 export default class User {
     private key: any;
     private method: string;
-    private userData: ProcessedUserData;
+    private userData: Server.V1.Features.UserData;
     public firebaseShortcut: string = `${Cfg.Local().fbDbName}/${
         Cfg.Local().fbDbUserData
     }`;
@@ -19,11 +18,11 @@ export default class User {
         this.method = method;
     }
 
-    public data = (): ProcessedUserData => {
+    public data = (): Server.V1.Features.UserData => {
         return this.userData;
     };
 
-    public isFriendsWith = (friend: ProcessedUserData): boolean => {
+    public isFriendsWith = (friend: Server.V1.Features.UserData): boolean => {
         let bool = false;
         // User1
         if (
@@ -44,7 +43,9 @@ export default class User {
         return bool;
     };
 
-    public hasUserSentFriendRequest = (toUser: ProcessedUserData): boolean => {
+    public hasUserSentFriendRequest = (
+        toUser: Server.V1.Features.UserData
+    ): boolean => {
         if (
             this.userData?.friendRequests?.sent?.find(
                 (request) => request.userId === toUser.userId
@@ -57,7 +58,7 @@ export default class User {
     };
 
     public hasUserReceivedFriendRequest = (
-        fromUser: ProcessedUserData
+        fromUser: Server.V1.Features.UserData
     ): boolean => {
         if (
             this.userData?.friendRequests?.received?.find(
@@ -76,7 +77,9 @@ export default class User {
             .set(url);
     };
 
-    public setUsername = async (username: string): Promise<DatabaseReturn> => {
+    public setUsername = async (
+        username: string
+    ): Promise<Server.V1.Features.DatabaseReturn> => {
         const user = await this.getUser(username, 'username');
         if (user) {
             return {
@@ -169,7 +172,7 @@ export default class User {
     public getUser = async (
         key: any,
         method: string
-    ): Promise<ProcessedUserData> => {
+    ): Promise<Server.V1.Features.UserData> => {
         let fbResData: any = null;
         try {
             const fbUserDataRef = Firebase.database
