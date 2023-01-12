@@ -13,14 +13,13 @@ export default new (class Features {
                 avatar: 'https://i.pravatar.cc/300',
             };
         } else {
-            const response = await Api.Post(
-                '/user/get-user-data',
-                {
+            const response = await Api.Post({
+                api: '/user/get-user-data',
+                body: {
                     method: 'authorization',
                     key: localStorage.getItem('authorization'),
                 },
-                true
-            );
+            });
             if (response && response.success === true) {
                 account = response.data;
             }
@@ -39,7 +38,10 @@ export default new (class Features {
                 });
             }
         } else {
-            const response = await Api.Post('/user/get-friends', null, true);
+            const response = await Api.Post({
+                api: '/user/get-friends',
+                body: null,
+            });
             if (response && response.success === true) {
                 friends = response.data.friends;
             }
@@ -64,13 +66,12 @@ export default new (class Features {
                 });
             }
         } else {
-            const response = await Api.Post(
-                '/messaging/get-messages',
-                {
+            const response = await Api.Post({
+                api: '/messaging/get-messages',
+                body: {
                     userId: userId,
                 },
-                true
-            );
+            });
             if (response && response.success === true) {
                 messages = response.data.messages;
                 messagingGroupId = response.data.messagingGroupId;
@@ -101,11 +102,10 @@ export default new (class Features {
                 });
             }
         } else {
-            const response = await Api.Post(
-                '/user/get-friend-requests',
-                null,
-                true
-            );
+            const response = await Api.Post({
+                api: '/user/get-friend-requests',
+                body: null,
+            });
             if (response && response.success === true) {
                 sent = response.data.sent;
                 received = response.data.received;
@@ -121,13 +121,12 @@ export default new (class Features {
         let success = false;
         let error = null;
         if (!this.debugMode) {
-            const response = await Api.Post(
-                '/user/change-username',
-                {
+            const response = await Api.Post({
+                api: '/user/change-username',
+                body: {
                     username: username,
                 },
-                true
-            );
+            });
             if (response && response.success === true) {
                 success = true;
             } else {
@@ -146,13 +145,12 @@ export default new (class Features {
         let success = false;
         let error = null;
         if (!this.debugMode) {
-            const response = await Api.Post(
-                '/user/change-avatar',
-                {
+            const response = await Api.Post({
+                api: '/user/change-avatar',
+                body: {
                     avatar: avatar,
                 },
-                true
-            );
+            });
             if (response && response.success === true) {
                 success = true;
             } else {

@@ -10,5 +10,5 @@
         },
         "types": ["@types/node"]
     },
-    "include": ["src/server/*"]
+    "include": ["src/server/*", "src/server/types.d.ts"]
 }

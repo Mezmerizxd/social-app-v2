@@ -21,14 +21,13 @@ export default function Application() {
     useEffect(() => {
         if (localStorage.getItem('authorization') !== null) {
             setTimeout(async () => {
-                const response = await Api.Post(
-                    '/user/get-user-data',
-                    {
+                const response = await Api.Post({
+                    api: '/user/get-user-data',
+                    body: {
                         method: 'authorization',
                         key: localStorage.getItem('authorization'),
                     },
-                    true
-                );
+                });
                 if (response && response.success === true) {
                     dispatch(setUserData(response.data));
                     dispatch(setFriends(await Features.getFriends()));

@@ -3,8 +3,6 @@ import Responder from '../responder';
 import Log from '../../../utils/Log';
 import User from '../features/user';
 
-type RequestBody = {};
-
 export default new (class GetFriends {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [User] GetFriends Started');

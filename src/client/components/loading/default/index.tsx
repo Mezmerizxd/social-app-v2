@@ -1,16 +1,10 @@
 import './styles.scss';
 
-interface LoadingDefaultProps {
-    isLoading: boolean;
-    name: string;
-    style?: any;
-}
-
 export default function LoadingDefault({
     isLoading,
     name,
     style,
-}: LoadingDefaultProps) {
+}: Client.Components.Loading.Default) {
     return (
         isLoading && (
             <div className="Loading-container" style={style}>

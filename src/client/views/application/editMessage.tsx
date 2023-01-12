@@ -18,15 +18,14 @@ export default function EditMessage() {
     };
 
     const confirm = async () => {
-        const response = await Api.Post(
-            '/messaging/edit-message',
-            {
+        const response = await Api.Post({
+            api: '/messaging/edit-message',
+            body: {
                 messageId: state.selectedMessage.messageId,
                 messagesGroupId: state.selectedFriend.messagesGroupId,
                 content: newMessage,
             },
-            true
-        );
+        });
         if (response && response.success === true) {
             dispatch(editMessage({ content: newMessage }));
             close();

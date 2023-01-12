@@ -16,14 +16,13 @@ export default function DeleteMessage() {
     };
 
     const confirm = async () => {
-        const response = await Api.Post(
-            '/messaging/delete-message',
-            {
+        const response = await Api.Post({
+            api: '/messaging/delete-message',
+            body: {
                 messageId: state.selectedMessage.messageId,
                 messagesGroupId: state.selectedFriend.messagesGroupId,
             },
-            true
-        );
+        });
         if (response && response.success === true) {
             dispatch(rmMessage());
             close();

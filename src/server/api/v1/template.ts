@@ -4,8 +4,6 @@ import { Request, Response } from 'express';
 import Responder from './responder';
 import Log from '../../utils/Log';
 
-type RequestBody = {};
-
 export default new (class Template {
     public perform = async (req: Request, res: Response) => {
         Log.debugApi('[V1] [Template] Started');

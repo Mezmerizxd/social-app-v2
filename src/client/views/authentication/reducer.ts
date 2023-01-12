@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface InitialStateProps {
-    context: string;
-}
-
-export const InitialState: InitialStateProps = {
+export const InitialState: Client.Authentication.InitialState = {
     context: '',
 };
 

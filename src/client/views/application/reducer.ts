@@ -1,7 +1,6 @@
-import { InitialStateProps } from './types';
 import { createSlice } from '@reduxjs/toolkit';
 
-export const InitialState: InitialStateProps = {
+export const InitialState: Client.Application.InitialState = {
     error: null,
     user: {
         userId: null,

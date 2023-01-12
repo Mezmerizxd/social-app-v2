@@ -4,24 +4,61 @@ export default new (class Api {
     private developmentUri = 'http://localhost:3001';
     private authorization = localStorage.getItem('authorization');
 
-    public Post = async (
-        api: string,
-        body?: any,
-        json?: boolean
-    ): Promise<any> => {
+    // public Post = async (
+    //     api: string,
+    //     body?: any,
+    //     json?: boolean
+    // ): Promise<any> => {
+    //     try {
+    //         return await fetch(this.getUri() + api, {
+    //             method: 'POST',
+    //             body: body ? JSON.stringify(body) : null,
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 Authorization: this.authorization,
+    //             },
+    //         }).then((res) => {
+    //             return json === true ? res.json() : res;
+    //         });
+    //     } catch (error) {
+    //         console.log('error');
+    //     }
+    // };
+
+    public Post = async ({ api, body }: Client.API.Post) => {
         try {
             return await fetch(this.getUri() + api, {
                 method: 'POST',
                 body: body ? JSON.stringify(body) : null,
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: this.authorization,
+                    Authorization: this.authorization
+                        ? this.authorization
+                        : 'None',
                 },
-            }).then((res) => {
-                return json === true ? res.json() : res;
+            }).then((response) => {
+                return response.json();
             });
         } catch (error) {
-            console.log('error');
+            console.log('error', error);
+        }
+    };
+
+    public Get = async ({ api }: Client.API.Get) => {
+        try {
+            return await fetch(this.getUri() + api, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: this.authorization
+                        ? this.authorization
+                        : 'None',
+                },
+            }).then((response) => {
+                return response.json();
+            });
+        } catch (error) {
+            console.log('error', error);
         }
     };
 

@@ -9,11 +9,7 @@ import Api from '../../classes/Api';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { setContext } from './reducer';
 
-interface LoginProps {
-    contexts: any;
-}
-
-export default function Login({ contexts }: LoginProps) {
+export default function Login({ contexts }: Client.Authentication.Login) {
     const [emailValue, setEmailValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
     const [errorValue, setErrorValue] = useState<string>(null);
@@ -29,14 +25,13 @@ export default function Login({ contexts }: LoginProps) {
 
     async function handleLogin() {
         setErrorValue(null);
-        const response = await Api.Post(
-            '/user/login',
-            {
+        const response = await Api.Post({
+            api: '/user/login',
+            body: {
                 email: emailValue,
                 password: passwordValue,
             },
-            true
-        );
+        });
         if (response.success === true) {
             if (remember)
                 localStorage.setItem('remember', remember ? 'true' : 'false');

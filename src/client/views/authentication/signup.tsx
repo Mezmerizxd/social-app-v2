@@ -8,11 +8,8 @@ import Api from '../../classes/Api';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { setContext } from './reducer';
-interface SignupProps {
-    contexts: any;
-}
 
-export default function Signup({ contexts }: SignupProps) {
+export default function Signup({ contexts }: Client.Authentication.Signup) {
     const [emailValue, setEmailValue] = useState<string>(null);
     const [usernameValue, setUsernameValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
@@ -28,15 +25,14 @@ export default function Signup({ contexts }: SignupProps) {
 
     async function handleSignup() {
         setErrorValue(null);
-        const response = await Api.Post(
-            '/user/signup',
-            {
+        const response = await Api.Post({
+            api: '/user/signup',
+            body: {
                 email: emailValue,
                 username: usernameValue,
                 password: passwordValue,
             },
-            true
-        );
+        });
         if (response.success === true) {
             if (remember)
                 localStorage.setItem('remember', remember ? 'true' : 'false');

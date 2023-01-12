@@ -16,13 +16,12 @@ export default function AddFriend() {
     };
 
     const send = async () => {
-        const response = await Api.Post(
-            '/user/send-friend-request',
-            {
+        const response = await Api.Post({
+            api: '/user/send-friend-request',
+            body: {
                 username: usernameValue,
             },
-            true
-        );
+        });
         if (response && response.success === true) {
             close();
         } else {

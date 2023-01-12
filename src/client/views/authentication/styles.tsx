@@ -1,14 +1,6 @@
 import styled from '@emotion/styled';
 import { TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
 
-interface CustomCheckBoxProps {
-    label?: string;
-    required?: boolean;
-    checked?: boolean;
-    state?: any;
-    onClick?: () => void;
-}
-
 export const CustomTextField = styled(TextField)({
     width: '100%',
     marginTop: 20,
@@ -48,7 +40,7 @@ export const CustomCheckBox = ({
     state,
     checked,
     onClick,
-}: CustomCheckBoxProps) => {
+}: Client.Authentication.Styles.Checkbox) => {
     const CheckBox = styled(Checkbox)({
         '& .MuiSvgIcon-root': {
             color: 'rgb(240, 240, 240)',

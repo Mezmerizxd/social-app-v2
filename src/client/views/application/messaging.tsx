@@ -3,7 +3,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
-import { MessagingProps } from './types';
 import Socket from '../../classes/Socket';
 import Utils from '../../classes/Utils';
 import './styles.scss';
@@ -17,7 +16,9 @@ import {
 } from './reducer';
 import LoadingDefault from '../../components/loading/default';
 
-export default function Messaging({ mobileMode }: MessagingProps) {
+export default function Messaging({
+    mobileMode,
+}: Client.Application.Messaging) {
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState<string>('');
     const [isLoading, setIsLoading] = useState(true);

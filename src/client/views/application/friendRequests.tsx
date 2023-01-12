@@ -37,27 +37,25 @@ export default function FriendRequests() {
     };
 
     const accept = async (id: any) => {
-        const response = await Api.Post(
-            '/user/handle-friend-request',
-            {
+        const response = await Api.Post({
+            api: '/user/handle-friend-request',
+            body: {
                 type: 'accept',
                 userId: id,
             },
-            true
-        );
+        });
         if (!response?.error) {
             dispatch(rmFriendRequestsPopupRequest(id));
         }
     };
     const decline = async (id: any) => {
-        const response = await Api.Post(
-            '/user/handle-friend-request',
-            {
+        const response = await Api.Post({
+            api: '/user/handle-friend-request',
+            body: {
                 type: 'decline',
                 userId: id,
             },
-            true
-        );
+        });
         if (!response?.error) {
             dispatch(rmFriendRequestsPopupRequest(id));
         }

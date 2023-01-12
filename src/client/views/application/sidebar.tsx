@@ -2,7 +2,6 @@ import AddIcon from '@mui/icons-material/Add';
 import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { SidebarProps } from './types';
 import Features from './features';
 import './styles.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
@@ -14,7 +13,7 @@ import {
     toggleSidebar,
 } from './reducer';
 
-export default function Sidebar({ mobileMode }: SidebarProps) {
+export default function Sidebar({ mobileMode }: Client.Application.Sidebar) {
     const state = useAppSelector((state) => state.application);
     const dispatch = useAppDispatch();
 

@@ -10,11 +10,10 @@ export default function VerifyEmail() {
 
     useEffect(() => {
         setTimeout(async () => {
-            const r = await Api.Post(
-                `/account/verify-email?code=${query.get('code')}`,
-                null,
-                true
-            );
+            const r = await Api.Post({
+                api: `/account/verify-email?code=${query.get('code')}`,
+                body: null,
+            });
             if (r && r.success === false) {
                 setError(r.error);
             } else {
