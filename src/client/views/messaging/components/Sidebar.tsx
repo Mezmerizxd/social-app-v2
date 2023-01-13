@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import HomeIcon from '@mui/icons-material/Home';
 import Features from '../features';
 import { useAppSelector, useAppDispatch } from '../../../hooks/reduxHooks';
 import {
@@ -107,6 +108,7 @@ export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
                         ))}
                 </div>
                 <div className="Messaging-sidebar-actionbar">
+                    <HomeIcon onClick={() => (window.location.href = '/')} />
                     <SettingsIcon
                         onClick={() => dispatch(toggleSettingsPopup())}
                     />
