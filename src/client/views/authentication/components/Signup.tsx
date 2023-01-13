@@ -1,16 +1,16 @@
+import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import InputAdornment from '@mui/material/InputAdornment';
 import KeyIcon from '@mui/icons-material/Key';
-
-import './styles.scss';
-import { CustomTextField, CustomButton, CustomCheckBox } from './styles';
+import { CustomTextField, CustomButton, CustomCheckBox } from '../styles';
+import Api from '../../../classes/Api';
 import { useEffect, useState } from 'react';
-import Api from '../../classes/Api';
-import { useAppDispatch } from '../../hooks/reduxHooks';
-import { setContext } from './reducer';
+import { useAppDispatch } from '../../../hooks/reduxHooks';
+import { setContext } from '../reducer';
 
-export default function Login({ contexts }: Client.Authentication.Login) {
+export default function Signup({ contexts }: Client.Authentication.Signup) {
     const [emailValue, setEmailValue] = useState<string>(null);
+    const [usernameValue, setUsernameValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
     const [errorValue, setErrorValue] = useState<string>(null);
     const [remember, setRemember] = useState<boolean>(false);
@@ -18,17 +18,17 @@ export default function Login({ contexts }: Client.Authentication.Login) {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        // TODO: create a proper solution
         if (localStorage.getItem('remember') === 'true')
             window.location.href = '/app';
     }, []);
 
-    async function handleLogin() {
+    async function handleSignup() {
         setErrorValue(null);
         const response = await Api.Post({
-            api: '/user/login',
+            api: '/user/signup',
             body: {
                 email: emailValue,
+                username: usernameValue,
                 password: passwordValue,
             },
         });
@@ -43,7 +43,7 @@ export default function Login({ contexts }: Client.Authentication.Login) {
     }
 
     return (
-        <div className="Login-container">
+        <div className="Signup-container">
             <CustomTextField
                 id="email"
                 label="Email"
@@ -63,8 +63,25 @@ export default function Login({ contexts }: Client.Authentication.Login) {
             />
 
             <CustomTextField
+                id="username"
+                label="Username"
+                key="username"
+                type="text"
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <PersonIcon />
+                        </InputAdornment>
+                    ),
+                }}
+                variant="outlined"
+                onChange={(e) => setUsernameValue(e.target.value)}
+                value={usernameValue}
+            />
+
+            <CustomTextField
                 id="password"
-                label="Password"
+                label="Password (USE FAKE PASSWORD)"
                 key="password"
                 type="password"
                 InputProps={{
@@ -87,10 +104,10 @@ export default function Login({ contexts }: Client.Authentication.Login) {
 
             {errorValue && <p id="error">{errorValue}</p>}
 
-            <CustomButton onClick={handleLogin}>Login</CustomButton>
+            <CustomButton onClick={handleSignup}>Signup</CustomButton>
 
-            <p onClick={() => dispatch(setContext(contexts.signup))}>
-                Create an Account
+            <p onClick={() => dispatch(setContext(contexts.login))}>
+                Login with existing account
             </p>
         </div>
     );

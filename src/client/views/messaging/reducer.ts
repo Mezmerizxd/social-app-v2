@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const InitialState: Client.Application.InitialState = {
+export const InitialState: Client.Messaging.InitialState = {
     error: null,
     user: {
         userId: null,
@@ -43,7 +43,7 @@ export const InitialState: Client.Application.InitialState = {
     },
 };
 
-export const ApplicationSlice = createSlice({
+export const MessagingSlice = createSlice({
     name: 'auth',
     initialState: InitialState,
     reducers: {
@@ -159,6 +159,6 @@ export const {
     rmMessage,
     toggleEditMessagePopup,
     editMessage,
-} = ApplicationSlice.actions;
+} = MessagingSlice.actions;
 
-export default ApplicationSlice.reducer;
+export default MessagingSlice.reducer;

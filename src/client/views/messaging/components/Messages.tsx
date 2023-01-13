@@ -3,27 +3,24 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
-import Socket from '../../classes/Socket';
-import Utils from '../../classes/Utils';
-import './styles.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import Socket from '../../../classes/Socket';
+import Utils from '../../../classes/Utils';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import {
     addMessage,
     setSelectedMessage,
     toggleDeleteMessagePopup,
     toggleEditMessagePopup,
     toggleSidebar,
-} from './reducer';
-import LoadingDefault from '../../components/loading/default';
+} from '../reducer';
+import LoadingDefault from '../../../components/loading/default';
 
-export default function Messaging({
-    mobileMode,
-}: Client.Application.Messaging) {
+export default function Messages({ mobileMode }: Client.Messaging.Messages) {
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState<string>('');
     const [isLoading, setIsLoading] = useState(true);
 
-    const state = useAppSelector((state) => state.application);
+    const state = useAppSelector((state) => state.messaging);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -61,7 +58,7 @@ export default function Messaging({
 
     return (
         <div
-            className="Application-messaging-container"
+            className="Messaging-messages-container"
             style={
                 mobileMode
                     ? state.sidebar.open
@@ -72,7 +69,7 @@ export default function Messaging({
                     : { width: '100%' }
             }
         >
-            <div className="Application-messaging-titlebar">
+            <div className="Messaging-messages-titlebar">
                 {state.sidebar.open ? (
                     <ArrowBackIcon
                         onClick={handleSidebar}
@@ -89,7 +86,7 @@ export default function Messaging({
                 )}
                 <h1>{state.selectedFriend.username}</h1>
             </div>
-            <div className="Application-messaging-messages">
+            <div className="Messaging-messages-messages">
                 <LoadingDefault
                     isLoading={!state.messages.length ? false : isLoading}
                     name="messaging"
@@ -183,7 +180,7 @@ export default function Messaging({
                     ))}
                 <div id="autoscroll"></div>
             </div>
-            <div className="Application-messaging-input">
+            <div className="Messaging-messages-input">
                 <input
                     id="message_input"
                     key="message_input"

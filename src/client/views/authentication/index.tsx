@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './styles.scss';
-import Login from './login';
-import Signup from './signup';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { setContext } from './reducer';
 

@@ -54,11 +54,11 @@ declare namespace Client.Authentication.Styles {
     }
 }
 
-declare namespace Client.Application {
+declare namespace Client.Messaging {
     interface Sidebar {
         mobileMode: boolean;
     }
-    interface Messaging {
+    interface Messages {
         mobileMode: boolean;
     }
     interface InitialState {

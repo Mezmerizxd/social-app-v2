@@ -30,21 +30,27 @@ export default function App() {
                             </p>
                         </a>
                     </div>
-                    <div className="App-selection-options">
-                        <button
-                            onClick={() =>
-                                (window.location.href = '/authentication')
-                            }
-                        >
-                            Login
-                        </button>
-                        <button onClick={() => (window.location.href = '/app')}>
-                            Dev
-                        </button>
+                    <div className="App-selection-options-container">
+                        <div className="App-selection-options">
+                            <button
+                                onClick={() =>
+                                    (window.location.href = '/authentication')
+                                }
+                            >
+                                Login
+                            </button>
+                            <button
+                                onClick={() =>
+                                    (window.location.href = '/messaging')
+                                }
+                            >
+                                Messaging
+                            </button>
+                        </div>
                     </div>
                     <div className="App-selection-footer">
                         <p>
-                            🇬🇧 Made by{' '}
+                            Made by{' '}
                             <span
                                 onClick={() =>
                                     window.open(

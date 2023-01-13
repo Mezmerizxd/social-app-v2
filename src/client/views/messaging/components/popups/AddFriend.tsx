@@ -1,9 +1,8 @@
-import './styles.scss';
-import { CustomTextField, CustomButton } from './styles';
+import { CustomTextField, CustomButton } from '../../styles';
 import { useState } from 'react';
-import Api from '../../classes/Api';
-import { useAppDispatch } from '../../hooks/reduxHooks';
-import { toggleAddFriendPopup } from './reducer';
+import Api from '../../../../classes/Api';
+import { useAppDispatch } from '../../../../hooks/reduxHooks';
+import { toggleAddFriendPopup } from '../../reducer';
 
 export default function AddFriend() {
     const [usernameValue, setUsernameValue] = useState(null);

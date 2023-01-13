@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import './styles.scss';
-import Sidebar from './sidebar';
-import Messaging from './messaging';
-import AddFriend from './addFriend';
-import DeleteMessage from './deleteMessage';
-import FriendRequests from './friendRequests';
-import EditMessage from './editMessage';
-import Settings from './settings';
+import Sidebar from './components/Sidebar';
+import Messages from './components/Messages';
+import AddFriend from './components/popups/AddFriend';
+import DeleteMessage from './components/popups/DeleteMessage';
+import FriendRequests from './components/popups/FriendRequests';
+import EditMessage from './components/popups/EditMessage';
+import Settings from './components/popups/Settings';
 import Features from './features';
 import { setUserData, setFriends, setError } from './reducer';
 import Api from '../../classes/Api';
 
-export default function Application() {
+export default function Messaging() {
     const [mobileMode, setMobileMode] = useState(false);
 
-    const state = useAppSelector((state) => state.application);
+    const state = useAppSelector((state) => state.messaging);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -57,22 +57,22 @@ export default function Application() {
     });
 
     return (
-        <div className="Application-container">
+        <div className="Messaging-container">
             <title>Social App V2</title>
 
             {state.error !== null ? (
-                <div className="Application-error">
+                <div className="Messaging-error">
                     <h1>There was an error!</h1>
                     <p>{state.error}</p>
                 </div>
             ) : (
-                <div className="Application">
+                <div className="Messaging">
                     {/* {state.sidebar.open === true && ( */}
                     <Sidebar mobileMode={mobileMode} />
                     {/* )} */}
 
                     {state.selectedFriend.messagesGroupId !== null && (
-                        <Messaging mobileMode={mobileMode} />
+                        <Messages mobileMode={mobileMode} />
                     )}
                 </div>
             )}

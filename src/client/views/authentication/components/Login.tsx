@@ -1,17 +1,15 @@
-import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import InputAdornment from '@mui/material/InputAdornment';
 import KeyIcon from '@mui/icons-material/Key';
-import './styles.scss';
-import { CustomTextField, CustomButton, CustomCheckBox } from './styles';
-import Api from '../../classes/Api';
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../hooks/reduxHooks';
-import { setContext } from './reducer';
 
-export default function Signup({ contexts }: Client.Authentication.Signup) {
+import { CustomTextField, CustomButton, CustomCheckBox } from '../styles';
+import { useEffect, useState } from 'react';
+import Api from '../../../classes/Api';
+import { useAppDispatch } from '../../../hooks/reduxHooks';
+import { setContext } from '../reducer';
+
+export default function Login({ contexts }: Client.Authentication.Login) {
     const [emailValue, setEmailValue] = useState<string>(null);
-    const [usernameValue, setUsernameValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
     const [errorValue, setErrorValue] = useState<string>(null);
     const [remember, setRemember] = useState<boolean>(false);
@@ -19,17 +17,17 @@ export default function Signup({ contexts }: Client.Authentication.Signup) {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        // TODO: create a proper solution
         if (localStorage.getItem('remember') === 'true')
-            window.location.href = '/app';
+            window.location.href = '/messaging';
     }, []);
 
-    async function handleSignup() {
+    async function handleLogin() {
         setErrorValue(null);
         const response = await Api.Post({
-            api: '/user/signup',
+            api: '/user/login',
             body: {
                 email: emailValue,
-                username: usernameValue,
                 password: passwordValue,
             },
         });
@@ -37,14 +35,14 @@ export default function Signup({ contexts }: Client.Authentication.Signup) {
             if (remember)
                 localStorage.setItem('remember', remember ? 'true' : 'false');
             localStorage.setItem('authorization', response.data.authorization);
-            window.location.href = '/app';
+            window.location.href = '/messaging';
         } else {
             setErrorValue(response.error);
         }
     }
 
     return (
-        <div className="Signup-container">
+        <div className="Login-container">
             <CustomTextField
                 id="email"
                 label="Email"
@@ -64,25 +62,8 @@ export default function Signup({ contexts }: Client.Authentication.Signup) {
             />
 
             <CustomTextField
-                id="username"
-                label="Username"
-                key="username"
-                type="text"
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <PersonIcon />
-                        </InputAdornment>
-                    ),
-                }}
-                variant="outlined"
-                onChange={(e) => setUsernameValue(e.target.value)}
-                value={usernameValue}
-            />
-
-            <CustomTextField
                 id="password"
-                label="Password (USE FAKE PASSWORD)"
+                label="Password"
                 key="password"
                 type="password"
                 InputProps={{
@@ -105,10 +86,10 @@ export default function Signup({ contexts }: Client.Authentication.Signup) {
 
             {errorValue && <p id="error">{errorValue}</p>}
 
-            <CustomButton onClick={handleSignup}>Signup</CustomButton>
+            <CustomButton onClick={handleLogin}>Login</CustomButton>
 
-            <p onClick={() => dispatch(setContext(contexts.login))}>
-                Login with existing account
+            <p onClick={() => dispatch(setContext(contexts.signup))}>
+                Create an Account
             </p>
         </div>
     );
