@@ -3,7 +3,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './styles.scss';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 export default function Authentication() {
     const state = useAppSelector((state) => state.authentication);
@@ -16,16 +16,16 @@ export default function Authentication() {
 
     return (
         <div className="Authentication-container">
-            <title>{state.context}</title>
+            <title>{state.context === 0 ? 'Login' : 'Sign Up'}</title>
             <div className="Authentication-context-container">
                 <div className="Authentication-context-title">
                     <ArrowBackIcon
                         onClick={() => (window.location.href = '/')}
                     />
-                    <h1>{state.context}</h1>
+                    <h1>{state.context === 0 ? 'Login' : 'Sign Up'}</h1>
                 </div>
-                {state.context === 'Login' && <Login />}
-                {state.context === 'Sign Up' && <Signup />}
+                {state.context === 0 && <Login />}
+                {state.context === 1 && <Signup />}
             </div>
         </div>
     );

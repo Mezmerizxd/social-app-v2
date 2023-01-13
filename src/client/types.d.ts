@@ -30,7 +30,7 @@ declare namespace Client.API {
 
 declare namespace Client.Authentication {
     interface InitialState {
-        context: 'Login' | 'Register';
+        context: number;
     }
 }
 

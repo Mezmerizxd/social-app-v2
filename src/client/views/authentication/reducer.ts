@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const InitialState: Client.Authentication.InitialState = {
-    context: 'Login',
+    context: 0,
 };
 
 export const AuthenticationSlice = createSlice({

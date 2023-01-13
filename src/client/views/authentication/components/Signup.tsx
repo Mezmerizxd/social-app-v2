@@ -106,7 +106,7 @@ export default function Signup() {
 
             <CustomButton onClick={handleSignup}>Signup</CustomButton>
 
-            <p onClick={() => dispatch(setContext('Login'))}>
+            <p onClick={() => dispatch(setContext(0))}>
                 Login with existing account
             </p>
         </div>
