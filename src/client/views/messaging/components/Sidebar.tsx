@@ -2,16 +2,15 @@ import AddIcon from '@mui/icons-material/Add';
 import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Features from './features';
-import './styles.scss';
-import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
+import Features from '../features';
+import { useAppSelector, useAppDispatch } from '../../../hooks/reduxHooks';
 import {
     setMessages,
     toggleAddFriendPopup,
     toggleFriendRequestsPopup,
     toggleSettingsPopup,
     toggleSidebar,
-} from './reducer';
+} from '../reducer';
 
 export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
     const state = useAppSelector((state) => state.messaging);

@@ -2,17 +2,16 @@ import SendIcon from '@mui/icons-material/Send';
 import MailIcon from '@mui/icons-material/Mail';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Features from './features';
-import './styles.scss';
+import Features from '../../features';
 import { useState, useEffect } from 'react';
-import { CustomButton } from './styles';
-import Api from '../../classes/Api';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { CustomButton } from '../../styles';
+import Api from '../../../../classes/Api';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
     rmFriendRequestsPopupRequest,
     setFriendRequestsPopupData,
     toggleFriendRequestsPopup,
-} from './reducer';
+} from '../../reducer';
 
 export default function FriendRequests() {
     const [context, setContext] = useState<string>('sent');

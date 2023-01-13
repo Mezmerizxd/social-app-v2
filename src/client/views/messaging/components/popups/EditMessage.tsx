@@ -1,30 +1,32 @@
-import './styles.scss';
-import { CustomButton } from './styles';
+import { CustomButton, CustomTextField } from '../../styles';
 import { useState } from 'react';
-import Api from '../../classes/Api';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { rmMessage, toggleDeleteMessagePopup } from './reducer';
+import Api from '../../../../classes/Api';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import { editMessage, toggleEditMessagePopup } from '../../reducer';
 
-export default function DeleteMessage() {
+export default function EditMessage() {
     const [error, setError] = useState(null);
 
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.messaging);
 
+    const [newMessage, setNewMessage] = useState(state.selectedMessage.content);
+
     const close = () => {
-        dispatch(toggleDeleteMessagePopup());
+        dispatch(toggleEditMessagePopup());
     };
 
     const confirm = async () => {
         const response = await Api.Post({
-            api: '/messaging/delete-message',
+            api: '/messaging/edit-message',
             body: {
                 messageId: state.selectedMessage.messageId,
                 messagesGroupId: state.selectedFriend.messagesGroupId,
+                content: newMessage,
             },
         });
         if (response && response.success === true) {
-            dispatch(rmMessage());
+            dispatch(editMessage({ content: newMessage }));
             close();
         } else {
             setError(response.error);
@@ -35,11 +37,20 @@ export default function DeleteMessage() {
         <div className="Popup-container" onClick={close}>
             <div className="Popup-basic" onClick={(e) => e.stopPropagation()}>
                 <div className="Popup-basic-title">
-                    <h1>Delete Message</h1>
+                    <h1>Edit Message</h1>
                 </div>
-                <div className="Popup-basic-content">
-                    <p>Are you sure you want to delete this message?</p>
-                </div>
+                <CustomTextField
+                    label={state.selectedMessage.content}
+                    type="text"
+                    id={'editMessage'}
+                    key={'editMessage'}
+                    name={'Edit Message'}
+                    autoFocus={true}
+                    onChange={(e) => {
+                        setNewMessage(e.target.value);
+                    }}
+                    value={newMessage}
+                />
                 {error && (
                     <div className="Popup-basic-error">
                         <p>{error}</p>

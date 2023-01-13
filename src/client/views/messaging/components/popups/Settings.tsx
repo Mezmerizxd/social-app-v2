@@ -1,11 +1,10 @@
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
-import Features from './features';
-import './styles.scss';
-import { CustomButton, CustomSettingsInputField } from './styles';
+import Features from '../../features';
+import { CustomButton, CustomSettingsInputField } from '../../styles';
 import { useState, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
-import { editUserData, toggleSettingsPopup } from './reducer';
+import { useAppSelector, useAppDispatch } from '../../../../hooks/reduxHooks';
+import { editUserData, toggleSettingsPopup } from '../../reducer';
 
 export default function Settings() {
     const [editUsernameLocked, setEditUsernameLocked] = useState(true);

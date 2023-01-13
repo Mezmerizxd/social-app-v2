@@ -3,18 +3,17 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
-import Socket from '../../classes/Socket';
-import Utils from '../../classes/Utils';
-import './styles.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import Socket from '../../../classes/Socket';
+import Utils from '../../../classes/Utils';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import {
     addMessage,
     setSelectedMessage,
     toggleDeleteMessagePopup,
     toggleEditMessagePopup,
     toggleSidebar,
-} from './reducer';
-import LoadingDefault from '../../components/loading/default';
+} from '../reducer';
+import LoadingDefault from '../../../components/loading/default';
 
 export default function Messages({ mobileMode }: Client.Messaging.Messages) {
     const [socket, setSocket] = useState(null);
