@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../hooks/reduxHooks';
 import { setContext } from '../reducer';
 
-export default function Signup({ contexts }: Client.Authentication.Signup) {
+export default function Signup() {
     const [emailValue, setEmailValue] = useState<string>(null);
     const [usernameValue, setUsernameValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
@@ -106,7 +106,7 @@ export default function Signup({ contexts }: Client.Authentication.Signup) {
 
             <CustomButton onClick={handleSignup}>Signup</CustomButton>
 
-            <p onClick={() => dispatch(setContext(contexts.login))}>
+            <p onClick={() => dispatch(setContext('Login'))}>
                 Login with existing account
             </p>
         </div>

@@ -29,18 +29,8 @@ declare namespace Client.API {
 }
 
 declare namespace Client.Authentication {
-    enum ContextPages {
-        login = 'Login',
-        signup = 'Sign up',
-    }
-    interface Login {
-        contexts: any;
-    }
-    interface Signup {
-        contexts: any;
-    }
     interface InitialState {
-        context: string;
+        context: 'Login' | 'Register';
     }
 }
 

@@ -8,7 +8,7 @@ import Api from '../../../classes/Api';
 import { useAppDispatch } from '../../../hooks/reduxHooks';
 import { setContext } from '../reducer';
 
-export default function Login({ contexts }: Client.Authentication.Login) {
+export default function Login() {
     const [emailValue, setEmailValue] = useState<string>(null);
     const [passwordValue, setPassowrdValue] = useState<string>(null);
     const [errorValue, setErrorValue] = useState<string>(null);
@@ -88,7 +88,7 @@ export default function Login({ contexts }: Client.Authentication.Login) {
 
             <CustomButton onClick={handleLogin}>Login</CustomButton>
 
-            <p onClick={() => dispatch(setContext(contexts.signup))}>
+            <p onClick={() => dispatch(setContext('Sign Up'))}>
                 Create an Account
             </p>
         </div>
