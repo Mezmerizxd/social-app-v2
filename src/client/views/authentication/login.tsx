@@ -20,7 +20,7 @@ export default function Login({ contexts }: Client.Authentication.Login) {
     useEffect(() => {
         // TODO: create a proper solution
         if (localStorage.getItem('remember') === 'true')
-            window.location.href = '/app';
+            window.location.href = '/messaging';
     }, []);
 
     async function handleLogin() {
@@ -36,7 +36,7 @@ export default function Login({ contexts }: Client.Authentication.Login) {
             if (remember)
                 localStorage.setItem('remember', remember ? 'true' : 'false');
             localStorage.setItem('authorization', response.data.authorization);
-            window.location.href = '/app';
+            window.location.href = '/messaging';
         } else {
             setErrorValue(response.error);
         }

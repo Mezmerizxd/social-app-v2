@@ -5,7 +5,7 @@ import App from './App';
 import PageNotFound from './views/pagenotfound';
 import VerifyEmail from './views/verifyemail';
 import Authentication from './views/authentication';
-import Application from './views/application';
+import Messaging from './views/messaging';
 import { Provider } from 'react-redux';
 import { store } from './store';
 
@@ -19,7 +19,7 @@ root.render(
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/authentication" element={<Authentication />} />
-                <Route path="/app" element={<Application />} />
+                <Route path="/messaging" element={<Messaging />} />
                 <Route path="/verify-email" element={<VerifyEmail />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>

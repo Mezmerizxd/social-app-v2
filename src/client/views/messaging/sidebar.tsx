@@ -13,8 +13,8 @@ import {
     toggleSidebar,
 } from './reducer';
 
-export default function Sidebar({ mobileMode }: Client.Application.Sidebar) {
-    const state = useAppSelector((state) => state.application);
+export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
+    const state = useAppSelector((state) => state.messaging);
     const dispatch = useAppDispatch();
 
     const handleSidebar = () => {
@@ -40,7 +40,7 @@ export default function Sidebar({ mobileMode }: Client.Application.Sidebar) {
 
     return (
         <div
-            className="Application-sidebar-container"
+            className="Messaging-sidebar-container"
             style={
                 mobileMode
                     ? state.sidebar.open
@@ -51,7 +51,7 @@ export default function Sidebar({ mobileMode }: Client.Application.Sidebar) {
                     : { width: '0' }
             }
         >
-            <div className="Application-sidebar-title">
+            <div className="Messaging-sidebar-title">
                 <AddIcon
                     id="add"
                     onClick={() => dispatch(toggleAddFriendPopup())}
@@ -73,8 +73,8 @@ export default function Sidebar({ mobileMode }: Client.Application.Sidebar) {
                         />
                     )}
             </div>
-            <div className="Application-sidebar">
-                <div className="Application-sidebar-friendslist">
+            <div className="Messaging-sidebar">
+                <div className="Messaging-sidebar-friendslist">
                     {!state.friends && (
                         <div className="no-friends">
                             <h1>No friends found</h1>
@@ -107,7 +107,7 @@ export default function Sidebar({ mobileMode }: Client.Application.Sidebar) {
                             </div>
                         ))}
                 </div>
-                <div className="Application-sidebar-actionbar">
+                <div className="Messaging-sidebar-actionbar">
                     <SettingsIcon
                         onClick={() => dispatch(toggleSettingsPopup())}
                     />

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import './styles.scss';
 import Sidebar from './sidebar';
-import Messaging from './messaging';
+import Messages from './messages';
 import AddFriend from './addFriend';
 import DeleteMessage from './deleteMessage';
 import FriendRequests from './friendRequests';
@@ -12,10 +12,10 @@ import Features from './features';
 import { setUserData, setFriends, setError } from './reducer';
 import Api from '../../classes/Api';
 
-export default function Application() {
+export default function Messaging() {
     const [mobileMode, setMobileMode] = useState(false);
 
-    const state = useAppSelector((state) => state.application);
+    const state = useAppSelector((state) => state.messaging);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -57,22 +57,22 @@ export default function Application() {
     });
 
     return (
-        <div className="Application-container">
+        <div className="Messaging-container">
             <title>Social App V2</title>
 
             {state.error !== null ? (
-                <div className="Application-error">
+                <div className="Messaging-error">
                     <h1>There was an error!</h1>
                     <p>{state.error}</p>
                 </div>
             ) : (
-                <div className="Application">
+                <div className="Messaging">
                     {/* {state.sidebar.open === true && ( */}
                     <Sidebar mobileMode={mobileMode} />
                     {/* )} */}
 
                     {state.selectedFriend.messagesGroupId !== null && (
-                        <Messaging mobileMode={mobileMode} />
+                        <Messages mobileMode={mobileMode} />
                     )}
                 </div>
             )}

@@ -38,13 +38,17 @@ export default function App() {
                         >
                             Login
                         </button>
-                        <button onClick={() => (window.location.href = '/app')}>
+                        <button
+                            onClick={() =>
+                                (window.location.href = '/messaging')
+                            }
+                        >
                             Dev
                         </button>
                     </div>
                     <div className="App-selection-footer">
                         <p>
-                            🇬🇧 Made by{' '}
+                            Made by{' '}
                             <span
                                 onClick={() =>
                                     window.open(

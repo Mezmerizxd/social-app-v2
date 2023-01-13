@@ -17,7 +17,7 @@ import {
 export default function FriendRequests() {
     const [context, setContext] = useState<string>('sent');
 
-    const state = useAppSelector((state) => state.application);
+    const state = useAppSelector((state) => state.messaging);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

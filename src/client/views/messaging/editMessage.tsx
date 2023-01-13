@@ -9,7 +9,7 @@ export default function EditMessage() {
     const [error, setError] = useState(null);
 
     const dispatch = useAppDispatch();
-    const state = useAppSelector((state) => state.application);
+    const state = useAppSelector((state) => state.messaging);
 
     const [newMessage, setNewMessage] = useState(state.selectedMessage.content);
 

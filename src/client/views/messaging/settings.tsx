@@ -14,7 +14,7 @@ export default function Settings() {
     const [editAvatar, setEditAvatar] = useState(false);
     const [editAvatarValue, setEditAvatarValue] = useState(null);
 
-    const state = useAppSelector((state) => state.application);
+    const state = useAppSelector((state) => state.messaging);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
