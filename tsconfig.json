@@ -19,5 +19,5 @@
         "jsx": "react-jsx",
         "types": ["@types/node"]
     },
-    "include": ["src/client/*", "src/client/types.d.ts"]
+    "include": ["src/client/**/*", "src/client/types.d.ts"]
 }

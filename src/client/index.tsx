@@ -5,6 +5,7 @@ import PageNotFound from './views/pagenotfound';
 import VerifyEmail from './views/verifyemail';
 import Authentication from './views/authentication';
 import Messaging from './views/messaging';
+import Globe from './views/globe';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { RouterContainer } from './styled';
@@ -24,6 +25,7 @@ root.render(
                         element={<Authentication />}
                     />
                     <Route path="/messaging" element={<Messaging />} />
+                    <Route path="/globe" element={<Globe />} />
                     <Route path="/verify-email" element={<VerifyEmail />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>

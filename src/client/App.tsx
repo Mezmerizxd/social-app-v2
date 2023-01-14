@@ -49,6 +49,9 @@ export default function App() {
                             <button onClick={() => setWindowHref('/messaging')}>
                                 Messaging
                             </button>
+                            <button onClick={() => setWindowHref('/globe')}>
+                                The Globe
+                            </button>
                         </SelectionOptions>
                     </SelectionOptionsContainer>
                     <SelectionFooter>

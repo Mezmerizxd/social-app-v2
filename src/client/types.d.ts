@@ -99,6 +99,17 @@ declare namespace Client.Messaging {
         };
     }
 }
+declare namespace Client.Styled {
+    interface ColorData {
+        hex: string;
+        rgb?: string;
+        rawRgb?: [r: number, g: number, b: number];
+    }
+    interface Theme {
+        colors: Record<string, ColorData>;
+        text: Record<string, ColorData>;
+    }
+}
 declare namespace Client.Styled.Components {}
 declare namespace Client.Styled.Components.Loading {
     interface Default {

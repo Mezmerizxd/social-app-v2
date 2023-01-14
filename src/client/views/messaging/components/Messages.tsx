@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
 import Socket from '../../../classes/Socket';
-import Utils from '../../../classes/Utils';
+import { TimeAgo } from '../../../lib/util';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import {
     addMessage,
@@ -149,9 +149,7 @@ export default function Messages({ mobileMode }: Client.Messaging.Messages) {
                                 <MessagesMessagesMessageContentDetails>
                                     <p id="username">{message.username}</p>
                                     <p id="date">
-                                        {Utils.TimeAgo(
-                                            JSON.parse(message.dateSent)
-                                        )}
+                                        {TimeAgo(JSON.parse(message.dateSent))}
                                     </p>
                                     {state.selectedMessage.isHovering &&
                                         message.userId === state.user.userId &&
