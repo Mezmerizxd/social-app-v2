@@ -1,17 +1,28 @@
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import Features from '../../features';
-import { CustomButton, CustomSettingsInputField } from '../../styles';
+import SettingsTextField from '../../../../styled/components/inputs/SettingsTextField';
+import Button from '../../../../styled/components/buttons/Button';
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../hooks/reduxHooks';
 import { editUserData, toggleSettingsPopup } from '../../reducer';
+import {
+    Container,
+    Popup,
+    PopupTitle,
+    PopupActionsCenter,
+    PopupSettingsContent,
+    PopupSettingsContentAccount,
+    PopupSettingsContentProfile,
+    PopupSettingsContentProfileImage,
+} from './styled';
 
 export default function Settings() {
     const [editUsernameLocked, setEditUsernameLocked] = useState(true);
-    const [editUsernameValue, setEditUsernameValue] = useState(null);
+    const [editUsernameValue, setEditUsernameValue] = useState('');
     const [error, setError] = useState(null);
     const [editAvatar, setEditAvatar] = useState(false);
-    const [editAvatarValue, setEditAvatarValue] = useState(null);
+    const [editAvatarValue, setEditAvatarValue] = useState('');
 
     const state = useAppSelector((state) => state.messaging);
     const dispatch = useAppDispatch();
@@ -66,14 +77,14 @@ export default function Settings() {
     };
 
     return (
-        <div className="Popup-container" onClick={close}>
-            <div className="Popup-basic" onClick={(e) => e.stopPropagation()}>
-                <div className="Popup-basic-title">
+        <Container onClick={close}>
+            <Popup onClick={(e) => e.stopPropagation()}>
+                <PopupTitle>
                     <h1>Settings</h1>
-                </div>
-                <div className="Popup-settings-content">
-                    <div className="Settings-content-profile">
-                        <div className="Settings-content-profile-image">
+                </PopupTitle>
+                <PopupSettingsContent>
+                    <PopupSettingsContentProfile>
+                        <PopupSettingsContentProfileImage>
                             {editAvatar === false && (
                                 <EditIcon
                                     style={{ background: '#61B84B' }}
@@ -98,9 +109,9 @@ export default function Settings() {
                                 }
                                 alt=""
                             />
-                        </div>
+                        </PopupSettingsContentProfileImage>
                         {editUsernameLocked === true && (
-                            <CustomSettingsInputField
+                            <SettingsTextField
                                 label={state.user.username}
                                 disabled={true}
                                 type="text"
@@ -111,7 +122,7 @@ export default function Settings() {
                             />
                         )}
                         {editUsernameLocked === false && (
-                            <CustomSettingsInputField
+                            <SettingsTextField
                                 label={state.user.username}
                                 disabled={false}
                                 type="text"
@@ -150,11 +161,11 @@ export default function Settings() {
                                     />
                                 </i>
                             )}
-                    </div>
-                    {error && <p className="username-error">{error}</p>}
-                    <div className="Settings-content-account">
+                    </PopupSettingsContentProfile>
+                    {error && <p id="username-error">{error}</p>}
+                    <PopupSettingsContentAccount>
                         {editAvatar === true && (
-                            <CustomSettingsInputField
+                            <SettingsTextField
                                 label={`Example: https://i.pravatar.cc/300`}
                                 disabled={editAvatar ? false : true}
                                 type="url"
@@ -167,7 +178,7 @@ export default function Settings() {
                                 }
                             />
                         )}
-                        <CustomSettingsInputField
+                        <SettingsTextField
                             label={`Email: ${state.user.email}`}
                             disabled={true}
                             type="text"
@@ -175,7 +186,7 @@ export default function Settings() {
                             key="email"
                             name="email"
                         />
-                        <CustomSettingsInputField
+                        <SettingsTextField
                             label={`User ID: ${state.user.userId}`}
                             disabled={true}
                             type="text"
@@ -183,14 +194,14 @@ export default function Settings() {
                             key="userid"
                             name="userid"
                         />
-                    </div>
-                </div>
-                <div className="Popup-basic-action-center">
-                    <CustomButton id="close" onClick={close}>
+                    </PopupSettingsContentAccount>
+                </PopupSettingsContent>
+                <PopupActionsCenter>
+                    <Button id="close" onClick={close}>
                         Close
-                    </CustomButton>
-                </div>
-            </div>
-        </div>
+                    </Button>
+                </PopupActionsCenter>
+            </Popup>
+        </Container>
     );
 }

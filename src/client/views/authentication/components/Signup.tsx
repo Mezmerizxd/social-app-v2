@@ -2,7 +2,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import InputAdornment from '@mui/material/InputAdornment';
 import KeyIcon from '@mui/icons-material/Key';
-import { CustomTextField, CustomButton, CustomCheckBox } from '../styles';
+import TextField from '../../../styled/components/inputs/TextField';
+import Checkbox from '../../../styled/components/inputs/Checkbox';
+import Button from '../../../styled/components/buttons/Button';
 import Api from '../../../classes/Api';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../hooks/reduxHooks';
@@ -43,8 +45,8 @@ export default function Signup() {
     }
 
     return (
-        <div className="Signup-container">
-            <CustomTextField
+        <>
+            <TextField
                 id="email"
                 label="Email"
                 key="email"
@@ -62,7 +64,7 @@ export default function Signup() {
                 value={emailValue}
             />
 
-            <CustomTextField
+            <TextField
                 id="username"
                 label="Username"
                 key="username"
@@ -79,7 +81,7 @@ export default function Signup() {
                 value={usernameValue}
             />
 
-            <CustomTextField
+            <TextField
                 id="password"
                 label="Password (USE FAKE PASSWORD)"
                 key="password"
@@ -96,7 +98,7 @@ export default function Signup() {
                 value={passwordValue}
             />
 
-            <CustomCheckBox
+            <Checkbox
                 label="Remember Me"
                 checked={remember}
                 state={setRemember}
@@ -104,11 +106,11 @@ export default function Signup() {
 
             {errorValue && <p id="error">{errorValue}</p>}
 
-            <CustomButton onClick={handleSignup}>Signup</CustomButton>
+            <Button onClick={handleSignup}>Signup</Button>
 
             <p onClick={() => dispatch(setContext(0))}>
                 Login with existing account
             </p>
-        </div>
+        </>
     );
 }

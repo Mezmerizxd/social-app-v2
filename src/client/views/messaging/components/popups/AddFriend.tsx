@@ -1,11 +1,20 @@
-import { CustomTextField, CustomButton } from '../../styles';
+import TextField from '../../../../styled/components/inputs/TextField';
+import Button from '../../../../styled/components/buttons/Button';
 import { useState } from 'react';
 import Api from '../../../../classes/Api';
 import { useAppDispatch } from '../../../../hooks/reduxHooks';
 import { toggleAddFriendPopup } from '../../reducer';
+import {
+    Container,
+    Popup,
+    PopupTitle,
+    PopupContent,
+    PopupError,
+    PopupActions,
+} from './styled';
 
 export default function AddFriend() {
-    const [usernameValue, setUsernameValue] = useState(null);
+    const [usernameValue, setUsernameValue] = useState('');
     const [error, setError] = useState(null);
 
     const dispatch = useAppDispatch();
@@ -29,13 +38,13 @@ export default function AddFriend() {
     };
 
     return (
-        <div className="Popup-container" onClick={close}>
-            <div className="Popup-basic" onClick={(e) => e.stopPropagation()}>
-                <div className="Popup-basic-title">
+        <Container onClick={close}>
+            <Popup onClick={(e) => e.stopPropagation()}>
+                <PopupTitle>
                     <h1>Add Friend</h1>
-                </div>
-                <div className="Popup-basic-content">
-                    <CustomTextField
+                </PopupTitle>
+                <PopupContent>
+                    <TextField
                         label={'Enter a username'}
                         type="text"
                         id={'addfriend'}
@@ -47,21 +56,21 @@ export default function AddFriend() {
                         }}
                         value={usernameValue}
                     />
-                </div>
+                </PopupContent>
                 {error && (
-                    <div className="Popup-basic-error">
+                    <PopupError>
                         <p>{error}</p>
-                    </div>
+                    </PopupError>
                 )}
-                <div className="Popup-basic-actions">
-                    <CustomButton id="close" onClick={close}>
+                <PopupActions>
+                    <Button id="close" onClick={close}>
                         Close
-                    </CustomButton>
-                    <CustomButton id="send" onClick={send}>
+                    </Button>
+                    <Button id="send" onClick={send}>
                         Send
-                    </CustomButton>
-                </div>
-            </div>
-        </div>
+                    </Button>
+                </PopupActions>
+            </Popup>
+        </Container>
     );
 }

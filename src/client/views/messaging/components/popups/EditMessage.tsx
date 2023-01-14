@@ -1,8 +1,17 @@
-import { CustomButton, CustomTextField } from '../../styles';
+import TextField from '../../../../styled/components/inputs/TextField';
+import Button from '../../../../styled/components/buttons/Button';
 import { useState } from 'react';
 import Api from '../../../../classes/Api';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { editMessage, toggleEditMessagePopup } from '../../reducer';
+import {
+    Container,
+    Popup,
+    PopupTitle,
+    PopupContent,
+    PopupError,
+    PopupActions,
+} from './styled';
 
 export default function EditMessage() {
     const [error, setError] = useState(null);
@@ -34,37 +43,39 @@ export default function EditMessage() {
     };
 
     return (
-        <div className="Popup-container" onClick={close}>
-            <div className="Popup-basic" onClick={(e) => e.stopPropagation()}>
-                <div className="Popup-basic-title">
+        <Container onClick={close}>
+            <Popup onClick={(e) => e.stopPropagation()}>
+                <PopupTitle>
                     <h1>Edit Message</h1>
-                </div>
-                <CustomTextField
-                    label={state.selectedMessage.content}
-                    type="text"
-                    id={'editMessage'}
-                    key={'editMessage'}
-                    name={'Edit Message'}
-                    autoFocus={true}
-                    onChange={(e) => {
-                        setNewMessage(e.target.value);
-                    }}
-                    value={newMessage}
-                />
+                </PopupTitle>
+                <PopupContent>
+                    <TextField
+                        label={state.selectedMessage.content}
+                        type="text"
+                        id={'editMessage'}
+                        key={'editMessage'}
+                        name={'Edit Message'}
+                        autoFocus={true}
+                        onChange={(e) => {
+                            setNewMessage(e.target.value);
+                        }}
+                        value={newMessage}
+                    />
+                </PopupContent>
                 {error && (
-                    <div className="Popup-basic-error">
+                    <PopupError>
                         <p>{error}</p>
-                    </div>
+                    </PopupError>
                 )}
-                <div className="Popup-basic-actions">
-                    <CustomButton id="close" onClick={close}>
+                <PopupActions>
+                    <Button id="close" onClick={close}>
                         Cancel
-                    </CustomButton>
-                    <CustomButton id="send" onClick={confirm}>
+                    </Button>
+                    <Button id="send" onClick={confirm}>
                         Confirm
-                    </CustomButton>
-                </div>
-            </div>
-        </div>
+                    </Button>
+                </PopupActions>
+            </Popup>
+        </Container>
     );
 }

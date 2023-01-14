@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import './styles.scss';
+import { Container, MessagignError, MessagingContainer } from './styled';
 import Sidebar from './components/Sidebar';
 import Messages from './components/Messages';
 import AddFriend from './components/popups/AddFriend';
@@ -57,16 +57,16 @@ export default function Messaging() {
     });
 
     return (
-        <div className="Messaging-container">
+        <Container>
             <title>Social App V2</title>
 
             {state.error !== null ? (
-                <div className="Messaging-error">
+                <MessagignError>
                     <h1>There was an error!</h1>
                     <p>{state.error}</p>
-                </div>
+                </MessagignError>
             ) : (
-                <div className="Messaging">
+                <MessagingContainer>
                     {/* {state.sidebar.open === true && ( */}
                     <Sidebar mobileMode={mobileMode} />
                     {/* )} */}
@@ -74,7 +74,7 @@ export default function Messaging() {
                     {state.selectedFriend.messagesGroupId !== null && (
                         <Messages mobileMode={mobileMode} />
                     )}
-                </div>
+                </MessagingContainer>
             )}
 
             {/* Popups */}
@@ -83,6 +83,6 @@ export default function Messaging() {
             {state.settingsPopup.open && <Settings />}
             {state.deleteMessagePopup.open && <DeleteMessage />}
             {state.editMessagePopup.open && <EditMessage />}
-        </div>
+        </Container>
     );
 }

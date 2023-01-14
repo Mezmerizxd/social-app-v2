@@ -15,7 +15,7 @@ export default new (class GetFriendRequests {
 
         try {
             if (!user.data().friendRequests) {
-                Responder(res, 'error', null, 'No friend requests.');
+                Responder(res, 'success', null, 'No friend requests.');
                 return;
             }
             // Return data

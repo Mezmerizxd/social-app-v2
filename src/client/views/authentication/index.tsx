@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import './styles.scss';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { useAppSelector } from '../../hooks/reduxHooks';
+import { Container, ContextContainer, ContextTitle } from './styled';
+import { setWindowHref } from '../../lib/util';
 
 export default function Authentication() {
     const state = useAppSelector((state) => state.authentication);
@@ -15,18 +16,16 @@ export default function Authentication() {
     }, []);
 
     return (
-        <div className="Authentication-container">
+        <Container>
             <title>{state.context === 0 ? 'Login' : 'Sign Up'}</title>
-            <div className="Authentication-context-container">
-                <div className="Authentication-context-title">
-                    <ArrowBackIcon
-                        onClick={() => (window.location.href = '/')}
-                    />
+            <ContextContainer>
+                <ContextTitle>
+                    <ArrowBackIcon onClick={() => setWindowHref('/')} />
                     <h1>{state.context === 0 ? 'Login' : 'Sign Up'}</h1>
-                </div>
+                </ContextTitle>
                 {state.context === 0 && <Login />}
                 {state.context === 1 && <Signup />}
-            </div>
-        </div>
+            </ContextContainer>
+        </Container>
     );
 }

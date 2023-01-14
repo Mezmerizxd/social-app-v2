@@ -1,40 +1,7 @@
 import styled from '@emotion/styled';
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
-export const CustomTextField = styled(TextField)({
-    width: '100%',
-    marginTop: 20,
-    '& label': {
-        color: 'white',
-    },
-    '& input': {
-        color: 'white',
-    },
-    '& label.Mui-focused': {
-        color: 'white',
-    },
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderColor: 'white',
-        },
-        '&:hover fieldset': {
-            borderColor: 'rgb(200, 200, 200)',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: 'white',
-        },
-    },
-    '& svg': {
-        color: 'white',
-    },
-});
-
-export const CustomButton = styled(Button)({
-    color: 'black',
-    backgroundColor: 'white',
-});
-
-export const CustomSettingsInputField = styled(TextField)({
+export default styled(TextField)({
     width: '100%',
     marginTop: '10px',
     marginBottom: '10px',

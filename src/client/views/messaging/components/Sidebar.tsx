@@ -12,6 +12,15 @@ import {
     toggleSettingsPopup,
     toggleSidebar,
 } from '../reducer';
+import {
+    SidebarContent,
+    SidebarContainer,
+    SidebarTitle,
+    SidebarActionbar,
+    SidebarFriendslist,
+    SidebarFriendslistNoFriends,
+    SidebarFriend,
+} from './styled';
 
 export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
     const state = useAppSelector((state) => state.messaging);
@@ -39,8 +48,7 @@ export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
     };
 
     return (
-        <div
-            className="Messaging-sidebar-container"
+        <SidebarContainer
             style={
                 mobileMode
                     ? state.sidebar.open
@@ -51,7 +59,7 @@ export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
                     : { width: '0' }
             }
         >
-            <div className="Messaging-sidebar-title">
+            <SidebarTitle>
                 <AddIcon
                     id="add"
                     onClick={() => dispatch(toggleAddFriendPopup())}
@@ -72,18 +80,17 @@ export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
                             }
                         />
                     )}
-            </div>
-            <div className="Messaging-sidebar">
-                <div className="Messaging-sidebar-friendslist">
+            </SidebarTitle>
+            <SidebarContent>
+                <SidebarFriendslist>
                     {!state.friends && (
-                        <div className="no-friends">
+                        <SidebarFriendslistNoFriends>
                             <h1>No friends found</h1>
-                        </div>
+                        </SidebarFriendslistNoFriends>
                     )}
                     {state.friends &&
                         state.friends.map((friend) => (
-                            <div
-                                className="friend"
+                            <SidebarFriend
                                 id={friend.userId}
                                 key={friend.userId}
                                 onClick={() =>
@@ -104,10 +111,10 @@ export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
                             >
                                 <img src={friend.avatar} alt={friend.avatar} />
                                 <p>{friend.username}</p>
-                            </div>
+                            </SidebarFriend>
                         ))}
-                </div>
-                <div className="Messaging-sidebar-actionbar">
+                </SidebarFriendslist>
+                <SidebarActionbar>
                     <HomeIcon onClick={() => (window.location.href = '/')} />
                     <SettingsIcon
                         onClick={() => dispatch(toggleSettingsPopup())}
@@ -116,8 +123,8 @@ export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
                         onClick={() => dispatch(toggleFriendRequestsPopup())}
                     />
                     <p>{state?.user?.username}</p>
-                </div>
-            </div>
-        </div>
+                </SidebarActionbar>
+            </SidebarContent>
+        </SidebarContainer>
     );
 }

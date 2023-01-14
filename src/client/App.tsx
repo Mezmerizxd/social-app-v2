@@ -1,5 +1,14 @@
 import { useEffect, useState } from 'react';
-import './styles.scss';
+import { setWindowHref } from './lib/util';
+import {
+    Container,
+    SelectionContainer,
+    Selection,
+    SelectionTitle,
+    SelectionOptionsContainer,
+    SelectionOptions,
+    SelectionFooter,
+} from './styled';
 
 export default function App() {
     const [state, setState] = useState(null);
@@ -18,37 +27,31 @@ export default function App() {
     }, []);
 
     return (
-        <div className="App-container">
+        <Container>
             <title>App</title>
-            <div className="App-selection-container">
-                <div className="App-selection">
-                    <div className="App-selection-title">
+            <SelectionContainer>
+                <Selection>
+                    <SelectionTitle>
                         <h1>Social App v2</h1>
                         <a href={state?.repository}>
                             <p>
                                 {state?.name} - v{state?.version}
                             </p>
                         </a>
-                    </div>
-                    <div className="App-selection-options-container">
-                        <div className="App-selection-options">
+                    </SelectionTitle>
+                    <SelectionOptionsContainer>
+                        <SelectionOptions>
                             <button
-                                onClick={() =>
-                                    (window.location.href = '/authentication')
-                                }
+                                onClick={() => setWindowHref('/authentication')}
                             >
                                 Login
                             </button>
-                            <button
-                                onClick={() =>
-                                    (window.location.href = '/messaging')
-                                }
-                            >
+                            <button onClick={() => setWindowHref('/messaging')}>
                                 Messaging
                             </button>
-                        </div>
-                    </div>
-                    <div className="App-selection-footer">
+                        </SelectionOptions>
+                    </SelectionOptionsContainer>
+                    <SelectionFooter>
                         <p>
                             Made by{' '}
                             <span
@@ -62,9 +65,9 @@ export default function App() {
                                 {state?.author}
                             </span>
                         </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </SelectionFooter>
+                </Selection>
+            </SelectionContainer>
+        </Container>
     );
 }

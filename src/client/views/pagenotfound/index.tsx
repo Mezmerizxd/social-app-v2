@@ -1,12 +1,12 @@
-import './styles.scss';
+import { Container, Card } from './styled';
 
 export default function PageNotFound() {
     return (
-        <div className="PageNotFound-container">
+        <Container>
             <title>Page Not Found</title>
-            <div className="PageNotFound">
+            <Card>
                 <p>Page Not Found</p>
-            </div>
-        </div>
+            </Card>
+        </Container>
     );
 }

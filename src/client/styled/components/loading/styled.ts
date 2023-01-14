@@ -1,4 +1,6 @@
-.Loading-container {
+import styled from 'styled-components';
+
+export const LoadingContainer = styled.div`
     position: absolute;
     width: inherit;
     height: inherit;
@@ -9,15 +11,15 @@
     background: rgba(1, 1, 1, 0.6);
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
+`;
 
-    .Loading-default {
-        display: inline-block;
-        position: relative;
-        width: 80px;
-        height: 80px;
-    }
+export const LoadingDefault = styled.div`
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
 
-    .Loading-default div {
+    div {
         position: absolute;
         width: 6px;
         height: 6px;
@@ -25,62 +27,62 @@
         border-radius: 50%;
         animation: Loading-default 1.2s linear infinite;
     }
-    .Loading-default div:nth-child(1) {
+    div:nth-child(1) {
         animation-delay: 0s;
         top: 37px;
         left: 66px;
     }
-    .Loading-default div:nth-child(2) {
+    div:nth-child(2) {
         animation-delay: -0.1s;
         top: 22px;
         left: 62px;
     }
-    .Loading-default div:nth-child(3) {
+    div:nth-child(3) {
         animation-delay: -0.2s;
         top: 11px;
         left: 52px;
     }
-    .Loading-default div:nth-child(4) {
+    div:nth-child(4) {
         animation-delay: -0.3s;
         top: 7px;
         left: 37px;
     }
-    .Loading-default div:nth-child(5) {
+    div:nth-child(5) {
         animation-delay: -0.4s;
         top: 11px;
         left: 22px;
     }
-    .Loading-default div:nth-child(6) {
+    div:nth-child(6) {
         animation-delay: -0.5s;
         top: 22px;
         left: 11px;
     }
-    .Loading-default div:nth-child(7) {
+    div:nth-child(7) {
         animation-delay: -0.6s;
         top: 37px;
         left: 7px;
     }
-    .Loading-default div:nth-child(8) {
+    div:nth-child(8) {
         animation-delay: -0.7s;
         top: 52px;
         left: 11px;
     }
-    .Loading-default div:nth-child(9) {
+    div:nth-child(9) {
         animation-delay: -0.8s;
         top: 62px;
         left: 22px;
     }
-    .Loading-default div:nth-child(10) {
+    div:nth-child(10) {
         animation-delay: -0.9s;
         top: 66px;
         left: 37px;
     }
-    .Loading-default div:nth-child(11) {
+    div:nth-child(11) {
         animation-delay: -1s;
         top: 62px;
         left: 52px;
     }
-    .Loading-default div:nth-child(12) {
+    div:nth-child(12) {
         animation-delay: -1.1s;
         top: 52px;
         left: 62px;
@@ -97,4 +99,4 @@
             transform: scale(1.5);
         }
     }
-}
+`;

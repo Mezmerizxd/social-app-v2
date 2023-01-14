@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Api from '../../classes/Api';
-import './styles.scss';
+import { Container, Card, Verify } from './styled';
 
 export default function VerifyEmail() {
     const [query] = useSearchParams();
@@ -23,16 +23,16 @@ export default function VerifyEmail() {
     }, []);
 
     return (
-        <div className="VerifyEmail-container">
+        <Container>
             <title>Email Verification</title>
-            <div className="VerifyEmail-card">
-                <div className="VerifyEmail">
+            <Card>
+                <Verify>
                     <h1>Email Verification</h1>
                     {error && <p>{error}</p>}
                     {!isVerified && !error && <p>Verifying...</p>}
                     {isVerified === true && <p>Successfully Verified</p>}
-                </div>
-            </div>
-        </div>
+                </Verify>
+            </Card>
+        </Container>
     );
 }

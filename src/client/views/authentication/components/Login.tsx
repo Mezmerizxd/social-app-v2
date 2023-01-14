@@ -1,16 +1,17 @@
 import EmailIcon from '@mui/icons-material/Email';
 import InputAdornment from '@mui/material/InputAdornment';
 import KeyIcon from '@mui/icons-material/Key';
-
-import { CustomTextField, CustomButton, CustomCheckBox } from '../styles';
+import TextField from '../../../styled/components/inputs/TextField';
+import Checkbox from '../../../styled/components/inputs/Checkbox';
+import Button from '../../../styled/components/buttons/Button';
 import { useEffect, useState } from 'react';
 import Api from '../../../classes/Api';
 import { useAppDispatch } from '../../../hooks/reduxHooks';
 import { setContext } from '../reducer';
 
 export default function Login() {
-    const [emailValue, setEmailValue] = useState<string>(null);
-    const [passwordValue, setPassowrdValue] = useState<string>(null);
+    const [emailValue, setEmailValue] = useState<string>('');
+    const [passwordValue, setPassowrdValue] = useState<string>('');
     const [errorValue, setErrorValue] = useState<string>(null);
     const [remember, setRemember] = useState<boolean>(false);
 
@@ -42,8 +43,8 @@ export default function Login() {
     }
 
     return (
-        <div className="Login-container">
-            <CustomTextField
+        <>
+            <TextField
                 id="email"
                 label="Email"
                 key="email"
@@ -61,7 +62,7 @@ export default function Login() {
                 value={emailValue}
             />
 
-            <CustomTextField
+            <TextField
                 id="password"
                 label="Password"
                 key="password"
@@ -78,7 +79,7 @@ export default function Login() {
                 value={passwordValue}
             />
 
-            <CustomCheckBox
+            <Checkbox
                 label="Remember Me"
                 checked={remember}
                 state={setRemember}
@@ -86,9 +87,9 @@ export default function Login() {
 
             {errorValue && <p id="error">{errorValue}</p>}
 
-            <CustomButton onClick={handleLogin}>Login</CustomButton>
+            <Button onClick={handleLogin}>Login</Button>
 
             <p onClick={() => dispatch(setContext(1))}>Create an Account</p>
-        </div>
+        </>
     );
 }

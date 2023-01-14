@@ -1,8 +1,16 @@
-import { CustomButton } from '../../styles';
+import Button from '../../../../styled/components/buttons/Button';
 import { useState } from 'react';
 import Api from '../../../../classes/Api';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { rmMessage, toggleDeleteMessagePopup } from '../../reducer';
+import {
+    Container,
+    Popup,
+    PopupTitle,
+    PopupContent,
+    PopupError,
+    PopupActions,
+} from './styled';
 
 export default function DeleteMessage() {
     const [error, setError] = useState(null);
@@ -31,28 +39,28 @@ export default function DeleteMessage() {
     };
 
     return (
-        <div className="Popup-container" onClick={close}>
-            <div className="Popup-basic" onClick={(e) => e.stopPropagation()}>
-                <div className="Popup-basic-title">
+        <Container onClick={close}>
+            <Popup onClick={(e) => e.stopPropagation()}>
+                <PopupTitle>
                     <h1>Delete Message</h1>
-                </div>
-                <div className="Popup-basic-content">
+                </PopupTitle>
+                <PopupContent>
                     <p>Are you sure you want to delete this message?</p>
-                </div>
+                </PopupContent>
                 {error && (
-                    <div className="Popup-basic-error">
+                    <PopupError>
                         <p>{error}</p>
-                    </div>
+                    </PopupError>
                 )}
-                <div className="Popup-basic-actions">
-                    <CustomButton id="close" onClick={close}>
+                <PopupActions>
+                    <Button id="close" onClick={close}>
                         Cancel
-                    </CustomButton>
-                    <CustomButton id="send" onClick={confirm}>
+                    </Button>
+                    <Button id="send" onClick={confirm}>
                         Confirm
-                    </CustomButton>
-                </div>
-            </div>
-        </div>
+                    </Button>
+                </PopupActions>
+            </Popup>
+        </Container>
     );
 }

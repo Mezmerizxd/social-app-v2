@@ -107,8 +107,8 @@ export default new (class Features {
                 body: null,
             });
             if (response && response.success === true) {
-                sent = response.data.sent;
-                received = response.data.received;
+                sent = response.data?.sent;
+                received = response.data?.received;
             }
         }
         return {

@@ -34,16 +34,6 @@ declare namespace Client.Authentication {
     }
 }
 
-declare namespace Client.Authentication.Styles {
-    interface Checkbox {
-        label?: string;
-        required?: boolean;
-        checked?: boolean;
-        state?: any;
-        onClick?: () => void;
-    }
-}
-
 declare namespace Client.Messaging {
     interface Sidebar {
         mobileMode: boolean;
@@ -109,11 +99,20 @@ declare namespace Client.Messaging {
         };
     }
 }
-declare namespace Client.Components {}
-declare namespace Client.Components.Loading {
+declare namespace Client.Styled.Components {}
+declare namespace Client.Styled.Components.Loading {
     interface Default {
         isLoading: boolean;
         name: string;
         style?: any;
+    }
+}
+declare namespace Client.Styled.Components.Inputs {
+    interface Checkbox {
+        label?: string;
+        required?: boolean;
+        checked?: boolean;
+        state?: any;
+        onClick?: () => void;
     }
 }

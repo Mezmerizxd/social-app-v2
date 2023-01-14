@@ -4,7 +4,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Features from '../../features';
 import { useState, useEffect } from 'react';
-import { CustomButton } from '../../styles';
+import Button from '../../../../styled/components/buttons/Button';
 import Api from '../../../../classes/Api';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
@@ -12,6 +12,18 @@ import {
     setFriendRequestsPopupData,
     toggleFriendRequestsPopup,
 } from '../../reducer';
+import {
+    Container,
+    Popup,
+    PopupTitle,
+    PopupActionsCenter,
+    PopupTabbar,
+    PopupTabbarTab,
+    PopupFriendRequests,
+    PopupFriendRequestsNotFound,
+    PopupFriendRequestsRequest,
+    PopupFriendRequestsRequestActions,
+} from './styled';
 
 export default function FriendRequests() {
     const [context, setContext] = useState<string>('sent');
@@ -61,57 +73,54 @@ export default function FriendRequests() {
     };
 
     return (
-        <div className="Popup-container" onClick={close}>
-            <div className="Popup-basic" onClick={(e) => e.stopPropagation()}>
-                <div className="Popup-basic-title">
+        <Container onClick={close}>
+            <Popup onClick={(e) => e.stopPropagation()}>
+                <PopupTitle>
                     <h1>Friend Requests</h1>
-                </div>
+                </PopupTitle>
 
-                <div className="Popup-basic-tabbar">
-                    <div
-                        className="Popup-basic-tab"
+                <PopupTabbar>
+                    <PopupTabbarTab
                         id={context === 'sent' ? 'tab_selected' : ''}
                         onClick={() => setContext('sent')}
                     >
                         <SendIcon />
-                    </div>
-                    <div
-                        className="Popup-basic-tab"
+                    </PopupTabbarTab>
+                    <PopupTabbarTab
                         id={context === 'received' ? 'tab_selected' : ''}
                         onClick={() => setContext('received')}
                     >
                         <MailIcon />
-                    </div>
-                </div>
+                    </PopupTabbarTab>
+                </PopupTabbar>
 
-                <div className="Popup-basic-friendRequests">
+                <PopupFriendRequests>
                     {context === 'sent' && (
                         <>
                             {state.friendRequestsPopup.sent &&
                             state.friendRequestsPopup.sent.length > 0 ? (
                                 state.friendRequestsPopup.sent.map(
                                     (request) => (
-                                        <div
-                                            className="Popup-basic-friendRequests-request"
+                                        <PopupFriendRequestsRequest
                                             key={request.userId}
                                         >
                                             <img src={request.avatar} alt="" />
                                             <p>{request.username}</p>
-                                            <div className="Popup-basic-friendRequests-request-actions">
+                                            <PopupFriendRequestsRequestActions>
                                                 <CancelIcon
                                                     id="decline"
                                                     onClick={() =>
                                                         decline(request.userId)
                                                     }
                                                 />
-                                            </div>
-                                        </div>
+                                            </PopupFriendRequestsRequestActions>
+                                        </PopupFriendRequestsRequest>
                                     )
                                 )
                             ) : (
-                                <div className="Popup-basic-friendRequests-notfound">
+                                <PopupFriendRequestsNotFound>
                                     <p>No Request Sent</p>
-                                </div>
+                                </PopupFriendRequestsNotFound>
                             )}
                         </>
                     )}
@@ -122,13 +131,12 @@ export default function FriendRequests() {
                             state.friendRequestsPopup.received.length > 0 ? (
                                 state.friendRequestsPopup.received.map(
                                     (request) => (
-                                        <div
-                                            className="Popup-basic-friendRequests-request"
+                                        <PopupFriendRequestsRequest
                                             key={request.userId}
                                         >
                                             <img src={request.avatar} alt="" />
                                             <p>{request.username}</p>
-                                            <div className="Popup-basic-friendRequests-request-actions">
+                                            <PopupFriendRequestsRequestActions>
                                                 <CancelIcon
                                                     id="decline"
                                                     onClick={() =>
@@ -141,25 +149,25 @@ export default function FriendRequests() {
                                                         accept(request.userId)
                                                     }
                                                 />
-                                            </div>
-                                        </div>
+                                            </PopupFriendRequestsRequestActions>
+                                        </PopupFriendRequestsRequest>
                                     )
                                 )
                             ) : (
-                                <div className="Popup-basic-friendRequests-notfound">
+                                <PopupFriendRequestsNotFound>
                                     <p>No Request Received</p>
-                                </div>
+                                </PopupFriendRequestsNotFound>
                             )}
                         </>
                     )}
-                </div>
+                </PopupFriendRequests>
 
-                <div className="Popup-basic-action-center">
-                    <CustomButton id="close" onClick={close}>
+                <PopupActionsCenter>
+                    <Button id="close" onClick={close}>
                         Close
-                    </CustomButton>
-                </div>
-            </div>
-        </div>
+                    </Button>
+                </PopupActionsCenter>
+            </Popup>
+        </Container>
     );
 }

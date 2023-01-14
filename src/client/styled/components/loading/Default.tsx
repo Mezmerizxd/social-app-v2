@@ -1,14 +1,15 @@
-import './styles.scss';
+import React from 'react';
+import { LoadingContainer, LoadingDefault } from './styled';
 
-export default function LoadingDefault({
+export default ({
     isLoading,
     name,
     style,
-}: Client.Components.Loading.Default) {
+}: Client.Styled.Components.Loading.Default) => {
     return (
         isLoading && (
-            <div className="Loading-container" style={style}>
-                <div className="Loading-default" id={name} key={name}>
+            <LoadingContainer style={style}>
+                <LoadingDefault id={name} key={name}>
                     <div></div>
                     <div></div>
                     <div></div>
@@ -21,8 +22,8 @@ export default function LoadingDefault({
                     <div></div>
                     <div></div>
                     <div></div>
-                </div>
-            </div>
+                </LoadingDefault>
+            </LoadingContainer>
         )
     );
-}
+};

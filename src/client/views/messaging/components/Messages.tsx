@@ -13,7 +13,18 @@ import {
     toggleEditMessagePopup,
     toggleSidebar,
 } from '../reducer';
-import LoadingDefault from '../../../components/loading/default';
+import LoadingDefault from '../../../styled/components/loading/Default';
+import {
+    MessagesContainer,
+    MessagesTitlebar,
+    MessagesInput,
+    MessagesMessages,
+    MessagesMessagesNoMessages,
+    MessagesMessagesMessage,
+    MessagesMessagesMessageAvatar,
+    MessagesMessagesMessageContent,
+    MessagesMessagesMessageContentDetails,
+} from './styled';
 
 export default function Messages({ mobileMode }: Client.Messaging.Messages) {
     const [socket, setSocket] = useState(null);
@@ -57,8 +68,7 @@ export default function Messages({ mobileMode }: Client.Messaging.Messages) {
     };
 
     return (
-        <div
-            className="Messaging-messages-container"
+        <MessagesContainer
             style={
                 mobileMode
                     ? state.sidebar.open
@@ -69,7 +79,7 @@ export default function Messages({ mobileMode }: Client.Messaging.Messages) {
                     : { width: '100%' }
             }
         >
-            <div className="Messaging-messages-titlebar">
+            <MessagesTitlebar>
                 {state.sidebar.open ? (
                     <ArrowBackIcon
                         onClick={handleSidebar}
@@ -85,23 +95,22 @@ export default function Messages({ mobileMode }: Client.Messaging.Messages) {
                     <ArrowForwardIcon onClick={handleSidebar} />
                 )}
                 <h1>{state.selectedFriend.username}</h1>
-            </div>
-            <div className="Messaging-messages-messages">
+            </MessagesTitlebar>
+            <MessagesMessages>
                 <LoadingDefault
                     isLoading={!state.messages.length ? false : isLoading}
                     name="messaging"
                     style={{ width: 'calc(100% - 20px)' }}
                 />
                 {!state.messages && (
-                    <div className="no-messages">
+                    <MessagesMessagesNoMessages>
                         <h1>No messages found</h1>
-                    </div>
+                    </MessagesMessagesNoMessages>
                 )}
                 {state.messages &&
                     state.messages.length > 0 &&
                     state.messages.map((message, i) => (
-                        <div
-                            className="message"
+                        <MessagesMessagesMessage
                             key={message.messageId}
                             style={
                                 message.userId === state.user.userId
@@ -130,14 +139,14 @@ export default function Messages({ mobileMode }: Client.Messaging.Messages) {
                                 )
                             }
                         >
-                            <div className="message-avatar">
+                            <MessagesMessagesMessageAvatar>
                                 <img
                                     src={message.avatar}
                                     alt={message.avatar}
                                 />
-                            </div>
-                            <div className="message-content">
-                                <div className="message-content-details">
+                            </MessagesMessagesMessageAvatar>
+                            <MessagesMessagesMessageContent>
+                                <MessagesMessagesMessageContentDetails>
                                     <p id="username">{message.username}</p>
                                     <p id="date">
                                         {Utils.TimeAgo(
@@ -148,39 +157,33 @@ export default function Messages({ mobileMode }: Client.Messaging.Messages) {
                                         message.userId === state.user.userId &&
                                         state.selectedMessage.messageId ===
                                             message.messageId && (
-                                            <div>
+                                            <>
                                                 <DeleteIcon
-                                                    className="option"
+                                                    id="option"
                                                     onClick={() =>
                                                         dispatch(
                                                             toggleDeleteMessagePopup()
                                                         )
                                                     }
                                                 />
-                                                {/* <ReplyIcon
-                                                    className="option"
-                                                    onClick={() =>
-                                                        handleReply()
-                                                    }
-                                                /> */}
                                                 <EditIcon
-                                                    className="option"
+                                                    id="option"
                                                     onClick={() =>
                                                         dispatch(
                                                             toggleEditMessagePopup()
                                                         )
                                                     }
                                                 />
-                                            </div>
+                                            </>
                                         )}
-                                </div>
+                                </MessagesMessagesMessageContentDetails>
                                 <p id="message">{message.content}</p>
-                            </div>
-                        </div>
+                            </MessagesMessagesMessageContent>
+                        </MessagesMessagesMessage>
                     ))}
                 <div id="autoscroll"></div>
-            </div>
-            <div className="Messaging-messages-input">
+            </MessagesMessages>
+            <MessagesInput>
                 <input
                     id="message_input"
                     key="message_input"
@@ -196,7 +199,7 @@ export default function Messages({ mobileMode }: Client.Messaging.Messages) {
                         }
                     }}
                 />
-            </div>
-        </div>
+            </MessagesInput>
+        </MessagesContainer>
     );
 }
