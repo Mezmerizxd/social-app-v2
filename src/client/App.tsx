@@ -10,7 +10,7 @@ import {
     SelectionFooter,
 } from './styled';
 
-export default function App() {
+export default () => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
@@ -73,4 +73,4 @@ export default function App() {
             </SelectionContainer>
         </Container>
     );
-}
+};

@@ -1,16 +1,19 @@
 import { Container, SidebarContainer, ContentContainer } from './styled';
 import Optionbar from './components/Optionbar';
+import Content from './components/Content';
 
-export default function Globe() {
+export default () => {
     return (
         <Container>
             <SidebarContainer>
                 <Optionbar />
             </SidebarContainer>
 
-            <ContentContainer></ContentContainer>
+            <ContentContainer>
+                <Content />
+            </ContentContainer>
 
             <SidebarContainer></SidebarContainer>
         </Container>
     );
-}
+};

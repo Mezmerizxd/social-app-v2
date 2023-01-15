@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import Api from '../../classes/Api';
 import { Container, Card, Verify } from './styled';
 
-export default function VerifyEmail() {
+export default () => {
     const [query] = useSearchParams();
     const [error, setError] = useState<string | null>(null);
     const [isVerified, setIsVerified] = useState<boolean>(false);
@@ -35,4 +35,4 @@ export default function VerifyEmail() {
             </Card>
         </Container>
     );
-}
+};

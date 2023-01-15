@@ -12,7 +12,7 @@ import Features from './features';
 import { setUserData, setFriends, setError } from './reducer';
 import Api from '../../classes/Api';
 
-export default function Messaging() {
+export default () => {
     const [mobileMode, setMobileMode] = useState(false);
 
     const state = useAppSelector((state) => state.messaging);
@@ -85,4 +85,4 @@ export default function Messaging() {
             {state.editMessagePopup.open && <EditMessage />}
         </Container>
     );
-}
+};

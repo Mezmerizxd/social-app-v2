@@ -26,7 +26,7 @@ import {
     MessagesMessagesMessageContentDetails,
 } from './styled';
 
-export default function Messages({ mobileMode }: Client.Messaging.Messages) {
+export default ({ mobileMode }: Client.Messaging.Messages) => {
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState<string>('');
     const [isLoading, setIsLoading] = useState(true);
@@ -200,4 +200,4 @@ export default function Messages({ mobileMode }: Client.Messaging.Messages) {
             </MessagesInput>
         </MessagesContainer>
     );
-}
+};

@@ -1,6 +1,6 @@
 import { Sidebar, SidebarHeader } from './styled';
 
-export default function Optionbar() {
+export default () => {
     return (
         <Sidebar>
             <SidebarHeader>
@@ -8,4 +8,4 @@ export default function Optionbar() {
             </SidebarHeader>
         </Sidebar>
     );
-}
+};

@@ -25,7 +25,7 @@ import {
     PopupFriendRequestsRequestActions,
 } from './styled';
 
-export default function FriendRequests() {
+export default () => {
     const [context, setContext] = useState<string>('sent');
 
     const state = useAppSelector((state) => state.messaging);
@@ -170,4 +170,4 @@ export default function FriendRequests() {
             </Popup>
         </Container>
     );
-}
+};

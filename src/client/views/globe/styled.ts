@@ -15,6 +15,7 @@ export const ContentContainer = styled.div`
     border-left: 2px rgba(255, 255, 255, 0.116) solid;
     border-right: 2px rgba(255, 255, 255, 0.116) solid;
     grid-area: 1 / 2 / 2 / 3;
+    overflow-y: hidden;
 `;
 
 export const SidebarContainer = styled.div``;

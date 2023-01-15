@@ -22,7 +22,7 @@ import {
     SidebarFriend,
 } from './styled';
 
-export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
+export default ({ mobileMode }: Client.Messaging.Sidebar) => {
     const state = useAppSelector((state) => state.messaging);
     const dispatch = useAppDispatch();
 
@@ -127,4 +127,4 @@ export default function Sidebar({ mobileMode }: Client.Messaging.Sidebar) {
             </SidebarContent>
         </SidebarContainer>
     );
-}
+};
