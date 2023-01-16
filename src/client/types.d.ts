@@ -99,6 +99,19 @@ declare namespace Client.Messaging {
         };
     }
 }
+declare namespace Client.Globe {}
+declare namespace Client.Globe.Components {}
+declare namespace Client.Globe.Components.Widgets {}
+declare namespace Client.Globe.Components.Widgets.CreatePost {
+    interface State {
+        textArea: {
+            maxHeight: number;
+            increment: number;
+            value: string;
+        };
+    }
+}
+
 declare namespace Client.Styled {
     interface ColorData {
         hex: string;

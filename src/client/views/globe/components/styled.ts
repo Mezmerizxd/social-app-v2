@@ -34,7 +34,7 @@ export const Content = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 150px 1fr;
+    grid-template-rows: auto 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     overflow-y: hidden;
