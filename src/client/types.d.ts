@@ -99,7 +99,33 @@ declare namespace Client.Messaging {
         };
     }
 }
-declare namespace Client.Globe {}
+declare namespace Client.Globe {
+    interface InitialState {
+        account: {
+            userId: any;
+            username: any;
+            email: any;
+            avatar: any;
+        };
+        posts: Post[];
+        createPost: {
+            increment: number;
+            maxHeight: number;
+            value: string;
+        };
+    }
+
+    interface Post {
+        postId: any;
+        userId: any;
+        username: any;
+        avatar: any;
+        content: any;
+        datePosted: any;
+        likes: any;
+        comments: any;
+    }
+}
 declare namespace Client.Globe.Components {}
 declare namespace Client.Globe.Components.Widgets {}
 declare namespace Client.Globe.Components.Widgets.CreatePost {
@@ -109,6 +135,11 @@ declare namespace Client.Globe.Components.Widgets.CreatePost {
             increment: number;
             value: string;
         };
+    }
+}
+declare namespace Client.Globe.Components.Models {
+    interface Post extends Client.Globe.Post {
+        id: any;
     }
 }
 

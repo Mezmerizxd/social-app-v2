@@ -1,39 +1,41 @@
-import { useState } from 'react';
 import { CreatePost } from './styled';
 import Button from '../../../../styled/components/buttons/Button';
+import { useAppSelector, useAppDispatch } from '../../../../hooks/reduxHooks';
+import { handleCreatePostUi, addPost } from '../../reducer';
 
 export default () => {
-    const [state, setState] =
-        useState<Client.Globe.Components.Widgets.CreatePost.State>({
-            textArea: {
-                increment: 0,
-                maxHeight: 10,
-                value: '',
-            },
-        });
+    const state = useAppSelector((state) => state.globe);
+    const dispatch = useAppDispatch();
 
-    function handleTextAre(e: React.ChangeEvent<HTMLTextAreaElement>) {
-        setState({
-            ...state,
-            textArea: { ...state.textArea, value: e.target.value },
-        });
+    function handleTextArea(e: React.ChangeEvent<HTMLTextAreaElement>) {
+        dispatch(handleCreatePostUi({ value: e.target.value }));
         if (e.target.value === '') {
-            setState({
-                ...state,
-                textArea: { ...state.textArea, increment: 0 },
-            });
+            dispatch(handleCreatePostUi({ increment: 0 }));
         }
-        if (state.textArea.increment < state.textArea.maxHeight) {
+        if (state.createPost.increment < state.createPost.maxHeight) {
             if (e.target.scrollHeight > e.target.offsetHeight) {
-                setState({
-                    ...state,
-                    textArea: {
-                        ...state.textArea,
-                        increment: state.textArea.increment + 1,
-                    },
-                });
+                dispatch(
+                    handleCreatePostUi({
+                        increment: state.createPost.increment + 1,
+                    })
+                );
             }
         }
+    }
+
+    function handlePublish() {
+        const date = JSON.stringify(new Date()); // TODO: Change to server side
+        const post = {
+            id: state?.posts?.length + 1,
+            userId: state.account.userId,
+            username: state.account.username,
+            datePosted: date,
+            avatar: state.account.avatar,
+            comments: [],
+            content: state.createPost.value,
+            likes: [],
+        };
+        dispatch(addPost(post));
     }
 
     return (
@@ -44,10 +46,10 @@ export default () => {
                 cols={30}
                 rows={10}
                 placeholder="Type your message here."
-                onChange={handleTextAre.bind(this)}
-                style={{ height: `${(state.textArea.increment + 1) * 20}px` }}
+                onChange={handleTextArea.bind(this)}
+                style={{ height: `${(state.createPost.increment + 1) * 20}px` }}
             ></textarea>
-            <Button>Post</Button>
+            <Button onClick={handlePublish}>Publish</Button>
         </CreatePost>
     );
 };

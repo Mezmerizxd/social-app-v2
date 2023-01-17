@@ -1,3 +1,4 @@
+import { TimeAgo } from '../../../lib/util';
 import {
     Post,
     PostSidebar,
@@ -9,28 +10,39 @@ import {
     PostHeaderOptions,
 } from './styled';
 
-export default () => {
+export default ({
+    postId,
+    userId,
+    username,
+    id,
+    datePosted,
+    avatar,
+    comments,
+    content,
+    likes,
+}: Client.Globe.Components.Models.Post) => {
     return (
-        <Post>
+        <Post key={id} id={postId}>
             <PostSidebar>
                 <PostSidebarAvatar>
-                    <img
-                        src="https://avatars.githubusercontent.com/u/52637194"
-                        alt=""
-                    />
+                    <img src={avatar} alt="" />
                 </PostSidebarAvatar>
             </PostSidebar>
             <PostContentContainer>
                 <PostHeader>
                     <PostHeaderDetails>
-                        <h1>UserName555</h1>
-                        <p>@username555</p>
+                        <h1 id={userId}>{username}</h1>
+                        <p>{TimeAgo(JSON.parse(datePosted))}</p>
+                        {/* <p>@username555</p> */}
                     </PostHeaderDetails>
                     <PostHeaderOptions>
                         <i>***</i>
                     </PostHeaderOptions>
                 </PostHeader>
-                <PostContent>This is a short post</PostContent>
+                <PostContent>{content}</PostContent>
+                <p>
+                    Likes: {likes.length} | Comments: {comments.length}
+                </p>
             </PostContentContainer>
         </Post>
     );
