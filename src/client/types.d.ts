@@ -102,10 +102,10 @@ declare namespace Client.Messaging {
 declare namespace Client.Globe {
     interface InitialState {
         account: {
-            userId: any;
-            username: any;
-            email: any;
-            avatar: any;
+            userId: number;
+            username: string;
+            email: string;
+            avatar: string;
         };
         posts: Post[];
         createPost: {
@@ -116,14 +116,14 @@ declare namespace Client.Globe {
     }
 
     interface Post {
-        postId: any;
-        userId: any;
-        username: any;
-        avatar: any;
-        content: any;
-        datePosted: any;
-        likes: any;
-        comments: any;
+        postId: number;
+        userId: number;
+        username: string;
+        avatar: string;
+        content: string;
+        datePosted: string;
+        likes: number;
+        comments: number;
     }
 }
 declare namespace Client.Globe.Components {}

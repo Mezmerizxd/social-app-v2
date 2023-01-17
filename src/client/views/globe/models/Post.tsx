@@ -8,7 +8,11 @@ import {
     PostContentContainer,
     PostHeaderDetails,
     PostHeaderOptions,
+    PostContentOptionsContainer,
+    PostContentOption,
 } from './styled';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import CommentIcon from '@mui/icons-material/Comment';
 
 export default ({
     postId,
@@ -22,7 +26,7 @@ export default ({
     likes,
 }: Client.Globe.Components.Models.Post) => {
     return (
-        <Post key={id} id={postId}>
+        <Post key={id}>
             <PostSidebar>
                 <PostSidebarAvatar>
                     <img src={avatar} alt="" />
@@ -31,7 +35,7 @@ export default ({
             <PostContentContainer>
                 <PostHeader>
                     <PostHeaderDetails>
-                        <h1 id={userId}>{username}</h1>
+                        <h1>{username}</h1>
                         <p>{TimeAgo(JSON.parse(datePosted))}</p>
                         {/* <p>@username555</p> */}
                     </PostHeaderDetails>
@@ -39,10 +43,17 @@ export default ({
                         <i>***</i>
                     </PostHeaderOptions>
                 </PostHeader>
-                <PostContent>{content}</PostContent>
-                <p>
-                    Likes: {likes.length} | Comments: {comments.length}
-                </p>
+                <PostContent>
+                    <p>{content}</p>
+                </PostContent>
+                <PostContentOptionsContainer>
+                    <PostContentOption>
+                        <FavoriteBorderIcon /> <p>{likes}</p>
+                    </PostContentOption>
+                    <PostContentOption>
+                        <CommentIcon /> <p>{comments}</p>
+                    </PostContentOption>
+                </PostContentOptionsContainer>
             </PostContentContainer>
         </Post>
     );

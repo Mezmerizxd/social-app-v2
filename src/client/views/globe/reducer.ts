@@ -7,7 +7,18 @@ export const InitialState: Client.Globe.InitialState = {
         email: 'test@test.com',
         avatar: 'https://avatars.githubusercontent.com/u/52637194',
     },
-    posts: [],
+    posts: [
+        {
+            postId: 1,
+            userId: 1,
+            username: 'Mezmerizxd',
+            avatar: 'https://avatars.githubusercontent.com/u/52637194',
+            content: 'Hello world!',
+            datePosted: JSON.stringify(new Date()),
+            likes: 0,
+            comments: 0,
+        },
+    ],
     createPost: {
         increment: 0,
         maxHeight: 10,

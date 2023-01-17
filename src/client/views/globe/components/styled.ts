@@ -43,6 +43,7 @@ export const ContentCreatePostContainer = styled.div`
     border-bottom: 2px rgba(255, 255, 255, 0.116) solid;
 `;
 export const ContentPostsContainer = styled.div`
+    width: 100%;
     overflow-y: scroll;
     ::-webkit-scrollbar {
         width: 0px;

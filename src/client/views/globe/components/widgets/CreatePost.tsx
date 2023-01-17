@@ -7,7 +7,12 @@ export default () => {
     const state = useAppSelector((state) => state.globe);
     const dispatch = useAppDispatch();
 
-    function handleTextArea(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    function resetTextArea() {
+        dispatch(handleCreatePostUi({ value: '', increment: 0 }));
+    }
+
+    function handleTextAreOnChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+        console.log(e.target.innerText);
         dispatch(handleCreatePostUi({ value: e.target.value }));
         if (e.target.value === '') {
             dispatch(handleCreatePostUi({ increment: 0 }));
@@ -24,18 +29,20 @@ export default () => {
     }
 
     function handlePublish() {
-        const date = JSON.stringify(new Date()); // TODO: Change to server side
+        // TODO: Change to server side
+        const date = JSON.stringify(new Date());
         const post = {
             id: state?.posts?.length + 1,
             userId: state.account.userId,
             username: state.account.username,
             datePosted: date,
             avatar: state.account.avatar,
-            comments: [],
+            comments: 0,
             content: state.createPost.value,
-            likes: [],
+            likes: 0,
         };
         dispatch(addPost(post));
+        resetTextArea();
     }
 
     return (
@@ -46,10 +53,13 @@ export default () => {
                 cols={30}
                 rows={10}
                 placeholder="Type your message here."
-                onChange={handleTextArea.bind(this)}
+                onChange={handleTextAreOnChange.bind(this)}
+                value={state.createPost.value}
                 style={{ height: `${(state.createPost.increment + 1) * 20}px` }}
             ></textarea>
-            <Button onClick={handlePublish}>Publish</Button>
+            {state?.createPost?.value !== '' && (
+                <Button onClick={handlePublish}>Publish</Button>
+            )}
         </CreatePost>
     );
 };

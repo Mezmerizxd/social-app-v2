@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Post = styled.div`
+    width: calc(100% - 10px);
     background: rgba(35, 35, 35, 0.4);
     box-shadow: 0px 0px 2px 0px rgba(35, 35, 35, 0.75);
     margin-top: 10px;
@@ -26,7 +27,7 @@ export const PostSidebarAvatar = styled.div`
 export const PostContentContainer = styled.div`
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 480px;
     grid-template-rows: 0.1fr 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
@@ -62,8 +63,44 @@ export const PostHeaderOptions = styled.div`
     }
 `;
 export const PostContent = styled.div`
-    color: rgb(240, 240, 240);
-    font-family: 'Quicksand', sans-serif;
-    font-weight: lighter;
-    font-size: 1rem;
+    overflow-wrap: break-word;
+    p {
+        color: rgb(240, 240, 240);
+        font-family: 'Quicksand', sans-serif;
+        font-weight: lighter;
+        font-size: 1rem;
+        word-wrap: break-word;
+    }
+`;
+export const PostContentOptionsContainer = styled.div`
+    display: flex;
+`;
+export const PostContentOption = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+
+    p {
+        margin-left: 5px;
+        color: rgb(180, 180, 180);
+        transition: 0.2s;
+    }
+    svg {
+        width: 20px;
+        height: 20px;
+        color: rgb(180, 180, 180);
+        transition: 0.2s;
+    }
+    &:hover {
+        svg {
+            color: rgb(220, 220, 220);
+        }
+        p {
+            color: rgb(220, 220, 220);
+        }
+    }
 `;
