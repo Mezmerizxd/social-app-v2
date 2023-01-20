@@ -6,6 +6,7 @@ import {
 import CreatePost from './widgets/CreatePost';
 import Post from '../models/Post';
 import { useAppSelector } from '../../../hooks/reduxHooks';
+import PostOptions from './PostOptions';
 
 export default () => {
     const state = useAppSelector((state) => state.globe);
@@ -17,7 +18,7 @@ export default () => {
             </ContentCreatePostContainer>
             <ContentPostsContainer>
                 {state?.posts?.length > 0 &&
-                    state.posts.map(
+                    state?.posts?.map(
                         (
                             post: Client.Globe.Components.Models.Post,
                             i: number
@@ -36,6 +37,7 @@ export default () => {
                             />
                         )
                     )}
+                {state.postOptions.open && <PostOptions />}
             </ContentPostsContainer>
         </Content>
     );

@@ -106,12 +106,29 @@ declare namespace Client.Globe {
             username: string;
             email: string;
             avatar: string;
+            accountCreationDate: string;
+            authorization: string;
+            friends?: [{ userId: number; username: string; avatar: string }];
+            lastLoggedInDate: string;
+            verifiedEmail: boolean;
+            verifiedUser: boolean;
+        };
+        data: {
+            likedPosts: any;
         };
         posts: Post[];
         createPost: {
             increment: number;
             maxHeight: number;
             value: string;
+        };
+        postOptions: {
+            open: boolean;
+            posX: number;
+            posY: number;
+            selectedPostId: number;
+            selectedPostUserId: number;
+            selectedPostUsername: string;
         };
     }
 
@@ -124,6 +141,12 @@ declare namespace Client.Globe {
         datePosted: string;
         likes: number;
         comments: number;
+    }
+}
+declare namespace Client.Globe.Reducer {
+    interface Action {
+        type: string;
+        payload: any;
     }
 }
 declare namespace Client.Globe.Components {}

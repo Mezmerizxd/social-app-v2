@@ -12,7 +12,6 @@ export default () => {
     }
 
     function handleTextAreOnChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-        console.log(e.target.innerText);
         dispatch(handleCreatePostUi({ value: e.target.value }));
         if (e.target.value === '') {
             dispatch(handleCreatePostUi({ increment: 0 }));
@@ -34,6 +33,7 @@ export default () => {
         const post = {
             id: state?.posts?.length + 1,
             userId: state.account.userId,
+            postId: state?.posts?.length + 1,
             username: state.account.username,
             datePosted: date,
             avatar: state.account.avatar,
@@ -52,6 +52,7 @@ export default () => {
                 id=""
                 cols={30}
                 rows={10}
+                maxLength={500}
                 placeholder="Type your message here."
                 onChange={handleTextAreOnChange.bind(this)}
                 value={state.createPost.value}

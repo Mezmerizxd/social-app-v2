@@ -13,6 +13,9 @@ import {
 } from './styled';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CommentIcon from '@mui/icons-material/Comment';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useAppDispatch } from '../../../hooks/reduxHooks';
+import { handlePostOptionsUi, likePost } from '../reducer';
 
 export default ({
     postId,
@@ -25,8 +28,29 @@ export default ({
     content,
     likes,
 }: Client.Globe.Components.Models.Post) => {
+    const dispatch = useAppDispatch();
+
+    function handleOptions(e: any) {
+        const x = e.clientX;
+        const y = e.clientY;
+        dispatch(
+            handlePostOptionsUi({
+                posX: x,
+                posY: y,
+                open: true,
+                selectedPostId: postId,
+                selectedPostUserId: userId,
+                selectedPostUsername: username,
+            })
+        );
+    }
+
+    function handleLikePost() {
+        dispatch(likePost({ postId: postId }));
+    }
+
     return (
-        <Post key={id}>
+        <Post key={id + postId + userId}>
             <PostSidebar>
                 <PostSidebarAvatar>
                     <img src={avatar} alt="" />
@@ -37,17 +61,16 @@ export default ({
                     <PostHeaderDetails>
                         <h1>{username}</h1>
                         <p>{TimeAgo(JSON.parse(datePosted))}</p>
-                        {/* <p>@username555</p> */}
                     </PostHeaderDetails>
-                    <PostHeaderOptions>
-                        <i>***</i>
+                    <PostHeaderOptions onClick={(e: any) => handleOptions(e)}>
+                        <MoreHorizIcon />
                     </PostHeaderOptions>
                 </PostHeader>
                 <PostContent>
                     <p>{content}</p>
                 </PostContent>
                 <PostContentOptionsContainer>
-                    <PostContentOption>
+                    <PostContentOption onClick={handleLikePost}>
                         <FavoriteBorderIcon /> <p>{likes}</p>
                     </PostContentOption>
                     <PostContentOption>

@@ -39,10 +39,12 @@ export const PostHeader = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 `;
 export const PostHeaderDetails = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
     h1 {
         color: white;
         font-family: 'Quicksand', sans-serif;
@@ -58,8 +60,19 @@ export const PostHeaderDetails = styled.div`
     }
 `;
 export const PostHeaderOptions = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     * {
         color: rgb(180, 180, 180);
+    }
+    svg {
+        cursor: pointer;
+        transition: 0.2s;
+        &:hover {
+            color: rgb(220, 220, 220);
+        }
     }
 `;
 export const PostContent = styled.div`
@@ -83,6 +96,7 @@ export const PostContentOption = styled.div`
     padding: 5px;
     margin-right: 10px;
     cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
 
     p {
         margin-left: 5px;

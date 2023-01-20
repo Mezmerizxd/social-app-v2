@@ -16,6 +16,10 @@ export const SidebarHeader = styled.div`
     margin: auto;
     padding: 10px;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     border-bottom: 2px rgba(255, 255, 255, 0.116) solid;
     * {
         user-select: none;
@@ -47,5 +51,41 @@ export const ContentPostsContainer = styled.div`
     overflow-y: scroll;
     ::-webkit-scrollbar {
         width: 0px;
+    }
+`;
+
+// Post Options
+export const PostOptionsContainer = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+`;
+export const PostOptions = styled.div`
+    background: rgba(35, 35, 35, 0.8);
+    box-shadow: 0px 0px 2px 0px rgba(35, 35, 35, 0.75);
+    position: absolute;
+    transition: 0.2s;
+    width: 200px;
+    height: fit-content;
+`;
+export const PostOption = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: lighter;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    :hover {
+        background: rgba(255, 255, 255, 0.116);
+    }
+    svg {
+        margin-right: 10px;
     }
 `;
