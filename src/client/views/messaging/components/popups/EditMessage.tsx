@@ -13,7 +13,7 @@ import {
     PopupActions,
 } from './styled';
 
-export default function EditMessage() {
+export default () => {
     const [error, setError] = useState(null);
 
     const dispatch = useAppDispatch();
@@ -78,4 +78,4 @@ export default function EditMessage() {
             </Popup>
         </Container>
     );
-}
+};

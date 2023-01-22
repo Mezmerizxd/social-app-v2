@@ -99,6 +99,84 @@ declare namespace Client.Messaging {
         };
     }
 }
+declare namespace Client.Globe {
+    interface InitialState {
+        account: {
+            userId: number;
+            username: string;
+            email: string;
+            avatar: string;
+            accountCreationDate: string;
+            authorization: string;
+            friends?: [{ userId: number; username: string; avatar: string }];
+            lastLoggedInDate: string;
+            verifiedEmail: boolean;
+            verifiedUser: boolean;
+        };
+        data: {
+            likedPosts: any;
+        };
+        posts: Post[];
+        createPost: {
+            increment: number;
+            maxHeight: number;
+            value: string;
+        };
+        postOptions: {
+            open: boolean;
+            posX: number;
+            posY: number;
+            selectedPostId: number;
+            selectedPostUserId: number;
+            selectedPostUsername: string;
+        };
+    }
+
+    interface Post {
+        postId: number;
+        userId: number;
+        username: string;
+        avatar: string;
+        content: string;
+        datePosted: string;
+        likes: number;
+        comments: number;
+    }
+}
+declare namespace Client.Globe.Reducer {
+    interface Action {
+        type: string;
+        payload: any;
+    }
+}
+declare namespace Client.Globe.Components {}
+declare namespace Client.Globe.Components.Widgets {}
+declare namespace Client.Globe.Components.Widgets.CreatePost {
+    interface State {
+        textArea: {
+            maxHeight: number;
+            increment: number;
+            value: string;
+        };
+    }
+}
+declare namespace Client.Globe.Components.Models {
+    interface Post extends Client.Globe.Post {
+        id: any;
+    }
+}
+
+declare namespace Client.Styled {
+    interface ColorData {
+        hex: string;
+        rgb?: string;
+        rawRgb?: [r: number, g: number, b: number];
+    }
+    interface Theme {
+        colors: Record<string, ColorData>;
+        text: Record<string, ColorData>;
+    }
+}
 declare namespace Client.Styled.Components {}
 declare namespace Client.Styled.Components.Loading {
     interface Default {

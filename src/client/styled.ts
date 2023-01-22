@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from './styled/theme';
 
 export const RouterContainer = styled.div`
     background: inherit;
@@ -31,16 +32,19 @@ export const Selection = styled.div`
 export const SelectionTitle = styled.div`
     text-align: center;
     font-family: 'Quicksand', sans-serif;
+
     h1 {
         font-weight: lighter;
         font-size: 3rem;
-        color: white;
+        color: ${theme.text.primary.hex};
     }
-
     p {
         font-weight: bold;
         font-size: 1rem;
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(${theme.text.primary.rgb}, 0.6);
+    }
+    a {
+        text-decoration: none;
     }
 `;
 
@@ -63,7 +67,7 @@ export const SelectionOptions = styled.div`
         font-weight: normal;
         font-size: 1rem;
         color: black;
-        background-color: white;
+        background-color: ${theme.colors.white.hex};
         outline: none;
         border: none;
         border-radius: 4px;

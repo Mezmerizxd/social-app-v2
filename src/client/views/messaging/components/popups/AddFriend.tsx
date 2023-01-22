@@ -13,7 +13,7 @@ import {
     PopupActions,
 } from './styled';
 
-export default function AddFriend() {
+export default () => {
     const [usernameValue, setUsernameValue] = useState('');
     const [error, setError] = useState(null);
 
@@ -73,4 +73,4 @@ export default function AddFriend() {
             </Popup>
         </Container>
     );
-}
+};

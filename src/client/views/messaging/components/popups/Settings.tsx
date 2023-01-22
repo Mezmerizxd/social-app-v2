@@ -17,7 +17,7 @@ import {
     PopupSettingsContentProfileImage,
 } from './styled';
 
-export default function Settings() {
+export default () => {
     const [editUsernameLocked, setEditUsernameLocked] = useState(true);
     const [editUsernameValue, setEditUsernameValue] = useState('');
     const [error, setError] = useState(null);
@@ -204,4 +204,4 @@ export default function Settings() {
             </Popup>
         </Container>
     );
-}
+};

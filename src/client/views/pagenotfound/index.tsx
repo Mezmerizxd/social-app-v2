@@ -1,6 +1,6 @@
 import { Container, Card } from './styled';
 
-export default function PageNotFound() {
+export default () => {
     return (
         <Container>
             <title>Page Not Found</title>
@@ -9,4 +9,4 @@ export default function PageNotFound() {
             </Card>
         </Container>
     );
-}
+};
