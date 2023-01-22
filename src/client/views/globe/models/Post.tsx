@@ -73,9 +73,9 @@ export default ({
                     <PostContentOption onClick={handleLikePost}>
                         <FavoriteBorderIcon /> <p>{likes}</p>
                     </PostContentOption>
-                    <PostContentOption>
+                    {/* <PostContentOption>
                         <CommentIcon /> <p>{comments}</p>
-                    </PostContentOption>
+                    </PostContentOption> */}
                 </PostContentOptionsContainer>
             </PostContentContainer>
         </Post>

@@ -31,6 +31,48 @@ export const SidebarHeader = styled.div`
         color: white;
     }
 `;
+export const SidebarOptions = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+`;
+export const SidebarOption = styled.div`
+    width: 130px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    svg {
+        color: white;
+        margin-right: 10px;
+        width: 30px;
+        height: 30px;
+        transition: 0.2s;
+    }
+    p {
+        font-family: 'Quicksand', sans-serif;
+        font-weight: lighter;
+        font-size: 1.2rem;
+        color: white;
+        transition: 0.2s;
+    }
+
+    :hover {
+        svg {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+`;
 
 // Content
 export const Content = styled.div`
