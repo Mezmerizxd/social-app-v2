@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { Server, Socket } from 'socket.io';
+import { Namespace, Server, Socket } from 'socket.io';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
@@ -12,7 +12,24 @@ const socketIo = new Server(http, {
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
+
 const v1 = express.Router();
+
+// type ApiType = <T extends keyof Server.API>(
+//   version: any,
+//   url: T,
+//   callback: any,
+// ) => void;
+
+function POST<T extends keyof Server.API>(
+  version: express.Router,
+  url: T,
+  callback: (req: Express.Request, res: Express.Response) => void,
+) {
+  version.post(url, callback);
+}
+
+POST(v1, '/test', (req, res) => {});
 
 api.use((req, res, next) => {
   console.log(req.method, req.url);
@@ -41,7 +58,9 @@ api.get('/*', (req, res) => {
 
 export default { api, http, v1 };
 
-export const socket = socketIo.of('/socket').use((socket: Socket, next: (err?: Error) => void) => {
-  socket.onAny((...args: any[]) => console.log(socket.nsp.name, socket.id, args));
-  next();
-});
+export const socket: Namespace<Server.Socket.ClientToServer & Server.Socket.ServerToClient> = socketIo
+  .of('/socket')
+  .use((socket: Socket, next: (err?: Error) => void) => {
+    socket.onAny((...args: any[]) => console.log(socket.nsp.name, socket.id, args));
+    next();
+  });

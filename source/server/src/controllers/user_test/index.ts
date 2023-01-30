@@ -6,32 +6,27 @@ export default (prisma: PrismaClient) => {
     console.log(`Socket connected: ${socket.id}`);
 
     socket.on('test', () => {
-      console.log('test used');
       socket.emit(`clientTest`, 'Hello from server');
     });
 
     socket.on('getAccount', async (data) => {
-      console.log('getAccountDetails used');
+      // const where: Record<string, string> = {};
+      // where['token'] = data.token;
+      // const accountDetails = await prisma.user.findFirst({
+      //   where,
+      // });
 
-      const where: Record<string, string> = {};
-      where['token'] = data.token;
-      const accountDetails = await prisma.user.findFirst({
-        where,
-      });
+      // if (!accountDetails) {
+      //   await prisma.user.create({
+      //     data: {
+      //       token: data.token,
+      //       email: 'test@test',
+      //       name: 'test',
+      //     },
+      //   });
+      // }
 
-      console.log(accountDetails);
-
-      if (!accountDetails) {
-        await prisma.user.create({
-          data: {
-            token: data.token,
-            email: 'test@test',
-            name: 'test',
-          },
-        });
-      }
-
-      socket.emit(`setAccount`, { account: accountDetails });
+      socket.emit(`setAccount`, { account: 'Feature disabled' });
     });
   });
 };

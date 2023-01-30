@@ -1,8 +1,9 @@
 import server from '../server';
+import handler from '../helpers/handler';
 
 export default () => {
-  server.v1.post('/get-socket-details', (req, res) => {
-    res.json({
+  handler.POST(server.v1, '/get-socket-details', (req, res) => {
+    res.send({
       socketUrl: process.env.SERVER_SOCKET_CONNECTION,
     });
   });
