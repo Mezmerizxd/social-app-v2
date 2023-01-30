@@ -15,22 +15,6 @@ const socketIo = new Server(http, {
 
 const v1 = express.Router();
 
-// type ApiType = <T extends keyof Server.API>(
-//   version: any,
-//   url: T,
-//   callback: any,
-// ) => void;
-
-function POST<T extends keyof Server.API>(
-  version: express.Router,
-  url: T,
-  callback: (req: Express.Request, res: Express.Response) => void,
-) {
-  version.post(url, callback);
-}
-
-POST(v1, '/test', (req, res) => {});
-
 api.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
