@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "paths": {
+      "@lib/*": ["../../lib/*"],
+      "@styled/*": ["./src/renderer/styled/*"],
+      "@clientLib/*": ["./src/lib/*"],
+      "react": ["../../node_modules/preact/compat/"],
+      "react-dom": ["../../node_modules/preact/compat/"]
+    },
+    "experimentalDecorators": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "module": "esnext",
+    "types": ["@types/node", "webpack-env"],
+    "moduleResolution": "node",
+    "downlevelIteration": true
+  },
+  "include": ["./src", "../../types.d.ts", "../**/src/types.d.ts", "./src/types.d.ts"]
+}
