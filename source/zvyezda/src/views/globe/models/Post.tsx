@@ -1,21 +1,20 @@
-import { TimeAgo } from '../../../lib/util';
+import {TimeAgo} from '../../../lib/util';
 import {
   Post,
-  PostSidebar,
-  PostSidebarAvatar,
-  PostHeader,
   PostContent,
   PostContentContainer,
+  PostContentOption,
+  PostContentOptionsContainer,
+  PostHeader,
   PostHeaderDetails,
   PostHeaderOptions,
-  PostContentOptionsContainer,
-  PostContentOption,
+  PostSidebar,
+  PostSidebarAvatar,
 } from './styled';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import CommentIcon from '@mui/icons-material/Comment';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useAppDispatch } from '../../../hooks/reduxHooks';
-import { handlePostOptionsUi, likePost } from '../reducer';
+import {useAppDispatch} from '../../../hooks/reduxHooks';
+import {handlePostOptionsUi, likePost} from '../reducer';
 
 export default ({
   postId,

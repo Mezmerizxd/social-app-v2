@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoadingContainer, LoadingDefault } from './styled';
+import {LoadingContainer, LoadingDefault} from './styled';
 
 export default ({ isLoading, name, style }: Client.Styled.Components.Loading.Default) => {
   return (

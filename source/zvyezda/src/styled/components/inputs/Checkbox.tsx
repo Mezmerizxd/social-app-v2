@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Checkbox, FormControlLabel } from '@mui/material';
+import {Checkbox, FormControlLabel} from '@mui/material';
 import React from 'react';
-import { CheckboxContainer } from './styled';
+import {CheckboxContainer} from './styled';
 
 const CheckBox = styled(Checkbox)({
   '& .MuiSvgIcon-root': {

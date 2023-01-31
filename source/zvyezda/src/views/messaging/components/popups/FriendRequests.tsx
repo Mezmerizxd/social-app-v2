@@ -3,22 +3,22 @@ import MailIcon from '@mui/icons-material/Mail';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Features from '../../features';
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import Button from '../../../../styled/components/buttons/Button';
 import Api from '../../../../classes/Api';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { rmFriendRequestsPopupRequest, setFriendRequestsPopupData, toggleFriendRequestsPopup } from '../../reducer';
+import {useAppDispatch, useAppSelector} from '../../../../hooks/reduxHooks';
+import {rmFriendRequestsPopupRequest, setFriendRequestsPopupData, toggleFriendRequestsPopup} from '../../reducer';
 import {
   Container,
   Popup,
-  PopupTitle,
   PopupActionsCenter,
-  PopupTabbar,
-  PopupTabbarTab,
   PopupFriendRequests,
   PopupFriendRequestsNotFound,
   PopupFriendRequestsRequest,
   PopupFriendRequestsRequestActions,
+  PopupTabbar,
+  PopupTabbarTab,
+  PopupTitle,
 } from './styled';
 
 export default () => {

@@ -1,14 +1,13 @@
-import { config } from 'dotenv';
+import {config} from 'dotenv';
 import server from './server';
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from '@prisma/client';
+// Controllers
+import Controllers from './controllers';
+import AccountController from './controllers/account';
 
 config({ path: `${__dirname}/../../.env` });
 
 const { PORT } = process.env;
-
-// Controllers
-import Controllers from './controllers';
-import AccountController from './controllers/account';
 
 const prisma = new PrismaClient();
 

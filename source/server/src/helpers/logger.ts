@@ -1,7 +1,7 @@
 import * as express from 'express';
-import { blue, green, yellow } from 'colors';
-import { inspect } from 'util';
-import { Socket } from 'socket.io';
+import {blue, green, yellow} from 'colors';
+import {inspect} from 'util';
+import {Socket} from 'socket.io';
 
 export const log = (...args: any[]) => {
   console.log(...args.map((arg) => (typeof arg === 'string' ? arg : inspect(arg, { depth: 4, colors: true }))));

@@ -1,6 +1,6 @@
 import Main from './renderer';
-import { io } from 'socket.io-client';
-import { getSocketDetails } from '@lib/client/client';
+import {io} from 'socket.io-client';
+import {getSocketDetails} from '@lib/client/client';
 
 const waitForSocket = (socket: any) => {
   return new Promise<void>((resolve) => {

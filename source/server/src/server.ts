@@ -1,9 +1,9 @@
 import * as express from 'express';
-import { Namespace, Server, Socket } from 'socket.io';
+import {Namespace, Server, Socket} from 'socket.io';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
-import { logAPI, logSocket } from './helpers/logger';
+import {logAPI, logSocket} from './helpers/logger';
 
 const api: express.Application = express();
 const http = require('http').Server(api);

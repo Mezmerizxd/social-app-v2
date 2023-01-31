@@ -1,4 +1,4 @@
-import { Sidebar, SidebarHeader, SidebarOptions, SidebarOption } from './styled';
+import {Sidebar, SidebarHeader, SidebarOption, SidebarOptions} from './styled';
 import MessageIcon from '@mui/icons-material/Message';
 import HomeIcon from '@mui/icons-material/Home';
 

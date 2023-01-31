@@ -1,5 +1,5 @@
-import { Component } from 'preact';
-import { Socket } from 'socket.io-client';
+import {Component} from 'preact';
+import {Socket} from 'socket.io-client';
 import './styles.scss';
 
 export default class App extends Component<{ socket: Socket }, Client.UI.App.State> {

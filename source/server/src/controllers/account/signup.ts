@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
-import server, { socket } from '../../server';
+import {PrismaClient} from '@prisma/client';
+import server from '../../server';
 import handler from '../../helpers/handler';
-import { AccountSettings } from '../../config';
-import { hashPassword, createUserId, createAuthorization, createVerificationCode } from '../../helpers/generators';
+import {AccountSettings} from '../../config';
+import {createAuthorization, createUserId, createVerificationCode, hashPassword} from '../../helpers/generators';
 
 export default (prisma: PrismaClient): void => {
   handler.POST(server.v1, '/account/signup', async (req, res) => {

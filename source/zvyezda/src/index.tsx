@@ -1,14 +1,14 @@
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import App from './App';
 import PageNotFound from './views/pagenotfound';
 import VerifyEmail from './views/verifyemail';
 import Authentication from './views/authentication';
 import Messaging from './views/messaging';
 import Globe from './views/globe';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import { RouterContainer } from './styled';
+import {Provider} from 'react-redux';
+import {store} from './store';
+import {RouterContainer} from './styled';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

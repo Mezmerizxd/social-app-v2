@@ -3,18 +3,18 @@ import DoneIcon from '@mui/icons-material/Done';
 import Features from '../../features';
 import SettingsTextField from '../../../../styled/components/inputs/SettingsTextField';
 import Button from '../../../../styled/components/buttons/Button';
-import { useState, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../../../hooks/reduxHooks';
-import { editUserData, toggleSettingsPopup } from '../../reducer';
+import {useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../../../hooks/reduxHooks';
+import {editUserData, toggleSettingsPopup} from '../../reducer';
 import {
   Container,
   Popup,
-  PopupTitle,
   PopupActionsCenter,
   PopupSettingsContent,
   PopupSettingsContentAccount,
   PopupSettingsContentProfile,
   PopupSettingsContentProfileImage,
+  PopupTitle,
 } from './styled';
 
 export default () => {

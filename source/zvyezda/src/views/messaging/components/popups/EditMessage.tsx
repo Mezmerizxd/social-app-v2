@@ -1,10 +1,10 @@
 import TextField from '../../../../styled/components/inputs/TextField';
 import Button from '../../../../styled/components/buttons/Button';
-import { useState } from 'react';
+import {useState} from 'react';
 import Api from '../../../../classes/Api';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { editMessage, toggleEditMessagePopup } from '../../reducer';
-import { Container, Popup, PopupTitle, PopupContent, PopupError, PopupActions } from './styled';
+import {useAppDispatch, useAppSelector} from '../../../../hooks/reduxHooks';
+import {editMessage, toggleEditMessagePopup} from '../../reducer';
+import {Container, Popup, PopupActions, PopupContent, PopupError, PopupTitle} from './styled';
 
 export default () => {
   const [error, setError] = useState(null);

@@ -1,7 +1,7 @@
-import { Content, ContentCreatePostContainer, ContentPostsContainer } from './styled';
+import {Content, ContentCreatePostContainer, ContentPostsContainer} from './styled';
 import CreatePost from './widgets/CreatePost';
 import Post from '../models/Post';
-import { useAppSelector } from '../../../hooks/reduxHooks';
+import {useAppSelector} from '../../../hooks/reduxHooks';
 import PostOptions from './PostOptions';
 
 export default () => {

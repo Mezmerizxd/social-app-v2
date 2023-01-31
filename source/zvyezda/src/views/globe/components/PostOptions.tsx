@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
-import { handlePostOptionsUi, deletePost } from '../reducer';
-import { PostOptionsContainer, PostOptions, PostOption } from './styled';
+import {useAppDispatch, useAppSelector} from '../../../hooks/reduxHooks';
+import {deletePost, handlePostOptionsUi} from '../reducer';
+import {PostOption, PostOptions, PostOptionsContainer} from './styled';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default () => {

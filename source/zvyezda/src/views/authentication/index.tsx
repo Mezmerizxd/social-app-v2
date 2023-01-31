@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import { useAppSelector } from '../../hooks/reduxHooks';
-import { Container, ContextContainer, ContextTitle } from './styled';
-import { setWindowHref } from '../../lib/util';
+import {useAppSelector} from '../../hooks/reduxHooks';
+import {Container, ContextContainer, ContextTitle} from './styled';
+import {setWindowHref} from '../../lib/util';
 
 export default function Authentication() {
   const state = useAppSelector((state) => state.authentication);

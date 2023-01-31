@@ -4,10 +4,10 @@ import KeyIcon from '@mui/icons-material/Key';
 import TextField from '../../../styled/components/inputs/TextField';
 import Checkbox from '../../../styled/components/inputs/Checkbox';
 import Button from '../../../styled/components/buttons/Button';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import Api from '../../../classes/Api';
-import { useAppDispatch } from '../../../hooks/reduxHooks';
-import { setContext } from '../reducer';
+import {useAppDispatch} from '../../../hooks/reduxHooks';
+import {setContext} from '../reducer';
 
 export default function Login() {
   const [emailValue, setEmailValue] = useState<string>('');

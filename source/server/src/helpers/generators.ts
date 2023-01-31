@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from '@prisma/client';
 import * as crypto from 'crypto';
 
 export function hashPassword(password: string): string {

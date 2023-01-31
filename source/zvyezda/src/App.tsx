@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import { setWindowHref } from './lib/util';
+import {useEffect, useState} from 'react';
+import {setWindowHref} from './lib/util';
 import {
   Container,
-  SelectionContainer,
   Selection,
-  SelectionTitle,
-  SelectionOptionsContainer,
-  SelectionOptions,
+  SelectionContainer,
   SelectionFooter,
+  SelectionOptions,
+  SelectionOptionsContainer,
+  SelectionTitle,
 } from './styled';
 
 export default () => {

@@ -1,7 +1,7 @@
-import { CreatePost } from './styled';
+import {CreatePost} from './styled';
 import Button from '../../../../styled/components/buttons/Button';
-import { useAppSelector, useAppDispatch } from '../../../../hooks/reduxHooks';
-import { handleCreatePostUi, addPost } from '../../reducer';
+import {useAppDispatch, useAppSelector} from '../../../../hooks/reduxHooks';
+import {addPost, handleCreatePostUi} from '../../reducer';
 
 export default () => {
   const state = useAppSelector((state) => state.globe);

@@ -1,11 +1,8 @@
-import { Container, SidebarContainer, ContentContainer } from './styled';
+import {Container, ContentContainer, SidebarContainer} from './styled';
 import Optionbar from './components/Optionbar';
 import Content from './components/Content';
-import PostOptions from './components/PostOptions';
-import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
-import { useEffect } from 'react';
-import Api from '../../classes/Api';
-import { setAccount } from './reducer';
+import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
+import {useEffect} from 'react';
 
 export default () => {
   const state: Client.Globe.InitialState = useAppSelector((state) => state.globe);

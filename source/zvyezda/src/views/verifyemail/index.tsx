@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useSearchParams} from 'react-router-dom';
 import Api from '../../classes/Api';
-import { Container, Card, Verify } from './styled';
+import {Card, Container, Verify} from './styled';
 
 export default () => {
   const [query] = useSearchParams();
