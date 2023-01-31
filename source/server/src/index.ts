@@ -8,12 +8,12 @@ const { PORT } = process.env;
 
 // Controllers
 import Controllers from './controllers';
-import UserController from './controllers/user_test';
+import AccountController from './controllers/account';
 
 const prisma = new PrismaClient();
 
 Controllers();
-UserController(prisma);
+AccountController(prisma);
 
 server.api.use('/api/v1', server.v1);
 

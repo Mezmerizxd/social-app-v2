@@ -1,9 +1,4 @@
-declare namespace Server {
-  type API = {
-    ['/test']: () => void;
-    ['/get-socket-details']: () => void;
-  };
-}
+declare namespace Server {}
 declare namespace Server.Socket {
   type ClientToServer = {
     test: () => void;
@@ -12,5 +7,20 @@ declare namespace Server.Socket {
   type ServerToClient = {
     clientTest: (message: string) => void;
     setAccount: (data: { account: string }) => void;
+  };
+}
+
+declare namespace Server.API {
+  type ReturnBase = {
+    success: boolean;
+    error?: string;
+  };
+
+  type API = {
+    ['/test']: () => void;
+    ['/get-socket-details']: () => { socketUrl: string };
+    ['/account/signup']: () => {
+      authorization: string | null;
+    };
   };
 }

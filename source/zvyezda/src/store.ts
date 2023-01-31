@@ -4,9 +4,9 @@ import MessagingSlice from './views/messaging/reducer';
 import GlobeSlice from './views/globe/reducer';
 
 export const store = configureStore({
-    reducer: {
-        authentication: AuthenticationSlice,
-        messaging: MessagingSlice,
-        globe: GlobeSlice,
-    },
+  reducer: {
+    authentication: AuthenticationSlice,
+    messaging: MessagingSlice,
+    globe: GlobeSlice,
+  },
 });
