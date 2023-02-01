@@ -1,4 +1,4 @@
-import {TimeAgo} from '../../../lib/util';
+import { TimeAgo } from '../../../lib/util';
 import {
   Post,
   PostContent,
@@ -13,8 +13,8 @@ import {
 } from './styled';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import {useAppDispatch} from '../../../hooks/reduxHooks';
-import {handlePostOptionsUi, likePost} from '../reducer';
+import { useAppDispatch } from '../../../hooks/reduxHooks';
+import { handlePostOptionsUi, likePost } from '../reducer';
 
 export default ({
   postId,

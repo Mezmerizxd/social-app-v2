@@ -1,5 +1,5 @@
-import {PrismaClient} from '@prisma/client';
-import {socket} from '../../server';
+import { PrismaClient } from '@prisma/client';
+import { socket } from '../../server';
 
 export default (prisma: PrismaClient) => {
   socket.on('connection', async (socket) => {

@@ -1,4 +1,4 @@
-import {colorH2A} from '../lib/util';
+import { colorH2A } from '../lib/util';
 
 const theme: Client.Styled.Theme = {
   colors: {

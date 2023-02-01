@@ -2,10 +2,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Socket from '../../../classes/Socket';
-import {TimeAgo} from '../../../lib/util';
-import {useAppDispatch, useAppSelector} from '../../../hooks/reduxHooks';
+import { TimeAgo } from '../../../lib/util';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import {
   addMessage,
   setSelectedMessage,

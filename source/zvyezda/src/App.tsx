@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {setWindowHref} from './lib/util';
+import { useEffect, useState } from 'react';
+import { setWindowHref } from './lib/util';
 import {
   Container,
   Selection,

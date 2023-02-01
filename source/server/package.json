@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "npx tsc --project tsconfig.json",
+    "build": "webpack --mode development",
     "watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\"",
-    "prettier": "prettier src/**/*.{ts,tsx} --write"
+    "prettier": "prettier src/**/*.{ts,tsx} --write",
+    "test:build": "npx tsc --project tsconfig.json"
   }
 }

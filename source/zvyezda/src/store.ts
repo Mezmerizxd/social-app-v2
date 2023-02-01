@@ -1,4 +1,4 @@
-import {configureStore} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import AuthenticationSlice from './views/authentication/reducer';
 import MessagingSlice from './views/messaging/reducer';
 import GlobeSlice from './views/globe/reducer';

@@ -1,9 +1,9 @@
 import Button from '../../../../styled/components/buttons/Button';
-import {useState} from 'react';
+import { useState } from 'react';
 import Api from '../../../../classes/Api';
-import {useAppDispatch, useAppSelector} from '../../../../hooks/reduxHooks';
-import {rmMessage, toggleDeleteMessagePopup} from '../../reducer';
-import {Container, Popup, PopupActions, PopupContent, PopupError, PopupTitle} from './styled';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import { rmMessage, toggleDeleteMessagePopup } from '../../reducer';
+import { Container, Popup, PopupActions, PopupContent, PopupError, PopupTitle } from './styled';
 
 export default () => {
   const [error, setError] = useState(null);

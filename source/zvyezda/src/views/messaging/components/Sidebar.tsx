@@ -4,7 +4,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import HomeIcon from '@mui/icons-material/Home';
 import Features from '../features';
-import {useAppDispatch, useAppSelector} from '../../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import {
   setMessages,
   toggleAddFriendPopup,

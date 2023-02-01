@@ -1,8 +1,8 @@
-import {Container, ContentContainer, SidebarContainer} from './styled';
+import { Container, ContentContainer, SidebarContainer } from './styled';
 import Optionbar from './components/Optionbar';
 import Content from './components/Content';
-import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
-import {useEffect} from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { useEffect } from 'react';
 
 export default () => {
   const state: Client.Globe.InitialState = useAppSelector((state) => state.globe);

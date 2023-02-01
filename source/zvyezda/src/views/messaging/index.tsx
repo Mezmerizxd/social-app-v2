@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks/reduxHooks';
-import {Container, MessagignError, MessagingContainer} from './styled';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { Container, MessagignError, MessagingContainer } from './styled';
 import Sidebar from './components/Sidebar';
 import Messages from './components/Messages';
 import AddFriend from './components/popups/AddFriend';
@@ -9,7 +9,7 @@ import FriendRequests from './components/popups/FriendRequests';
 import EditMessage from './components/popups/EditMessage';
 import Settings from './components/popups/Settings';
 import Features from './features';
-import {setError, setFriends, setUserData} from './reducer';
+import { setError, setFriends, setUserData } from './reducer';
 import Api from '../../classes/Api';
 
 export default () => {

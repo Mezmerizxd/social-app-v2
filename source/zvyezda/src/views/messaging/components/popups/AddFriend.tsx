@@ -1,10 +1,10 @@
 import TextField from '../../../../styled/components/inputs/TextField';
 import Button from '../../../../styled/components/buttons/Button';
-import {useState} from 'react';
+import { useState } from 'react';
 import Api from '../../../../classes/Api';
-import {useAppDispatch} from '../../../../hooks/reduxHooks';
-import {toggleAddFriendPopup} from '../../reducer';
-import {Container, Popup, PopupActions, PopupContent, PopupError, PopupTitle} from './styled';
+import { useAppDispatch } from '../../../../hooks/reduxHooks';
+import { toggleAddFriendPopup } from '../../reducer';
+import { Container, Popup, PopupActions, PopupContent, PopupError, PopupTitle } from './styled';
 
 export default () => {
   const [usernameValue, setUsernameValue] = useState('');

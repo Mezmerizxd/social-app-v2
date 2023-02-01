@@ -3,9 +3,9 @@ import DoneIcon from '@mui/icons-material/Done';
 import Features from '../../features';
 import SettingsTextField from '../../../../styled/components/inputs/SettingsTextField';
 import Button from '../../../../styled/components/buttons/Button';
-import {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../../../hooks/reduxHooks';
-import {editUserData, toggleSettingsPopup} from '../../reducer';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import { editUserData, toggleSettingsPopup } from '../../reducer';
 import {
   Container,
   Popup,

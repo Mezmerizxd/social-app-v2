@@ -6,9 +6,9 @@ import TextField from '../../../styled/components/inputs/TextField';
 import Checkbox from '../../../styled/components/inputs/Checkbox';
 import Button from '../../../styled/components/buttons/Button';
 import Api from '../../../classes/Api';
-import {useEffect, useState} from 'react';
-import {useAppDispatch} from '../../../hooks/reduxHooks';
-import {setContext} from '../reducer';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../../hooks/reduxHooks';
+import { setContext } from '../reducer';
 
 export default function Signup() {
   const [emailValue, setEmailValue] = useState<string>(null);

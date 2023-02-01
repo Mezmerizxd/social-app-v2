@@ -1,4 +1,4 @@
-import {Card, Container} from './styled';
+import { Card, Container } from './styled';
 
 export default () => {
   return (
