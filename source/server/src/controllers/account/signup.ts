@@ -131,7 +131,7 @@ export default (prisma: PrismaClient): void => {
       data: {
         userId: userId,
         username: username,
-        avatar: 'https://cdn.discordapp.com/embed/avatars/' + (userId % 5) + '.png',
+        avatar: 'https://cdn.discordapp.com/embed/avatars/1.png',
       },
     });
 

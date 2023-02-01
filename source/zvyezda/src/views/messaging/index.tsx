@@ -22,14 +22,11 @@ export default () => {
     if (localStorage.getItem('authorization') !== null) {
       setTimeout(async () => {
         const response = await Api.Post({
-          api: '/user/get-user-data',
-          body: {
-            method: 'authorization',
-            key: localStorage.getItem('authorization'),
-          },
+          api: '/profile',
+          body: {},
         });
         if (response && response.success === true) {
-          dispatch(setUserData(response.data));
+          dispatch(setUserData(response));
           dispatch(setFriends(await Features.getFriends()));
         } else {
           dispatch(setError(response.error));

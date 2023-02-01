@@ -39,11 +39,11 @@ export default new (class Features {
       }
     } else {
       const response = await Api.Post({
-        api: '/user/get-friends',
+        api: '/profile/friends',
         body: null,
       });
       if (response && response.success === true) {
-        friends = response.data.friends;
+        friends = response.friends;
       }
     }
     return friends;

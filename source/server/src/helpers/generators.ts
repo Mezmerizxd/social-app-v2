@@ -6,7 +6,7 @@ export function hashPassword(password: string): string {
   return hash;
 }
 
-export async function createUserId(prisma: PrismaClient): Promise<number | null> {
+export async function createUserId(prisma: PrismaClient): Promise<string | null> {
   let id: number | null = Math.floor(Math.random() * 1000000000000000);
   let isCreated = false;
   let attempts = 0;
@@ -28,7 +28,7 @@ export async function createUserId(prisma: PrismaClient): Promise<number | null>
       isCreated = true;
     }
   }
-  return id;
+  return id.toString();
 }
 
 export async function createAuthorization(prisma: PrismaClient): Promise<string | null> {

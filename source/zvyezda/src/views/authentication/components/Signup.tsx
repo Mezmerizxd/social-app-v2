@@ -35,7 +35,7 @@ export default function Signup() {
     });
     if (response.success === true) {
       if (remember) localStorage.setItem('remember', remember ? 'true' : 'false');
-      localStorage.setItem('authorization', response.data.authorization);
+      localStorage.setItem('authorization', response.authorization);
       window.location.href = '/app';
     } else {
       setErrorValue(response.error);

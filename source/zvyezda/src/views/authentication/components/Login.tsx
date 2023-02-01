@@ -25,7 +25,7 @@ export default function Login() {
   async function handleLogin() {
     setErrorValue(null);
     const response = await Api.Post({
-      api: '/user/login',
+      api: '/account/login',
       body: {
         email: emailValue,
         password: passwordValue,
@@ -33,7 +33,7 @@ export default function Login() {
     });
     if (response.success === true) {
       if (remember) localStorage.setItem('remember', remember ? 'true' : 'false');
-      localStorage.setItem('authorization', response.data.authorization);
+      localStorage.setItem('authorization', response.authorization);
       window.location.href = '/messaging';
     } else {
       setErrorValue(response.error);
