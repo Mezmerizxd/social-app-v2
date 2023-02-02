@@ -51,7 +51,11 @@ export const MessagingSlice = createSlice({
       state.error = action.payload;
     },
     setUserData: (state, action) => {
-      state.user = action.payload;
+      state.user.userId = action.payload.userId;
+      state.user.username = action.payload.username;
+      state.user.email = action.payload.email;
+      state.user.avatar = action.payload.avatar;
+      state.friends = action.payload.friends;
     },
     editUserData: (state, action) => {
       state.user.userId = action.payload.userId ? action.payload.userId : state.user.userId;

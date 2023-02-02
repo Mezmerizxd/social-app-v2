@@ -31,15 +31,17 @@ declare namespace Server.API {
       email?: string;
       avatar?: string;
     };
-    ['/profile/friends']: () => {};
-    ['/profile/friend-requests']: () => {};
-    ['/profile/handle-friend-request']: () => {
-      action: 'accept' | 'decline';
-      userId: string;
+    ['/profile/change-username']: () => {};
+    ['/profile/change-avatar']: () => {};
+    ['/profile/friends']: () => {
+      friends?: Server.Managers.Profile.BasicProfileData[];
     };
-    ['/profile/add-friend']: () => {
-      userId: string;
+    ['/profile/friend-requests']: () => {
+      sent?: Server.Managers.Profile.BasicProfileData[];
+      received?: Server.Managers.Profile.BasicProfileData[];
     };
+    ['/profile/handle-friend-request']: () => {};
+    ['/profile/add-friend']: () => {};
   };
 }
 

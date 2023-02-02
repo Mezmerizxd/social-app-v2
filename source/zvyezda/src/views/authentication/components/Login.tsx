@@ -34,7 +34,7 @@ export default function Login() {
     if (response.success === true) {
       if (remember) localStorage.setItem('remember', remember ? 'true' : 'false');
       localStorage.setItem('authorization', response.authorization);
-      window.location.href = '/messaging';
+      window.location.href = '/globe';
     } else {
       setErrorValue(response.error);
     }

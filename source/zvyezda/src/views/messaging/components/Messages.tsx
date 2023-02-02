@@ -38,16 +38,16 @@ export default ({ mobileMode }: Client.Messaging.Messages) => {
     document.getElementById('autoscroll').scrollIntoView(false);
   }, [state.messages]);
 
-  useEffect(() => {
-    const socket = Socket.New();
-    socket.on(`handleReceiveFriendMessage_${state.selectedFriend.messagesGroupId}`, (data) => {
-      dispatch(addMessage(data));
-    });
-    setSocket(socket);
-    return () => {
-      socket.close();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const socket = Socket.New();
+  //   socket.on(`handleReceiveFriendMessage_${state.selectedFriend.messagesGroupId}`, (data) => {
+  //     dispatch(addMessage(data));
+  //   });
+  //   setSocket(socket);
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());

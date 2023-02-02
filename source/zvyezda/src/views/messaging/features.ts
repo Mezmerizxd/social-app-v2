@@ -14,14 +14,14 @@ export default new (class Features {
       };
     } else {
       const response = await Api.Post({
-        api: '/user/get-user-data',
+        api: '/user/profile',
         body: {
           method: 'authorization',
           key: localStorage.getItem('authorization'),
         },
       });
       if (response && response.success === true) {
-        account = response.data;
+        account = response;
       }
     }
     return account;
@@ -101,12 +101,12 @@ export default new (class Features {
       }
     } else {
       const response = await Api.Post({
-        api: '/user/get-friend-requests',
+        api: '/profile/friend-requests',
         body: null,
       });
       if (response && response.success === true) {
-        sent = response.data?.sent;
-        received = response.data?.received;
+        sent = response?.sent;
+        received = response?.received;
       }
     }
     return {
@@ -120,7 +120,7 @@ export default new (class Features {
     let error = null;
     if (!this.debugMode) {
       const response = await Api.Post({
-        api: '/user/change-username',
+        api: '/profile/change-username',
         body: {
           username: username,
         },
@@ -144,7 +144,7 @@ export default new (class Features {
     let error = null;
     if (!this.debugMode) {
       const response = await Api.Post({
-        api: '/user/change-avatar',
+        api: '/profile/change-avatar',
         body: {
           avatar: avatar,
         },

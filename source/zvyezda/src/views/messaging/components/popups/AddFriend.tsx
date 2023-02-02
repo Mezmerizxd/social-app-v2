@@ -18,7 +18,7 @@ export default () => {
 
   const send = async () => {
     const response = await Api.Post({
-      api: '/user/send-friend-request',
+      api: '/profile/add-friend',
       body: {
         username: usernameValue,
       },

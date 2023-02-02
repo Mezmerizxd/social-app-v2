@@ -45,9 +45,9 @@ export default () => {
 
   const accept = async (id: any) => {
     const response = await Api.Post({
-      api: '/user/handle-friend-request',
+      api: '/profile/handle-friend-request',
       body: {
-        type: 'accept',
+        action: 'accept',
         userId: id,
       },
     });
@@ -57,9 +57,9 @@ export default () => {
   };
   const decline = async (id: any) => {
     const response = await Api.Post({
-      api: '/user/handle-friend-request',
+      api: '/profile/handle-friend-request',
       body: {
-        type: 'decline',
+        action: 'decline',
         userId: id,
       },
     });
