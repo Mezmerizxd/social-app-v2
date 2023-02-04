@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client';
 import Controllers from './controllers';
 import AccountController from './controllers/account';
 import ProfileController from './controllers/profile';
+import MessagingController from './controllers/messaging';
 
 config({ path: `${__dirname}/../../.env` });
 
@@ -15,6 +16,7 @@ const prisma = new PrismaClient();
 Controllers();
 AccountController(prisma);
 ProfileController(prisma);
+MessagingController(prisma);
 
 server.api.use('/api/v1', server.v1);
 

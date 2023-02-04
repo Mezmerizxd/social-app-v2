@@ -31,6 +31,32 @@ export async function createUserId(prisma: PrismaClient): Promise<string | null>
   return id.toString();
 }
 
+export async function createMessageId(prisma: PrismaClient, messageGroupId: string): Promise<string | null> {
+  let messageId: string | null = Math.floor(Math.random() * 1000000000000000).toString();
+  let isCreated = false;
+  let attempts = 0;
+
+  while (!isCreated) {
+    if (attempts === 5) {
+      return null;
+    }
+    if (
+      await prisma.messages.findFirst({
+        where: {
+          messageId: messageId,
+          groupId: messageGroupId,
+        },
+      })
+    ) {
+      messageId = Math.floor(Math.random() * 1000000000000000).toString();
+      attempts++;
+    } else {
+      isCreated = true;
+    }
+  }
+  return messageId;
+}
+
 export async function createAuthorization(prisma: PrismaClient): Promise<string | null> {
   let authorization: string | null = crypto.randomBytes(64).toString('hex');
   let isCreated = false;

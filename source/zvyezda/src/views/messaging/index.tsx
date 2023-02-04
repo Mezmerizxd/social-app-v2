@@ -11,10 +11,11 @@ import Settings from './components/popups/Settings';
 import Features from './features';
 import { setError, setFriends, setUserData } from './reducer';
 import Api from '../../classes/Api';
-import { io } from 'socket.io-client';
+import * as socketIo from 'socket.io-client';
 
 export default () => {
   const [mobileMode, setMobileMode] = useState(false);
+  const [socket, setSocket] = useState<any>(null);
 
   const state = useAppSelector((state) => state.messaging);
   const dispatch = useAppDispatch();
@@ -44,31 +45,18 @@ export default () => {
     } else {
       setMobileMode(false);
     }
-  }, []);
-
-  useEffect(() => {
     setTimeout(async () => {
-      const { socketUrl } = await Api.Post({
-        api: '/get-socket-details',
-        body: {},
-      });
-      const socket = io(socketUrl, {
+      const { socketUrl } = await Api.Post({ api: '/get-socket-details', body: {} });
+      const s = socketIo.io(socketUrl, {
         secure: false,
         rejectUnauthorized: false,
         reconnectionAttempts: 0,
         autoConnect: false,
       });
-      socket.on('connect_error', async (e) => {
-        console.log('socket error', e);
-      });
-
-      socket.on('connect', () => {
-        console.log('connected');
-      });
-
-      socket.connect();
+      s.connect();
+      setSocket(s);
     });
-  });
+  }, []);
 
   window.addEventListener('resize', () => {
     if (screen.width < 600) {
@@ -90,10 +78,10 @@ export default () => {
       ) : (
         <MessagingContainer>
           {/* {state.sidebar.open === true && ( */}
-          <Sidebar mobileMode={mobileMode} />
+          <Sidebar mobileMode={mobileMode} socket={socket} />
           {/* )} */}
 
-          {state.selectedFriend.messagesGroupId !== null && <Messages mobileMode={mobileMode} />}
+          {state.selectedFriend.messagesGroupId !== null && <Messages mobileMode={mobileMode} socket={socket} />}
         </MessagingContainer>
       )}
 

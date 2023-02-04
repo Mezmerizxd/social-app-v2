@@ -20,7 +20,7 @@ export default () => {
       api: '/messaging/delete-message',
       body: {
         messageId: state.selectedMessage.messageId,
-        messagesGroupId: state.selectedFriend.messagesGroupId,
+        messageGroupId: state.selectedFriend.messagesGroupId,
       },
     });
     if (response && response.success === true) {

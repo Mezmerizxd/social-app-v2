@@ -10,9 +10,9 @@ export default () => {
   const [error, setError] = useState(null);
 
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.messaging);
+  const state: Client.Messaging.InitialState = useAppSelector((state) => state.messaging);
 
-  const [newMessage, setNewMessage] = useState(state.selectedMessage.content);
+  const [newMessage, setNewMessage] = useState(state.selectedMessage.message);
 
   const close = () => {
     dispatch(toggleEditMessagePopup());
@@ -23,12 +23,12 @@ export default () => {
       api: '/messaging/edit-message',
       body: {
         messageId: state.selectedMessage.messageId,
-        messagesGroupId: state.selectedFriend.messagesGroupId,
-        content: newMessage,
+        messageGroupId: state.selectedFriend.messagesGroupId,
+        message: newMessage,
       },
     });
     if (response && response.success === true) {
-      dispatch(editMessage({ content: newMessage }));
+      dispatch(editMessage({ message: newMessage }));
       close();
     } else {
       setError(response.error);
@@ -43,7 +43,7 @@ export default () => {
         </PopupTitle>
         <PopupContent>
           <TextField
-            label={state.selectedMessage.content}
+            label={state.selectedMessage.message}
             type="text"
             id={'editMessage'}
             key={'editMessage'}

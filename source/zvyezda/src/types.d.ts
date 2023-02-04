@@ -37,9 +37,11 @@ declare namespace Client.Authentication {
 declare namespace Client.Messaging {
   interface Sidebar {
     mobileMode: boolean;
+    socket: any;
   }
   interface Messages {
     mobileMode: boolean;
+    socket: any;
   }
   interface InitialState {
     error: any;
@@ -59,8 +61,8 @@ declare namespace Client.Messaging {
     messages: [
       {
         avatar: any;
-        content: any;
-        dateSent: any;
+        message: any;
+        createdAt: any;
         messageId: any;
         userId: any;
         username: any;
@@ -69,7 +71,7 @@ declare namespace Client.Messaging {
     selectedMessage: {
       isHovering: boolean;
       messageId: any;
-      content: any;
+      message: any;
     };
     selectedFriend: {
       userId: any;

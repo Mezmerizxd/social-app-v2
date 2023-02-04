@@ -1,3 +1,5 @@
 # Social App V2
 
-### View the [Documentation here](docs/README.md).
+### View the [Setup tutorial here](docs/SETUP.md)
+
+### View the [Documentation here](docs/DOCS.md).

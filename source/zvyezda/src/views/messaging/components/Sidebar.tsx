@@ -22,7 +22,7 @@ import {
   SidebarTitle,
 } from './styled';
 
-export default ({ mobileMode }: Client.Messaging.Sidebar) => {
+export default ({ mobileMode, socket }: Client.Messaging.Sidebar) => {
   const state = useAppSelector((state) => state.messaging);
   const dispatch = useAppDispatch();
 
@@ -31,6 +31,9 @@ export default ({ mobileMode }: Client.Messaging.Sidebar) => {
   };
 
   const handleFriend = async (userId: any, username: any) => {
+    socket.emit('leaveMessageGroup', {
+      messageGroupId: state.selectedFriend.messagesGroupId,
+    });
     const messages = await Features.getMessages(userId);
     if (messages) {
       dispatch(
@@ -45,6 +48,10 @@ export default ({ mobileMode }: Client.Messaging.Sidebar) => {
         handleSidebar();
       }
     }
+    socket.emit('joinMessageGroup', {
+      authorization: localStorage.getItem('authorization'),
+      messageGroupId: messages.messagingGroupId,
+    });
   };
 
   return (

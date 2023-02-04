@@ -3,6 +3,7 @@ import server from '../../server';
 import handler from '../../helpers/handler';
 import { AccountSettings } from '../../config';
 import { createAuthorization, createUserId, createVerificationCode, hashPassword } from '../../helpers/generators';
+import Emailer from '../../helpers/emailer';
 
 export default (prisma: PrismaClient): void => {
   handler.POST(server.v1, '/account/signup', async (req, res) => {
@@ -116,6 +117,8 @@ export default (prisma: PrismaClient): void => {
         authorization: null,
       };
     }
+
+    await Emailer(email, verificationCode);
 
     // Create account
     await prisma.accounts.create({

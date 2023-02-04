@@ -65,14 +65,16 @@ export default new (class Features {
       }
     } else {
       const response = await Api.Post({
-        api: '/messaging/get-messages',
+        api: '/messaging/get-message-group',
         body: {
           userId: userId,
         },
       });
       if (response && response.success === true) {
-        messages = response.data.messages;
-        messagingGroupId = response.data.messagingGroupId;
+        console.log(response);
+
+        messages = response.messages;
+        messagingGroupId = response.messageGroupId;
       }
     }
     return {

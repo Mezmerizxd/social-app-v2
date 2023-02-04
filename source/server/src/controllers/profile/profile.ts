@@ -9,12 +9,7 @@ export default (prisma: PrismaClient): void => {
     const { authorization } = req.headers;
     const profile = new Profile(prisma, authorization, 'token');
     const err = await profile.init();
-    if (err.error) {
-      return {
-        success: false,
-        error: err.error,
-      };
-    }
+    if (err.error) return err;
 
     return {
       success: true,
@@ -33,12 +28,7 @@ export default (prisma: PrismaClient): void => {
     const { username } = req.body;
     const profile = new Profile(prisma, authorization, 'token');
     const err = await profile.init();
-    if (err.error) {
-      return {
-        success: false,
-        error: err.error,
-      };
-    }
+    if (err.error) return err;
 
     if (!username) {
       return {
@@ -63,12 +53,7 @@ export default (prisma: PrismaClient): void => {
     const { avatar } = req.body;
     const profile = new Profile(prisma, authorization, 'token');
     const err = await profile.init();
-    if (err.error) {
-      return {
-        success: false,
-        error: err.error,
-      };
-    }
+    if (err.error) return err;
 
     if (!avatar) {
       return {

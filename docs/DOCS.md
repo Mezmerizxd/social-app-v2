@@ -1,3 +1,5 @@
+# Documentation
+
 ### The Stack
 
 - [Express](http://expressjs.com/) - API Server
@@ -6,3 +8,5 @@
 - [Webpack](https://webpack.js.org/) - Bundler
 - [Postgres](https://www.postgresql.org/) - Database
 - [Prisma](https://www.prisma.io/) - ORM
+
+### Setup [Setup tutorial](SETUP.md)

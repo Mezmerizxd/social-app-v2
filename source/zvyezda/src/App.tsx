@@ -9,7 +9,6 @@ import {
   SelectionOptionsContainer,
   SelectionTitle,
 } from './styled';
-
 export default () => {
   const [state, setState] = useState(null);
 

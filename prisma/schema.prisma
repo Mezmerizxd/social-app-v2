@@ -18,7 +18,7 @@ model Accounts {
   authorization    String
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
-  verificationCode String
+  verificationCode String    @unique
   verifiedEmail    Boolean   @default(false)
   profile          Profiles?
 }
@@ -51,8 +51,10 @@ model Messages {
   message       String
   avatar        String
   username      String
-  userId        String         @unique
+  userId        String
   createdAt     DateTime       @default(now())
   MessageGroups MessageGroups? @relation(fields: [groupId], references: [groupId])
-  groupId       String?        @unique
+  groupId       String?
+
+  @@unique([groupId, messageId])
 }

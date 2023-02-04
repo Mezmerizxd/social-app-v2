@@ -13,7 +13,7 @@ export const InitialState: Client.Messaging.InitialState = {
   selectedMessage: {
     isHovering: false,
     messageId: null,
-    content: null,
+    message: null,
   },
   selectedFriend: {
     userId: null,
@@ -77,10 +77,17 @@ export const MessagingSlice = createSlice({
       state.selectedMessage.messageId = action.payload.messageId
         ? action.payload.messageId
         : state.selectedMessage.messageId;
-      state.selectedMessage.content = action.payload.content ? action.payload.content : state.selectedMessage.content;
+      state.selectedMessage.message = action.payload.content ? action.payload.content : state.selectedMessage.message;
     },
     addMessage: (state, action) => {
-      state.messages.push(action.payload);
+      state.messages.push({
+        messageId: action.payload.messageId,
+        userId: action.payload.userId,
+        username: action.payload.username,
+        avatar: action.payload.avatar,
+        message: action.payload.message,
+        createdAt: action.payload.createdAt,
+      });
     },
     toggleSidebar: (state) => {
       state.sidebar.open = !state.sidebar.open;
@@ -126,7 +133,7 @@ export const MessagingSlice = createSlice({
     editMessage: (state, action) => {
       state.messages.filter((message) => {
         if (message.messageId === state.selectedMessage.messageId) {
-          message.content = action.payload.content;
+          message.message = action.payload.message;
         }
       });
     },

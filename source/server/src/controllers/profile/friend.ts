@@ -8,12 +8,7 @@ export default (prisma: PrismaClient): void => {
     const { authorization } = req.headers;
     const profile = new Profile(prisma, authorization, 'token');
     const err = await profile.init();
-    if (err.error) {
-      return {
-        success: false,
-        error: err.error,
-      };
-    }
+    if (err.error) return err;
 
     return {
       success: true,
@@ -25,12 +20,7 @@ export default (prisma: PrismaClient): void => {
     const { authorization } = req.headers;
     const profile = new Profile(prisma, authorization, 'token');
     const err = await profile.init();
-    if (err.error) {
-      return {
-        success: false,
-        error: err.error,
-      };
-    }
+    if (err.error) return err;
 
     return {
       success: true,
@@ -52,26 +42,13 @@ export default (prisma: PrismaClient): void => {
 
     const profile = new Profile(prisma, authorization, 'token');
     const err = await profile.init();
-    if (err.error) {
-      return {
-        success: false,
-        error: err.error,
-      };
-    }
+    if (err.error) return err;
 
-    const friend = await prisma.profiles.findFirst({
-      where: {
-        userId,
-      },
-    });
-    if (!friend) {
-      return {
-        success: false,
-        error: 'User does not exist',
-      };
-    }
+    const friend = new Profile(prisma, userId, 'id');
+    const err2 = await profile.init();
+    if (err2.error) return err2;
 
-    const handleRequest = await profile.handleFriend(friend.userId, action);
+    const handleRequest = await profile.handleFriend(userId, action);
     if (handleRequest.error) {
       return {
         success: false,
@@ -94,12 +71,7 @@ export default (prisma: PrismaClient): void => {
 
     const profile = new Profile(prisma, authorization, 'token');
     const err = await profile.init();
-    if (err.error) {
-      return {
-        success: false,
-        error: err.error,
-      };
-    }
+    if (err.error) return err;
 
     if (profile.profile.username === username) {
       return {
@@ -111,12 +83,12 @@ export default (prisma: PrismaClient): void => {
     const friend = await prisma.profiles.findFirst({
       where: {
         username,
-      },
+      }
     });
     if (!friend) {
       return {
         success: false,
-        error: 'User does not exist',
+        error: 'User not found',
       };
     }
 

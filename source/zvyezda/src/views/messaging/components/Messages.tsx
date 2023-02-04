@@ -3,7 +3,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
-import Socket from '../../../classes/Socket';
 import { TimeAgo } from '../../../lib/util';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import {
@@ -26,42 +25,37 @@ import {
   MessagesTitlebar,
 } from './styled';
 
-export default ({ mobileMode }: Client.Messaging.Messages) => {
-  const [socket, setSocket] = useState(null);
+export default ({ mobileMode, socket }: Client.Messaging.Messages) => {
   const [message, setMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const state = useAppSelector((state) => state.messaging);
+  const state: Client.Messaging.InitialState = useAppSelector((state) => state.messaging);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    socket.on('message', (data) => {
+      console.log(data);
+      dispatch(addMessage(data));
+    });
+  }, []);
 
   useEffect(() => {
     document.getElementById('autoscroll').scrollIntoView(false);
   }, [state.messages]);
-
-  // useEffect(() => {
-  //   const socket = Socket.New();
-  //   socket.on(`handleReceiveFriendMessage_${state.selectedFriend.messagesGroupId}`, (data) => {
-  //     dispatch(addMessage(data));
-  //   });
-  //   setSocket(socket);
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
   };
 
   const handleSend = () => {
-    if (message && message !== '') {
-      socket.emit('handleSendFriendMessage', {
+    if (message) {
+      socket.emit('sendMessage', {
+        message: message,
+        to: state.selectedFriend.userId,
         authorization: localStorage.getItem('authorization'),
-        userId: state.selectedFriend.userId,
-        content: message,
       });
+      setMessage('');
     }
-    setMessage('');
   };
 
   return (
@@ -118,7 +112,7 @@ export default ({ mobileMode }: Client.Messaging.Messages) => {
                   setSelectedMessage({
                     isHovering: true,
                     messageId: message.messageId,
-                    content: message.content,
+                    message: message.message,
                   }),
                 )
               }
@@ -136,7 +130,7 @@ export default ({ mobileMode }: Client.Messaging.Messages) => {
               <MessagesMessagesMessageContent>
                 <MessagesMessagesMessageContentDetails>
                   <p id="username">{message.username}</p>
-                  <p id="date">{TimeAgo(JSON.parse(message.dateSent))}</p>
+                  <p id="date">{TimeAgo(message.createdAt)}</p>
                   {state.selectedMessage.isHovering &&
                     message.userId === state.user.userId &&
                     state.selectedMessage.messageId === message.messageId && (
@@ -146,7 +140,7 @@ export default ({ mobileMode }: Client.Messaging.Messages) => {
                       </>
                     )}
                 </MessagesMessagesMessageContentDetails>
-                <p id="message">{message.content}</p>
+                <p id="message">{message.message}</p>
               </MessagesMessagesMessageContent>
             </MessagesMessagesMessage>
           ))}
