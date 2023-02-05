@@ -1,15 +1,11 @@
 declare namespace Server {}
 declare namespace Server.Socket {
   type ClientToServer = {
-    test: () => void;
-    getAccount: (data: { token: string }) => void;
     sendMessage: (data: { to: string; authorization: string; message: string }) => void;
     joinMessageGroup: (data: { messageGroupId: string; authorization: string }) => void;
     leaveMessageGroup: (data: { messageGroupId: string }) => void;
   };
   type ServerToClient = {
-    clientTest: (message: string) => void;
-    setAccount: (data: { account: string }) => void;
     message: (data: {
       userId: string;
       username: string;

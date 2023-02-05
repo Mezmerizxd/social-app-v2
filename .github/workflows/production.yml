@@ -1,0 +1,46 @@
+name: Production
+
+on:
+    push:
+        branches: main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        env:
+            IMAGE_NAME: social-app-v2
+            PROJECT_ID: pro-hour-350721
+
+        strategy:
+            matrix:
+                node-version: [16.x]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'yarn'
+            - name: Install dependencies
+              run: yarn --production=true
+            - name: Production build
+              run: yarn build
+            - name: Format with Prettier
+              run: yarn prettier
+
+            - name: Get package version
+              id: pkg_version
+              uses: martinbeentjes/npm-get-version-action@main
+
+            - name: Docker build & push
+              uses: mr-smithers-excellent/docker-build-push@v5
+              with:
+                  image: mezmerizxd/social-app-v2
+                  tags: ${{ steps.pkg_version.outputs.current-version}}, latest
+                  registry: docker.io
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
