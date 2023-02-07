@@ -2,7 +2,7 @@ name: Production
 
 on:
     push:
-        branches: main
+        branches: remaster
 
 jobs:
     build:
@@ -40,7 +40,8 @@ jobs:
               uses: mr-smithers-excellent/docker-build-push@v5
               with:
                   image: mezmerizxd/social-app-v2
-                  tags: ${{ steps.pkg_version.outputs.current-version}}, latest
+#                  tags: ${{ steps.pkg_version.outputs.current-version}}, latest
+                  tags: test
                   registry: docker.io
                   username: ${{ secrets.DOCKER_USERNAME }}
                   password: ${{ secrets.DOCKER_PASSWORD }}
