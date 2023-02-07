@@ -8,10 +8,6 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
-        env:
-            IMAGE_NAME: social-app-v2
-            PROJECT_ID: pro-hour-350721
-
         strategy:
             matrix:
                 node-version: [16.x]
@@ -26,7 +22,7 @@ jobs:
                   node-version: ${{ matrix.node-version }}
                   cache: 'yarn'
             - name: Install dependencies
-              run: yarn --production=true
+              run: yarn
             - name: Production build
               run: yarn build
             - name: Format with Prettier
