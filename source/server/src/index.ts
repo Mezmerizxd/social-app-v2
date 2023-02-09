@@ -7,7 +7,7 @@ import AccountController from './controllers/account';
 import ProfileController from './controllers/profile';
 import MessagingController from './controllers/messaging';
 
-config({ path: `${__dirname}/../../.env` });
+config({ path: `${__dirname}/../../../.env` });
 
 const { PORT } = process.env;
 
