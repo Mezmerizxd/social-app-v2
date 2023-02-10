@@ -1,7 +1,4 @@
 export default new (class Api {
-  private apiVersion = 'v1';
-  private productionUri = 'http://mezmerizxd.net';
-  private developmentUri = 'http://localhost:3000';
   private authorization = localStorage.getItem('authorization');
 
   public Post = async ({ api, body }: Client.API.Post) => {
@@ -38,13 +35,12 @@ export default new (class Api {
   };
 
   public getUri = () => {
-    // return process.env.NODE_ENV === 'production'
-    //   ? `${this.productionUri}/api/${this.apiVersion}`
-    //   : `${this.developmentUri}/api/${this.apiVersion}`;
-    const protocol = window.location.protocol;
     const host = window.location.host;
-    const port = window.location.port;
-    const isNotDev = host === 'localhost' && port === '3000';
-    return isNotDev ? `${protocol}//${host}/api/v1` : 'http://localhost:3000/api/v1';
+    // If host is localhost:3000 or localhost:8080 then we are in development mode
+    if (host.includes('localhost')) {
+      return 'http://localhost:3000/api/v1';
+    } else {
+      return 'http://mezmerizxd.net/api/v1';
+    }
   };
 })();
