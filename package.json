@@ -7,7 +7,7 @@
   "scripts": {
     "watch": "lerna run watch --stream --parallel",
     "build": "lerna run build --stream --parallel",
-    "start": "node ./source/server/build/index.js",
+    "start": "yarn migrate && yarn build && node ./source/server/build/index.js",
     "minimal-client:watch": "preact watch --refresh --src ./src --cwd ./source/minimal-client/",
     "migrate": "yarn prisma migrate deploy",
     "generate": "yarn prisma generate",

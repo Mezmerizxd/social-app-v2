@@ -8,10 +8,6 @@ COPY . .
 
 RUN yarn
 
-RUN yarn prisma migrate deploy
-
-RUN yarn build
-
 CMD ["yarn", "start"]
 
 EXPOSE 3000
