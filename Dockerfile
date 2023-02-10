@@ -6,10 +6,8 @@ COPY ./package.json ./
 
 COPY . .
 
-RUN yarn --production=true
-
-RUN yarn build
+RUN yarn
 
 CMD ["yarn", "start"]
 
-EXPOSE 3001 3002
+EXPOSE 3000

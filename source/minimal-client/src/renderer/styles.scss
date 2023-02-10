@@ -1,0 +1,14 @@
+html {
+  box-sizing: border-box;
+
+  font-family: 'Oxygen', sans-serif;
+
+  text-rendering: optimizeLegibility;
+
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+}

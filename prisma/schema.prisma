@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = "debian-openssl-1.1.x"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Accounts {
+  id               Int       @id @default(autoincrement())
+  userId           String    @unique
+  email            String
+  password         String
+  authorization    String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  verificationCode String    @unique
+  verifiedEmail    Boolean   @default(false)
+  profile          Profiles?
+}
+
+model Profiles {
+  id                     Int      @id @default(autoincrement())
+  userId                 String   @unique
+  account                Accounts @relation(fields: [userId], references: [userId])
+  avatar                 String
+  username               String
+  messageGroups          String[]
+  friends                String[]
+  friendRequestsSent     String[]
+  friendRequestsReceived String[]
+}
+
+model MessageGroups {
+  id        Int        @id @default(autoincrement())
+  groupId   String     @unique
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  messages  Messages[]
+}
+
+// Messages will not need a unique messageId because its parent, groupId will be unique but messageId will be unique within the group
+model Messages {
+  id            Int            @id @default(autoincrement())
+  messageId     String
+  message       String
+  avatar        String
+  username      String
+  userId        String
+  createdAt     DateTime       @default(now())
+  MessageGroups MessageGroups? @relation(fields: [groupId], references: [groupId])
+  groupId       String?
+
+  @@unique([groupId, messageId])
+}
