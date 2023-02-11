@@ -22,7 +22,7 @@ import {
 } from './styled';
 
 export default () => {
-  const [context, setContext] = useState<string>('sent');
+  const [context, setContext] = useState<string>('received');
 
   const state = useAppSelector((state) => state.messaging);
   const dispatch = useAppDispatch();

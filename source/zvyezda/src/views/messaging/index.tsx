@@ -17,7 +17,7 @@ export default () => {
   const [mobileMode, setMobileMode] = useState(false);
   const [socket, setSocket] = useState<any>(null);
 
-  const state = useAppSelector((state) => state.messaging);
+  const state: Client.Messaging.InitialState = useAppSelector((state) => state.messaging);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -33,6 +33,21 @@ export default () => {
         } else {
           dispatch(setError(response.error));
         }
+
+        const { socketUrl } = await Api.Post({ api: '/get-socket-details', body: {} });
+        const s = socketIo.io(socketUrl, {
+          secure: false,
+          rejectUnauthorized: false,
+          reconnectionAttempts: 0,
+          autoConnect: false,
+        });
+        s.connect();
+
+        s.emit('join', {
+          userId: response.userId,
+          authorization: localStorage.getItem('authorization'),
+        });
+        setSocket(s);
       });
     } else {
       window.location.href = '/authentication';
@@ -45,17 +60,6 @@ export default () => {
     } else {
       setMobileMode(false);
     }
-    setTimeout(async () => {
-      const { socketUrl } = await Api.Post({ api: '/get-socket-details', body: {} });
-      const s = socketIo.io(socketUrl, {
-        secure: false,
-        rejectUnauthorized: false,
-        reconnectionAttempts: 0,
-        autoConnect: false,
-      });
-      s.connect();
-      setSocket(s);
-    });
   }, []);
 
   window.addEventListener('resize', () => {

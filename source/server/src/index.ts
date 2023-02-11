@@ -13,7 +13,7 @@ const { PORT } = process.env;
 
 const prisma = new PrismaClient();
 
-Controllers();
+Controllers(prisma);
 AccountController(prisma);
 ProfileController(prisma);
 MessagingController(prisma);

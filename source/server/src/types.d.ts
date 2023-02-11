@@ -1,6 +1,7 @@
 declare namespace Server {}
 declare namespace Server.Socket {
   type ClientToServer = {
+    join: (data: { userId: string; authorization: string }) => void;
     sendMessage: (data: { to: string; authorization: string; message: string }) => void;
     joinMessageGroup: (data: { messageGroupId: string; authorization: string }) => void;
     leaveMessageGroup: (data: { messageGroupId: string }) => void;
