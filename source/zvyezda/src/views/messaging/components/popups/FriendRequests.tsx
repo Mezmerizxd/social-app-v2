@@ -76,11 +76,11 @@ export default () => {
         </PopupTitle>
 
         <PopupTabbar>
-          <PopupTabbarTab id={context === 'sent' ? 'tab_selected' : ''} onClick={() => setContext('sent')}>
-            <SendIcon />
-          </PopupTabbarTab>
           <PopupTabbarTab id={context === 'received' ? 'tab_selected' : ''} onClick={() => setContext('received')}>
             <MailIcon />
+          </PopupTabbarTab>
+          <PopupTabbarTab id={context === 'sent' ? 'tab_selected' : ''} onClick={() => setContext('sent')}>
+            <SendIcon />
           </PopupTabbarTab>
         </PopupTabbar>
 
