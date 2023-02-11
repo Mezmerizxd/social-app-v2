@@ -15,6 +15,10 @@
 
 - Nothing yet
 
+### Socket
+
+- [ ] Whenever a user connects and is authenticated, add them to a list of connected users and in that list, add their username, userId and socketId so searching for a users socketId is easier
+
 ### Authentication
 
 - Nothing yet
