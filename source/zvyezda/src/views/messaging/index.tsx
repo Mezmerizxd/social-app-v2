@@ -9,13 +9,14 @@ import FriendRequests from './components/popups/FriendRequests';
 import EditMessage from './components/popups/EditMessage';
 import Settings from './components/popups/Settings';
 import Features from './features';
-import { setError, setFriends, setUserData } from './reducer';
+import { setError, setFriendRequestsPopupData, setFriends, setUserData } from './reducer';
 import Api from '../../classes/Api';
 import * as socketIo from 'socket.io-client';
 
 export default () => {
   const [mobileMode, setMobileMode] = useState(false);
-  const [socket, setSocket] = useState<any>(null);
+  const [socket, setSocket] =
+    useState<socketIo.Socket<Server.Socket.ServerToClient & Server.Socket.ClientToServer>>(null);
 
   const state: Client.Messaging.InitialState = useAppSelector((state) => state.messaging);
   const dispatch = useAppDispatch();
@@ -35,7 +36,7 @@ export default () => {
         }
 
         const { socketUrl } = await Api.Post({ api: '/get-socket-details', body: {} });
-        const s = socketIo.io(socketUrl, {
+        const s: socketIo.Socket<Server.Socket.ServerToClient & Server.Socket.ClientToServer> = socketIo.io(socketUrl, {
           secure: false,
           rejectUnauthorized: false,
           reconnectionAttempts: 0,
@@ -47,12 +48,30 @@ export default () => {
           userId: response.userId,
           authorization: localStorage.getItem('authorization'),
         });
+
+        s.on('receiveFriendRequest', (data: any) => {
+          dispatch(
+            setFriendRequestsPopupData({
+              sent: state.friendRequestsPopup.sent,
+              received: state.friendRequestsPopup.received ? [...state?.friendRequestsPopup?.received, data] : [data],
+            }),
+          );
+        });
+
         setSocket(s);
       });
     } else {
       window.location.href = '/authentication';
     }
-  }, [state.friendRequestsPopup, state.addFriendPopup]);
+
+    return () => {
+      socket.emit('leave', {
+        userId: state.user.userId,
+        authorization: localStorage.getItem('authorization'),
+      });
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if (screen.width < 600) {
