@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import MailIcon from '@mui/icons-material/Mail';
 import { Container, MessagignError, MessagingContainer } from './styled';
 import Sidebar from './components/Sidebar';
 import Messages from './components/Messages';
@@ -12,6 +13,7 @@ import Features from './features';
 import { setError, setFriendRequestsPopupData, setFriends, setUserData } from './reducer';
 import Api from '../../classes/Api';
 import * as socketIo from 'socket.io-client';
+import { setNotification } from '../../components/notifications/reducer';
 
 export default () => {
   const [mobileMode, setMobileMode] = useState(false);
@@ -50,6 +52,14 @@ export default () => {
         });
 
         s.on('receiveFriendRequest', (data: any) => {
+          dispatch(
+            setNotification({
+              icon: <MailIcon />,
+              message: `You have received a friend request from ${data.username}`,
+              wait: 10000,
+              closable: true,
+            }),
+          );
           dispatch(
             setFriendRequestsPopupData({
               sent: state.friendRequestsPopup.sent,

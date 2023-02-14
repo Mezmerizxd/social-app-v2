@@ -168,6 +168,16 @@ declare namespace Client.Globe.Components.Models {
   }
 }
 
+declare namespace Client.Components.Notifications.Default {
+  interface InitialState {
+    icon: any;
+    message: any;
+    open: boolean;
+    wait: number;
+    closable: boolean;
+  }
+}
+
 declare namespace Client.Styled {
   interface ColorData {
     hex: string;
