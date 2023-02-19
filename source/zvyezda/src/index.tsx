@@ -9,6 +9,7 @@ import Globe from './views/globe';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { RouterContainer } from './styled';
+import DefaultNotification from './components/notifications/Default';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -24,6 +25,7 @@ root.render(
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+        <DefaultNotification />
       </Provider>
     </Router>
   </RouterContainer>,

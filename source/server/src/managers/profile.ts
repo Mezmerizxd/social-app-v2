@@ -1,3 +1,4 @@
+import { socket } from '../server';
 import { PrismaClient, Accounts as PrismaAccount, Profiles as PrismaProfile } from '@prisma/client';
 import { AccountSettings } from '../config';
 
@@ -208,6 +209,18 @@ export default class Profile {
               set: user.profile.friendRequestsSent.filter((id) => id !== this.account.userId),
             },
           },
+        });
+
+        // emit to socket updateFriends
+        socket.to(user.account.userId).emit('updateFriends', {
+          userId: this.account.userId,
+          username: this.profile.username,
+          avatar: this.profile.avatar,
+        });
+        socket.to(this.account.userId).emit('updateFriends', {
+          userId: user.account.userId,
+          username: user.profile.username,
+          avatar: user.profile.avatar,
         });
         break;
       case 'decline':

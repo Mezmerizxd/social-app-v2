@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import server from '../../server';
+import server, { socket } from '../../server';
 import handler from '../../helpers/handler';
 import Profile from '../../managers/profile';
 
@@ -83,7 +83,7 @@ export default (prisma: PrismaClient): void => {
     const friend = await prisma.profiles.findFirst({
       where: {
         username,
-      }
+      },
     });
     if (!friend) {
       return {
@@ -99,6 +99,13 @@ export default (prisma: PrismaClient): void => {
         error: sendRequest.error,
       };
     }
+
+    // Emit to users socket room
+    socket.to(friend.userId).emit('receiveFriendRequest', {
+      userId: profile.profile.userId,
+      username: profile.profile.username,
+      avatar: profile.profile.avatar,
+    });
 
     return {
       success: true,

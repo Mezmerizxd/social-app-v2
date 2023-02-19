@@ -13,7 +13,7 @@ export const InitialState: Client.Messaging.InitialState = {
   selectedMessage: {
     isHovering: false,
     messageId: null,
-    message: null,
+    message: '',
   },
   selectedFriend: {
     userId: null,
@@ -65,6 +65,23 @@ export const MessagingSlice = createSlice({
     },
     setFriends: (state, action) => {
       state.friends = action.payload;
+    },
+    addFriend: (state, action) => {
+      if (state.friends) {
+        state.friends.push({
+          userId: action.payload.userId,
+          username: action.payload.username,
+          avatar: action.payload.avatar,
+        });
+      } else {
+        state.friends = [
+          {
+            userId: action.payload.userId,
+            username: action.payload.username,
+            avatar: action.payload.avatar,
+          },
+        ];
+      }
     },
     setMessages: (state, action) => {
       state.messages = action.payload.messages;
@@ -145,6 +162,7 @@ export const {
   setUserData,
   editUserData,
   setFriends,
+  addFriend,
   setSelectedMessage,
   toggleAddFriendPopup,
   setFriendRequestsPopupData,

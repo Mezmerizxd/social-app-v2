@@ -2,8 +2,8 @@
 
 ### General
 
-- [ ] Make a logo
-- [ ] Make a favicon
+- [x] Make a logo
+- [x] Make a favicon
 - [ ] Make a splash screen
 - [ ] Make a loading screen
 
@@ -25,8 +25,8 @@
 
 ### Messaging
 
-- [ ] Create socket events that the IO (not the Socket) can emit to certain clients when something happens like a new message or friend request
-- [ ] Make UI alerts
+- [x] Create socket events that the IO (not the Socket) can emit to certain clients when something happens like a new message or friend request
+- [x] Make UI alerts
 
 ### Globe
 
