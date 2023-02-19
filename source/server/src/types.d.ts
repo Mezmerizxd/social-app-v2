@@ -17,6 +17,7 @@ declare namespace Server.Socket {
       messageId: string;
     }) => void;
     receiveFriendRequest: (data: { userId: string; username: string; avatar: string }) => void;
+    updateFriends: (data: { userId: string; username: string; avatar: string }) => void;
   };
 }
 

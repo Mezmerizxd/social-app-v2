@@ -10,7 +10,7 @@ import FriendRequests from './components/popups/FriendRequests';
 import EditMessage from './components/popups/EditMessage';
 import Settings from './components/popups/Settings';
 import Features from './features';
-import { setError, setFriendRequestsPopupData, setFriends, setUserData } from './reducer';
+import { addFriend, setError, setFriendRequestsPopupData, setFriends, setUserData } from './reducer';
 import Api from '../../classes/Api';
 import * as socketIo from 'socket.io-client';
 import { setNotification } from '../../components/notifications/reducer';
@@ -66,6 +66,10 @@ export default () => {
               received: state.friendRequestsPopup.received ? [...state?.friendRequestsPopup?.received, data] : [data],
             }),
           );
+        });
+
+        s.on('updateFriends', (data: any) => {
+          dispatch(addFriend(data));
         });
 
         setSocket(s);
