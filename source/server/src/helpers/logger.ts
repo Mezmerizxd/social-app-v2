@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { blue, green, yellow } from 'colors';
+import { blue, green, yellow, gray } from 'colors';
 import { inspect } from 'util';
 import { Socket } from 'socket.io';
 
@@ -13,4 +13,12 @@ export function logAPI(req: express.Request, res: express.Response) {
 
 export function logSocket(socket: Socket) {
   socket.onAny((...args: any[]) => log(yellow('[SOCKET]'), green(socket.nsp.name), blue(socket.id), ...args));
+}
+
+export function logManager(...args: any[]) {
+  log(gray('[MANAGER]'), ...args);
+}
+
+export function logController(...args: any[]) {
+  log(yellow('[CONTROLLER]'), ...args);
 }

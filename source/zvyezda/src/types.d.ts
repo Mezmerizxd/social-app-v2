@@ -116,7 +116,7 @@ declare namespace Client.Globe {
       verifiedUser: boolean;
     };
     data: {
-      likedPosts: any;
+      likedPosts: string[];
     };
     posts: Post[];
     createPost: {
@@ -135,14 +135,20 @@ declare namespace Client.Globe {
   }
 
   interface Post {
-    postId: number;
-    userId: number;
-    username: string;
-    avatar: string;
+    id?: number;
+    postId?: string;
+    replyTo?: string | null;
+    avatar?: string;
+    username?: string;
+    userId: string;
+    createdAt?: any;
+    likes?: string[];
+    shares?: string[];
+    views?: number;
+    replies?: string[];
     content: string;
-    datePosted: string;
-    likes: number;
-    comments: number;
+    shared: boolean | null;
+    sharedBy?: string | null;
   }
 }
 declare namespace Client.Globe.Reducer {

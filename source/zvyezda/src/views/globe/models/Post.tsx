@@ -13,7 +13,9 @@ import {
 } from './styled';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useAppDispatch } from '../../../hooks/reduxHooks';
+import CommentIcon from '@mui/icons-material/Comment';
+import EyeIcon from '@mui/icons-material/Visibility';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { handlePostOptionsUi, likePost } from '../reducer';
 
 export default ({
@@ -21,12 +23,14 @@ export default ({
   userId,
   username,
   id,
-  datePosted,
+  createdAt,
   avatar,
-  comments,
+  replies,
   content,
   likes,
+  views,
 }: Client.Globe.Components.Models.Post) => {
+  const state: Client.Globe.InitialState = useAppSelector((state) => state.globe);
   const dispatch = useAppDispatch();
 
   function handleOptions(e: any) {
@@ -45,7 +49,7 @@ export default ({
   }
 
   function handleLikePost() {
-    dispatch(likePost({ postId: postId }));
+    dispatch(likePost({ postId: postId, userId: state.account.userId }));
   }
 
   return (
@@ -59,7 +63,7 @@ export default ({
         <PostHeader>
           <PostHeaderDetails>
             <h1>{username}</h1>
-            <p>{TimeAgo(JSON.parse(datePosted))}</p>
+            <p>{TimeAgo(JSON.parse(createdAt))}</p>
           </PostHeaderDetails>
           <PostHeaderOptions onClick={(e: any) => handleOptions(e)}>
             <MoreHorizIcon />
@@ -70,11 +74,14 @@ export default ({
         </PostContent>
         <PostContentOptionsContainer>
           <PostContentOption onClick={handleLikePost}>
-            <FavoriteBorderIcon /> <p>{likes}</p>
+            <FavoriteBorderIcon /> <p>{likes.length}</p>
           </PostContentOption>
-          {/* <PostContentOption>
-                        <CommentIcon /> <p>{comments}</p>
-                    </PostContentOption> */}
+          <PostContentOption>
+            <CommentIcon /> <p>{replies.length}</p>
+          </PostContentOption>
+          <PostContentOption>
+            <EyeIcon /> <p>{views}</p>
+          </PostContentOption>
         </PostContentOptionsContainer>
       </PostContentContainer>
     </Post>

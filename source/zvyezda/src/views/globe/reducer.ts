@@ -58,7 +58,7 @@ export const GlobeSlice = createSlice({
       state.posts = state.posts.filter((post) => post.postId !== action.payload.postId);
     },
     likePost: (state, action) => {
-      let likedPosts: any = [];
+      let likedPosts: string[] = [];
       state?.data?.likedPosts?.map((post) => {
         likedPosts.push(post);
       });
@@ -66,7 +66,7 @@ export const GlobeSlice = createSlice({
         likedPosts = likedPosts.filter((postId) => postId !== action.payload.postId);
         state.posts.map((post) => {
           if (post.postId === action.payload.postId) {
-            post.likes--;
+            post.likes.push(action.payload.userId);
             return;
           }
         });
@@ -74,7 +74,7 @@ export const GlobeSlice = createSlice({
         likedPosts.push(action.payload.postId);
         state.posts.map((post) => {
           if (post.postId === action.payload.postId) {
-            post.likes++;
+            post.likes = post.likes.filter((userId) => userId !== action.payload.userId);
             return;
           }
         });

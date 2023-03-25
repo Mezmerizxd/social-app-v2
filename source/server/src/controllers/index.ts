@@ -1,8 +1,19 @@
 import server, { socket } from '../server';
 import handler from '../helpers/handler';
 import { PrismaClient } from '@prisma/client';
+import { logController } from '../helpers/logger';
+
+import MessagingController from './messaging';
+import AccountController from './account';
+import ProfileController from './profile';
+import GlobeController from './globe';
 
 export default (prisma: PrismaClient): void => {
+  MessagingController(prisma);
+  AccountController(prisma);
+  ProfileController(prisma);
+  GlobeController(prisma);
+
   socket.on('connection', async (s) => {
     s.on('join', async (data) => {
       // Check theres data
@@ -46,4 +57,6 @@ export default (prisma: PrismaClient): void => {
       success: true,
     };
   });
+
+  logController('Loaded controllers');
 };
