@@ -2,7 +2,7 @@ import { socket } from '../server';
 import { PrismaClient, Accounts as PrismaAccount, Profiles as PrismaProfile } from '@prisma/client';
 import { AccountSettings } from '../config';
 
-export default class Profile {
+export default class User {
   prisma: PrismaClient;
   key: string;
   method: string;
@@ -14,7 +14,7 @@ export default class Profile {
 
   constructor(prisma: PrismaClient, key: string | undefined, method: 'token' | 'id') {
     this.prisma = prisma;
-    if (!key) throw new Error('Profile manager: missing key');
+    if (!key) throw new Error('Profile helper: missing key');
     this.key = key;
     this.method = method;
   }

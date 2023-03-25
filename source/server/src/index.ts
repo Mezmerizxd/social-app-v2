@@ -1,11 +1,12 @@
 import { config } from 'dotenv';
 import server from './server';
 import { PrismaClient } from '@prisma/client';
+
 // Controllers
 import Controllers from './controllers';
-import AccountController from './controllers/account';
-import ProfileController from './controllers/profile';
-import MessagingController from './controllers/messaging';
+
+// Managers
+import Globe from './managers/globe';
 
 config({ path: `${__dirname}/../../../.env` });
 
@@ -14,9 +15,8 @@ const { PORT } = process.env;
 const prisma = new PrismaClient();
 
 Controllers(prisma);
-AccountController(prisma);
-ProfileController(prisma);
-MessagingController(prisma);
+
+Globe.init(prisma);
 
 server.api.use('/api/v1', server.v1);
 

@@ -3,8 +3,8 @@ import Optionbar from './components/Optionbar';
 import Content from './components/Content';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { useEffect } from 'react';
-import { setAccount } from "./reducer";
-import Api from "../../classes/Api";
+import { setAccount } from './reducer';
+import Api from '../../classes/Api';
 
 export default () => {
   const state: Client.Globe.InitialState = useAppSelector((state) => state.globe);

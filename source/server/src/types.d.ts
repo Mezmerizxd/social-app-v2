@@ -28,8 +28,10 @@ declare namespace Server.API {
   };
 
   type API = {
+    // Api
     ['/test']: () => void;
     ['/get-socket-details']: () => { socketUrl: string };
+    // Account
     ['/account/signup']: () => {
       authorization: string | null;
     };
@@ -37,6 +39,7 @@ declare namespace Server.API {
       authorization: string | null;
     };
     ['/account/verify-email']: () => {};
+    // Profile
     ['/profile']: () => {
       userId?: string;
       username?: string;
@@ -54,16 +57,47 @@ declare namespace Server.API {
     };
     ['/profile/handle-friend-request']: () => {};
     ['/profile/add-friend']: () => {};
+    // Messaging
     ['/messaging/get-message-group']: () => {
       messageGroupId?: string;
       messages?: any[];
     };
     ['/messaging/delete-message']: () => {};
     ['/messaging/edit-message']: () => {};
+    // Globe
+    ['/globe/following-posts']: () => {
+      posts?: Server.Managers.Globe.Post[] | null;
+    };
+    ['/globe/create-post']: () => {};
+    ['/globe/like-post']: () => {};
+    ['/globe/share-post']: () => {};
+    ['/globe/view-post']: () => {
+      post: Server.Managers.Globe.Post | null;
+      replies: Server.Managers.Globe.Post[] | null;
+    };
+    ['/globe/reply-to-post']: () => {};
   };
 }
 
 declare namespace Server.Managers {}
 declare namespace Server.Managers.Profile {
   type BasicProfileData = { userId: string; username: string; avatar: string };
+}
+declare namespace Server.Managers.Globe {
+  type Post = {
+    id?: number;
+    postId?: any;
+    replyTo?: any;
+    avatar?: any;
+    username?: any;
+    userId: any;
+    createdAt?: any;
+    likes?: any;
+    shares?: any;
+    views?: any;
+    replies?: any;
+    content: any;
+    shared?: boolean;
+    sharedBy?: Profile.BasicProfileData;
+  };
 }

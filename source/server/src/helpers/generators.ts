@@ -18,7 +18,7 @@ export async function createUserId(prisma: PrismaClient): Promise<string | null>
     if (
       await prisma.accounts.findFirst({
         where: {
-          id,
+          userId: id.toString(),
         },
       })
     ) {
@@ -105,4 +105,29 @@ export async function createVerificationCode(prisma: PrismaClient): Promise<stri
     }
   }
   return verificationCode;
+}
+
+export async function createPostId(prisma: PrismaClient): Promise<string | null> {
+  let id: number | null = Math.floor(Math.random() * 1000000000000000);
+  let isCreated = false;
+  let attempts = 0;
+
+  while (!isCreated) {
+    if (attempts === 5) {
+      return null;
+    }
+    if (
+      await prisma.posts.findFirst({
+        where: {
+          postId: id.toString(),
+        },
+      })
+    ) {
+      id = Math.floor(Math.random() * 1000000000000000);
+      attempts++;
+    } else {
+      isCreated = true;
+    }
+  }
+  return id.toString();
 }

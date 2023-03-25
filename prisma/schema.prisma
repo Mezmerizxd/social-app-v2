@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  binaryTargets = "debian-openssl-1.1.x"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "windows"]
 }
 
 datasource db {
@@ -34,6 +34,9 @@ model Profiles {
   friends                String[]
   friendRequestsSent     String[]
   friendRequestsReceived String[]
+  posts                  String[]
+  likedPosts             String[]
+  sharedPosts            String[]
 }
 
 model MessageGroups {
@@ -58,4 +61,19 @@ model Messages {
   groupId       String?
 
   @@unique([groupId, messageId])
+}
+
+model Posts {
+  id        Int      @id @default(autoincrement())
+  postId    String   @unique
+  replyTo   String?
+  avatar    String
+  username  String
+  userId    String
+  createdAt DateTime @default(now())
+  likes     String[] // userId
+  shares    String[] // userId
+  views     Int
+  replies   String[] // postId
+  content   String
 }
