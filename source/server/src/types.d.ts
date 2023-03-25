@@ -86,18 +86,18 @@ declare namespace Server.Managers.Profile {
 declare namespace Server.Managers.Globe {
   type Post = {
     id?: number;
-    postId?: any;
-    replyTo?: any;
-    avatar?: any;
-    username?: any;
-    userId: any;
+    postId?: string;
+    replyTo?: string | null;
+    avatar?: string;
+    username?: string;
+    userId: string;
     createdAt?: any;
-    likes?: any;
-    shares?: any;
-    views?: any;
-    replies?: any;
-    content: any;
-    shared?: boolean;
-    sharedBy?: Profile.BasicProfileData;
+    likes?: string[];
+    shares?: string[];
+    views?: number;
+    replies?: string[];
+    content: string;
+    shared: boolean | null;
+    sharedBy?: string | null;
   };
 }

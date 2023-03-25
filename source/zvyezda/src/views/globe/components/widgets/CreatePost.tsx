@@ -30,16 +30,18 @@ export default () => {
   function handlePublish() {
     // TODO: Change to server side
     const date = JSON.stringify(new Date());
-    const post = {
+    const post: Client.Globe.Post = {
       id: state?.posts?.length + 1,
       userId: state.account.userId,
       postId: state?.posts?.length + 1,
       username: state.account.username,
-      datePosted: date,
+      createdAt: date,
       avatar: state.account.avatar,
-      comments: 0,
+      replies: [],
       content: state.createPost.value,
-      likes: 0,
+      likes: [],
+      views: 0,
+      shared: false,
     };
     dispatch(addPost(post));
     resetTextArea();

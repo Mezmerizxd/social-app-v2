@@ -178,11 +178,7 @@ class Globe {
               posts.push({
                 ...post,
                 shared: true,
-                sharedBy: {
-                  avatar: user.profile.avatar,
-                  username: user.profile.username,
-                  userId: user.profile.userId,
-                },
+                sharedBy: user.profile.userId,
               });
             }
           }

@@ -21,11 +21,13 @@ export default () => {
               userId={post.userId}
               username={post.username}
               id={post.id}
-              datePosted={post.datePosted}
+              createdAt={post.createdAt}
               avatar={post.avatar}
-              comments={post.comments}
+              replies={post.replies}
               content={post.content}
               likes={post.likes}
+              views={post.views}
+              shared={false}
             />
           ))}
         {state.postOptions.open && <PostOptions />}

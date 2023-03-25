@@ -73,7 +73,9 @@ model Posts {
   createdAt DateTime @default(now())
   likes     String[] // userId
   shares    String[] // userId
-  views     Int
+  views     Int      @default(0)
   replies   String[] // postId
   content   String
+  shared    Boolean?
+  sharedBy  String?
 }
