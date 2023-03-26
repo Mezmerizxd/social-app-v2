@@ -30,4 +30,9 @@
 
 ### Globe
 
-- Nothing yet
+- [ ] Show posts from teh user's friends
+- [x] Create a post
+- [ ] Like a post
+- [ ] Share a post
+- [ ] View a post
+- [ ] Reply to a post

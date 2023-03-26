@@ -68,7 +68,9 @@ declare namespace Server.API {
     ['/globe/following-posts']: () => {
       posts?: Server.Managers.Globe.Post[] | null;
     };
-    ['/globe/create-post']: () => {};
+    ['/globe/create-post']: () => {
+      post?: Server.Managers.Globe.Post | null;
+    };
     ['/globe/like-post']: () => {};
     ['/globe/share-post']: () => {};
     ['/globe/view-post']: () => {

@@ -114,19 +114,19 @@ class Globe {
     }
   }
 
-  async createPost(userId: string, content: string, replyTo?: string): Promise<void> {
+  async createPost(userId: string, content: string, replyTo?: string): Promise<Server.Managers.Globe.Post | null> {
     try {
       const user = new User(this.prisma, userId, 'id');
       const err = await user.init();
       if (!err.success) {
         logManager('createPost:', err);
-        return;
+        return null;
       }
 
       const postId = await createPostId(this.prisma);
       if (!postId) {
         logManager('createPost: Failed to create postId');
-        return;
+        return null;
       }
 
       const post: any = {
@@ -135,6 +135,12 @@ class Globe {
         username: user.profile.username,
         userId: userId,
         content: content,
+        likes: [],
+        shares: [],
+        replies: [],
+        views: 0,
+        shared: false,
+        sharedBy: null,
       };
 
       if (replyTo != null) {
@@ -144,8 +150,11 @@ class Globe {
       await this.prisma.posts.create({
         data: post,
       });
+
+      return post;
     } catch (err) {
       logManager('createPost:', err);
+      return null;
     }
   }
 

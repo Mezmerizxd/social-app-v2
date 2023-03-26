@@ -35,10 +35,11 @@ export default (prisma: PrismaClient): void => {
     const err = await user.init();
     if (err.error) return err;
 
-    await Globe.createPost(user.account.userId, content);
+    const post = await Globe.createPost(user.account.userId, content);
 
     return {
       success: true,
+      post: post,
     };
   });
 
