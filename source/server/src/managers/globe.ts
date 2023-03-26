@@ -60,29 +60,29 @@ class Globe {
   }
 
   async getAllRepliesFromPost(
-    replyTo: string,
-  ): Promise<{ post: Server.Managers.Globe.Post; replies: Server.Managers.Globe.Post[] } | null> {
+    postId: string,
+  ): Promise<{ post: Server.Managers.Globe.Post | null; replies: Server.Managers.Globe.Post[] | null }> {
     try {
       const post = await this.prisma.posts.findUnique({
         where: {
-          postId: replyTo,
+          postId: postId,
         },
       });
       if (!post) {
         logManager('getAllRepliesFromPost: Post not found');
-        return null;
+        return { post: null, replies: null };
       }
 
       const replies = await this.prisma.posts.findMany({
         where: {
-          replyTo: replyTo,
+          replyTo: postId,
         },
       });
 
       return { post, replies };
     } catch (err) {
       logManager('getAllRepliesFromPost:', err);
-      return null;
+      return { post: null, replies: null };
     }
   }
 
@@ -114,7 +114,7 @@ class Globe {
     }
   }
 
-  async createPost({ userId, content, replyTo }: Server.Managers.Globe.Post): Promise<void> {
+  async createPost(userId: string, content: string, replyTo?: string): Promise<void> {
     try {
       const user = new User(this.prisma, userId, 'id');
       const err = await user.init();
@@ -146,6 +146,74 @@ class Globe {
       });
     } catch (err) {
       logManager('createPost:', err);
+    }
+  }
+
+  async likePost(postId: string, userId: string): Promise<void> {
+    try {
+      const post = await this.prisma.posts.findUnique({
+        where: {
+          postId: postId,
+        },
+      });
+      if (!post) {
+        logManager('likePost: Post not found');
+        return;
+      }
+
+      const likes = post.likes;
+      // if not liked then like, else unlike
+      if (likes.includes(userId)) {
+        const index = likes.indexOf(userId);
+        likes.splice(index, 1);
+      } else {
+        likes.push(userId);
+      }
+
+      await this.prisma.posts.update({
+        where: {
+          postId: postId,
+        },
+        data: {
+          likes: likes,
+        },
+      });
+    } catch (err) {
+      logManager('likePost:', err);
+    }
+  }
+
+  async sharePost(postId: string, userId: string): Promise<void> {
+    try {
+      const post = await this.prisma.posts.findUnique({
+        where: {
+          postId: postId,
+        },
+      });
+      if (!post) {
+        logManager('sharePost: Post not found');
+        return;
+      }
+
+      const shares = post.shares;
+      // if not shared then share, else unshare
+      if (shares.includes(userId)) {
+        const index = shares.indexOf(userId);
+        shares.splice(index, 1);
+      } else {
+        shares.push(userId);
+      }
+
+      await this.prisma.posts.update({
+        where: {
+          postId: postId,
+        },
+        data: {
+          shares: shares,
+        },
+      });
+    } catch (err) {
+      logManager('sharePost:', err);
     }
   }
 
@@ -199,6 +267,8 @@ class Globe {
       return null;
     }
   }
+
+  async loadForYouPosts(userId: string) {}
 }
 
 export default Globe.instance;
