@@ -34,10 +34,12 @@ export default () => {
           left: `${state.postOptions.posX}px`,
         }}
       >
-        <PostOption onClick={handleDeletePost}>
-          <DeleteIcon />
-          <p>Delete</p>
-        </PostOption>
+        {state.account.userId === state.postOptions.selectedPostUserId && (
+          <PostOption onClick={handleDeletePost}>
+            <DeleteIcon />
+            Delete
+          </PostOption>
+        )}
       </PostOptions>
     </PostOptionsContainer>
   );
