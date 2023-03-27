@@ -51,7 +51,7 @@ export default (prisma: PrismaClient): void => {
     const err = await user.init();
     if (err.error) return err;
 
-    await Globe.likePost(user.account.userId, postId);
+    await Globe.likePost(postId, user.account.userId);
 
     return {
       success: true,

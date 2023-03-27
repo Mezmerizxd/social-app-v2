@@ -37,7 +37,7 @@ export default () => {
       },
     });
     if (response && response.success === true) {
-      const date = JSON.stringify(new Date());
+      const date = new Date().toISOString();
       const post: Client.Globe.Post = {
         id: state?.posts?.length + 1,
         postId: response.post.postId,
@@ -53,7 +53,7 @@ export default () => {
         shared: response.post.shared,
         sharedBy: response.post.sharedBy,
       };
-      dispatch(addPost(post));
+      dispatch(addPost({ ...post, justCreated: true }));
       resetTextArea();
     } else {
       // setError(response.error);

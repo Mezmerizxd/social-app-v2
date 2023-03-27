@@ -262,6 +262,16 @@ class Globe {
         });
       }
 
+      const personalPosts = await this.getAllPostsFromUser(userId);
+      if (personalPosts) {
+        for (let i = 0; i < personalPosts.length; i++) {
+          const post = personalPosts[i];
+          posts.push({
+            ...post,
+          });
+        }
+      }
+
       posts.filter((post, index, self) => {
         return self.findIndex((p) => p.postId === post.postId) === index;
       });

@@ -52,33 +52,36 @@ export const GlobeSlice = createSlice({
       state.postOptions.selectedPostUsername = action.payload.selectedPostUsername;
     },
     addPost: (state, action) => {
-      state.posts.push(action.payload);
+      if (action.payload?.justCreated === true) {
+        state.posts.unshift(action.payload);
+      } else {
+        state.posts.push(action.payload);
+      }
     },
     deletePost: (state, action) => {
       state.posts = state.posts.filter((post) => post.postId !== action.payload.postId);
     },
     likePost: (state, action) => {
       let likedPosts: string[] = [];
-      state?.data?.likedPosts?.map((post) => {
-        likedPosts.push(post);
-      });
-      if (likedPosts.includes(action.payload.postId)) {
-        likedPosts = likedPosts.filter((postId) => postId !== action.payload.postId);
-        state.posts.map((post) => {
-          if (post.postId === action.payload.postId) {
-            post.likes.push(action.payload.userId);
-            return;
-          }
-        });
-      } else {
-        likedPosts.push(action.payload.postId);
-        state.posts.map((post) => {
-          if (post.postId === action.payload.postId) {
+
+      state.posts.map((post) => {
+        if (post.postId === action.payload.postId) {
+          if (post.likes.includes(action.payload.userId)) {
             post.likes = post.likes.filter((userId) => userId !== action.payload.userId);
-            return;
+          } else {
+            post.likes.push(action.payload.userId);
           }
-        });
-      }
+        }
+      });
+
+      state.data.likedPosts.map((postId) => {
+        if (postId === action.payload.postId) {
+          likedPosts = likedPosts.filter((postId) => postId !== action.payload.postId);
+        } else {
+          likedPosts.push(action.payload.postId);
+        }
+      });
+
       state.data.likedPosts = likedPosts;
     },
   },
@@ -88,3 +91,24 @@ export const { setAccount, handleCreatePostUi, addPost, handlePostOptionsUi, del
   GlobeSlice.actions;
 
 export default GlobeSlice.reducer;
+
+// state?.data?.likedPosts?.map((post) => {
+//   likedPosts.push(post);
+// });
+// if (likedPosts.includes(action.payload.postId)) {
+//   likedPosts = likedPosts.filter((postId) => postId !== action.payload.postId);
+//   state.posts.map((post) => {
+//     if (post.postId === action.payload.postId) {
+//       post.likes.push(action.payload.userId);
+//       return;
+//     }
+//   });
+// } else {
+//   likedPosts.push(action.payload.postId);
+//   state.posts.map((post) => {
+//     if (post.postId === action.payload.postId) {
+//       post.likes = post.likes.filter((userId) => userId !== action.payload.userId);
+//       return;
+//     }
+//   });
+// }
