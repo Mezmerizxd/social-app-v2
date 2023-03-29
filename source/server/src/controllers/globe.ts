@@ -31,6 +31,13 @@ export default (prisma: PrismaClient): void => {
     const { authorization } = req.headers;
     const { content } = req.body;
 
+    if (!content) {
+      return {
+        success: false,
+        error: 'Content is required',
+      };
+    }
+
     const user: UserData = new UserData(prisma, authorization, 'token');
     const err = await user.init();
     if (err.error) return err;
@@ -47,6 +54,13 @@ export default (prisma: PrismaClient): void => {
     const { authorization } = req.headers;
     const { postId } = req.body;
 
+    if (!postId) {
+      return {
+        success: false,
+        error: 'Post ID is required',
+      };
+    }
+
     const user: UserData = new UserData(prisma, authorization, 'token');
     const err = await user.init();
     if (err.error) return err;
@@ -62,6 +76,13 @@ export default (prisma: PrismaClient): void => {
     const { authorization } = req.headers;
     const { postId } = req.body;
 
+    if (!postId) {
+      return {
+        success: false,
+        error: 'Post ID is required',
+      };
+    }
+
     const user: UserData = new UserData(prisma, authorization, 'token');
     const err = await user.init();
     if (err.error) return err;
@@ -76,6 +97,13 @@ export default (prisma: PrismaClient): void => {
   handler.POST(server.v1, '/globe/view-post', async (req, res) => {
     const { authorization } = req.headers;
     const { postId } = req.body;
+
+    if (!postId) {
+      return {
+        success: false,
+        error: 'Post ID is required',
+      };
+    }
 
     const user: UserData = new UserData(prisma, authorization, 'token');
     const err = await user.init();
@@ -100,11 +128,46 @@ export default (prisma: PrismaClient): void => {
     const { authorization } = req.headers;
     const { postId, content } = req.body;
 
+    if (!content) {
+      return {
+        success: false,
+        error: 'Content is required',
+      };
+    }
+    if (!postId) {
+      return {
+        success: false,
+        error: 'Post ID is required',
+      };
+    }
+
     const user: UserData = new UserData(prisma, authorization, 'token');
     const err = await user.init();
     if (err.error) return err;
 
     await Globe.createPost(user.account.userId, content, postId);
+
+    return {
+      success: true,
+    };
+  });
+
+  handler.POST(server.v1, '/globe/delete-post', async (req, res) => {
+    const { authorization } = req.headers;
+    const { postId } = req.body;
+
+    if (!postId) {
+      return {
+        success: false,
+        error: 'Post ID is required',
+      };
+    }
+
+    const user: UserData = new UserData(prisma, authorization, 'token');
+    const err = await user.init();
+    if (err.error) return err;
+
+    await Globe.deletePost(postId, user.account.userId);
 
     return {
       success: true,

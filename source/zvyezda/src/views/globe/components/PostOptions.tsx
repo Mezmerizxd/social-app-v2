@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { deletePost, handlePostOptionsUi } from '../reducer';
 import { PostOption, PostOptions, PostOptionsContainer } from './styled';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Api from '../../../classes/Api';
 
 export default () => {
   const state: Client.Globe.InitialState = useAppSelector((state) => state.globe);
@@ -20,9 +21,18 @@ export default () => {
     );
   }
 
-  function handleDeletePost() {
-    dispatch(deletePost({ postId: state.postOptions.selectedPostId }));
-    close();
+  async function handleDeletePost() {
+    const response = await Api.Post({
+      api: '/globe/delete-post',
+      body: {
+        postId: state.postOptions.selectedPostId,
+        userId: state.account.userId,
+      },
+    });
+    if (response && response.success === true) {
+      dispatch(deletePost({ postId: state.postOptions.selectedPostId }));
+      close();
+    }
   }
 
   return (

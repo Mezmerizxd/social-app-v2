@@ -36,3 +36,4 @@
 - [ ] Share a post
 - [ ] View a post
 - [ ] Reply to a post
+- [x] Delete a post

@@ -29,7 +29,6 @@ export default () => {
   }
 
   async function handlePublish() {
-    // TODO: Change to server side
     const response = await Api.Post({
       api: '/globe/create-post',
       body: {

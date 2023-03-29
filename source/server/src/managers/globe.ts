@@ -226,6 +226,33 @@ class Globe {
     }
   }
 
+  async deletePost(postId: string, userId: string): Promise<void> {
+    try {
+      const post = await this.prisma.posts.findUnique({
+        where: {
+          postId: postId,
+        },
+      });
+      if (!post || post.userId !== userId) {
+        logManager('deletePost: Post not found');
+        return;
+      }
+      await this.prisma.posts.delete({
+        where: {
+          postId: postId,
+        },
+      });
+      await this.prisma.posts.deleteMany({
+        where: {
+          replyTo: postId,
+        },
+      });
+      // TODO: delete post id from users profile data like, shares, liked, etc
+    } catch (err) {
+      logManager('deletePost:', err);
+    }
+  }
+
   async loadFollowingPosts(userId: string): Promise<Server.Managers.Globe.Post[] | null> {
     try {
       const user = new User(this.prisma, userId, 'id');

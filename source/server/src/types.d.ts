@@ -78,6 +78,7 @@ declare namespace Server.API {
       replies?: Server.Managers.Globe.Post[] | null;
     };
     ['/globe/reply-to-post']: () => {};
+    ['/globe/delete-post']: () => {};
   };
 }
 
