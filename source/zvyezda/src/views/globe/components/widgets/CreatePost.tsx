@@ -2,6 +2,7 @@ import { CreatePost } from './styled';
 import Button from '../../../../styled/components/buttons/Button';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { addPost, handleCreatePostUi } from '../../reducer';
+import Api from '../../../../classes/Api';
 
 export default () => {
   const state = useAppSelector((state) => state.globe);
@@ -27,24 +28,36 @@ export default () => {
     }
   }
 
-  function handlePublish() {
-    // TODO: Change to server side
-    const date = JSON.stringify(new Date());
-    const post: Client.Globe.Post = {
-      id: state?.posts?.length + 1,
-      userId: state.account.userId,
-      postId: state?.posts?.length + 1,
-      username: state.account.username,
-      createdAt: date,
-      avatar: state.account.avatar,
-      replies: [],
-      content: state.createPost.value,
-      likes: [],
-      views: 0,
-      shared: false,
-    };
-    dispatch(addPost(post));
-    resetTextArea();
+  async function handlePublish() {
+    const response = await Api.Post({
+      api: '/globe/create-post',
+      body: {
+        content: state.createPost.value,
+      },
+    });
+    if (response && response.success === true) {
+      const date = new Date().toISOString();
+      const post: Client.Globe.Post = {
+        id: state?.posts?.length + 1,
+        postId: response.post.postId,
+        avatar: response.post.avatar,
+        username: response.post.username,
+        userId: response.post.userId,
+        content: response.post.content,
+        createdAt: date,
+        likes: response.post.likes,
+        shares: response.post.shares,
+        replies: response.post.replies,
+        views: response.post.views,
+        shared: response.post.shared,
+        sharedBy: response.post.sharedBy,
+      };
+      dispatch(addPost({ ...post, justCreated: true }));
+      resetTextArea();
+    } else {
+      // setError(response.error);
+      console.log(response.error);
+    }
   }
 
   return (

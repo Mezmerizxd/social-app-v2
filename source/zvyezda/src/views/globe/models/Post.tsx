@@ -17,6 +17,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import EyeIcon from '@mui/icons-material/Visibility';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { handlePostOptionsUi, likePost } from '../reducer';
+import Api from '../../../classes/Api';
 
 export default ({
   postId,
@@ -48,8 +49,16 @@ export default ({
     );
   }
 
-  function handleLikePost() {
-    dispatch(likePost({ postId: postId, userId: state.account.userId }));
+  async function handleLikePost() {
+    const response = await Api.Post({
+      api: '/globe/like-post',
+      body: {
+        postId: postId,
+      },
+    });
+    if (response && response.success === true) {
+      dispatch(likePost({ postId: postId, userId: state.account.userId }));
+    }
   }
 
   return (
@@ -63,7 +72,7 @@ export default ({
         <PostHeader>
           <PostHeaderDetails>
             <h1>{username}</h1>
-            <p>{TimeAgo(JSON.parse(createdAt))}</p>
+            <p>{TimeAgo(createdAt)}</p>
           </PostHeaderDetails>
           <PostHeaderOptions onClick={(e: any) => handleOptions(e)}>
             <MoreHorizIcon />
