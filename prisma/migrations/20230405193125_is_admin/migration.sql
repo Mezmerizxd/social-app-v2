@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "Accounts" ADD COLUMN     "admin" BOOLEAN NOT NULL DEFAULT false;
+
+-- AlterTable
+ALTER TABLE "Posts" ALTER COLUMN "shared" DROP NOT NULL,
+ALTER COLUMN "shared" DROP DEFAULT,
+ALTER COLUMN "views" SET DEFAULT 0;

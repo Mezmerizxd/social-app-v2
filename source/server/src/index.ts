@@ -25,4 +25,11 @@ server.http.listen(Number(PORT), (): void => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-statistics.start();
+statistics.start(prisma);
+
+// statistics.socket.on('connection', async (s) => {
+//   console.log('a user connected');
+//   s.on('disconnect', () => {
+//     console.log('user disconnected');
+//   });
+// });

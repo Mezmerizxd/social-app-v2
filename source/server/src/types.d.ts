@@ -31,6 +31,7 @@ declare namespace Server.API {
     // Api
     ['/test']: () => void;
     ['/get-socket-details']: () => { socketUrl: string };
+    ['/get-statistics-token']: () => { accessToken?: string | null };
     // Account
     ['/account/signup']: () => {
       authorization: string | null;
