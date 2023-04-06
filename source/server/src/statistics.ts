@@ -25,13 +25,14 @@ class Statistics {
   socket: sckio.Namespace;
   prisma: PrismaClient;
 
-  accessToken: string;
+  accessToken: string = crypto.randomBytes(64).toString('hex');
 
-  _sysResourcesUpdateInterval: number = 1000;
+  resourcesRuntime: NodeJS.Timeout;
+  accessTokenRuntime: NodeJS.Timeout;
+
+  _resourcesUpdateInterval: number = 1000;
   _accessTokenUpdateInterval: number = 1000 * 60 * 60 * 24;
 
-  full_load_avg: number = 0;
-  load_avg: number = 0;
   platform: string = 'none';
   process_uptime: number = 0;
   uptime: number = 0;
@@ -41,7 +42,6 @@ class Statistics {
   mem_usage: number = 0;
   mem_total: number = 0;
   mem_free: number = 0;
-  hdd: number = 0;
 
   constructor() {
     this.express = express();
@@ -61,10 +61,11 @@ class Statistics {
   start(prisma: PrismaClient) {
     this.prisma = prisma;
 
-    this.updateAccessToken();
     this.updateSystemResources();
+    this.updateAccessToken();
 
     this.middlewares();
+    this.renderer();
 
     this.connect();
 
@@ -74,7 +75,20 @@ class Statistics {
   }
 
   stop() {
+    clearInterval(this.resourcesRuntime);
+    clearInterval(this.accessTokenRuntime);
+
+    this._io.close();
     this._http.close();
+    console.log('Statistics stopped');
+  }
+
+  updateAccessToken() {
+    console.log('New access token:', this.accessToken);
+    this.accessTokenRuntime = setInterval(() => {
+      this.accessToken = crypto.randomBytes(64).toString('hex');
+      console.log('New access token:', this.accessToken);
+    }, this._accessTokenUpdateInterval);
   }
 
   middlewares() {
@@ -94,6 +108,12 @@ class Statistics {
     );
   }
 
+  renderer() {
+    this.express.get('/', (req: express.Request, res: express.Response) => {
+      res.sendFile(__dirname + '/views/statistics.html');
+    });
+  }
+
   connect() {
     this.socket.on('connection', (s: sckio.Socket) => {
       if (!s.handshake.query.accessToken) {
@@ -102,23 +122,22 @@ class Statistics {
         s.disconnect();
       }
 
-      s.on('getSystemResources', () => {
-        setInterval(() => {
-          s.emit('getSystemResources', {
-            full_load_avg: this.full_load_avg,
-            load_avg: this.load_avg,
-            platform: this.platform,
-            process_uptime: this.process_uptime,
-            uptime: this.uptime,
-            cpu_usage: this.cpu_usage,
-            cpu_count: this.cpu_count,
-            cpu_free: this.cpu_free,
-            mem_usage: this.mem_usage,
-            mem_total: this.mem_total,
-            mem_free: this.mem_free,
-            hdd: this.hdd,
-          });
-        }, this._sysResourcesUpdateInterval);
+      s.on('systemResources', () => {
+        setInterval(
+          () =>
+            s.emit('systemResources', {
+              platform: this.platform,
+              process_uptime: this.process_uptime,
+              uptime: this.uptime,
+              cpu_usage: this.cpu_usage,
+              cpu_count: this.cpu_count,
+              cpu_free: this.cpu_free,
+              mem_usage: this.mem_usage,
+              mem_total: this.mem_total,
+              mem_free: this.mem_free,
+            }),
+          this._resourcesUpdateInterval,
+        );
       });
 
       s.on('disconnect', () => {
@@ -128,35 +147,22 @@ class Statistics {
   }
 
   updateSystemResources() {
-    setInterval(() => {
+    this.resourcesRuntime = setInterval(() => {
       os.cpuUsage((usage: number) => {
-        this.cpu_usage = usage;
+        this.cpu_usage = Math.round(usage * 100);
       });
       this.cpu_count = os.cpuCount();
       os.cpuFree((free: number) => {
-        this.cpu_free = free;
+        this.cpu_free = Math.round(free * 100);
       });
 
-      this.mem_total = os.totalmem();
-      this.mem_free = os.freemem();
-      this.mem_usage = this.mem_total - this.mem_free;
-
-      this.hdd = os.totalmem() - os.freemem();
-
-      this.full_load_avg = os.loadavg(1);
-      this.load_avg = os.loadavg(5);
+      this.mem_total = Math.round(os.totalmem());
+      this.mem_free = Math.round(os.freemem());
+      this.mem_usage = Math.round(os.totalmem() - os.freemem());
       this.platform = os.platform();
-      this.process_uptime = os.processUptime();
-      this.uptime = os.sysUptime();
-    }, this._sysResourcesUpdateInterval);
-  }
-
-  updateAccessToken() {
-    this.accessToken = crypto.randomBytes(64).toString('hex');
-
-    setInterval(() => {
-      this.accessToken = crypto.randomBytes(64).toString('hex');
-    }, this._accessTokenUpdateInterval);
+      this.process_uptime = Math.round(os.processUptime());
+      this.uptime = Math.round(os.sysUptime());
+    }, this._resourcesUpdateInterval);
   }
 }
 
