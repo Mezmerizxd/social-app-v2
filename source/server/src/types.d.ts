@@ -31,6 +31,7 @@ declare namespace Server.API {
     // Api
     ['/test']: () => void;
     ['/get-socket-details']: () => { socketUrl: string };
+    ['/get-statistics-token']: () => { accessToken?: string | null };
     // Account
     ['/account/signup']: () => {
       authorization: string | null;
@@ -102,5 +103,24 @@ declare namespace Server.Managers.Globe {
     content: string;
     shared: boolean | null;
     sharedBy?: string | null;
+  };
+}
+
+declare namespace Server.Statistics.Socket {
+  type ClientToServer = {
+    systemResources: () => void;
+  };
+  type ServerToClient = {
+    systemResources: (data: {
+      platform: string;
+      process_uptime: number;
+      uptime: number;
+      cpu_usage: number;
+      cpu_count: number;
+      cpu_free: number;
+      mem_usage: number;
+      mem_total: number;
+      mem_free: number;
+    }) => void;
   };
 }

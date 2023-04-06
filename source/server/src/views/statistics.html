@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Statistics</title>
+  </head>
+  <body>
+    <div class="Container">
+      <div class="Header">
+        <h1>Statistics Server</h1>
+      </div>
+      <div class="Form">
+        <div>
+          <input type="text" name="accessToken" id="accessToken" placeholder="Access Token" />
+          <button onclick="setAccessToken()">Submit</button>
+        </div>
+        <p>Not Connected</p>
+      </div>
+      <div class="Information"></div>
+    </div>
+  </body>
+
+  <script>
+    let development = false;
+    const url = window.location.href;
+    const isLocalhost = url.includes('localhost');
+
+    if (isLocalhost) development = true;
+
+    console.log('Devepment:', development);
+
+    const information = document.querySelector('.Information');
+    const form = document.querySelector('.Form');
+
+    const socketUrl = development ? 'http://localhost:5000/socket' : 'http://statistics.mezmerizxd.net/socket';
+    let socket;
+
+    if (localStorage.getItem('accessToken')) {
+      socket = io(socketUrl, {
+        query: {
+          accessToken: localStorage.getItem('accessToken'),
+        },
+      });
+    }
+
+    // check if socket successfully connected
+    socket.on('connect', () => {
+      console.log('Connected to socket');
+      form.style.display = 'none';
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from socket');
+      form.style.display = 'flex';
+    });
+
+    socket.on('systemResources', (data) => {
+      information.innerHTML = `
+        <p>Platform: <span>${data.platform}</span></p>
+        <p>Process Uptime: <span>${data.process_uptime} Seconds</span></p>
+        <p>System Uptime: <span>${data.uptime} Seconds</span></p>
+        <p>CPU Usage: <span>${data.cpu_usage}%</span></p>
+        <p>CPU Free: <span>${data.cpu_free}%</span></p>
+        <p>CPU Count: <span>${data.cpu_count}</span></p>
+        <p>Memory Usage: <span>${data.mem_usage} MB</span></p>
+        <p>Memory Free: <span>${data.mem_free} MB</span></p>
+        <p>Memory Total: <span>${data.mem_total} MB</span></p>
+      `;
+    });
+
+    socket.emit('systemResources');
+
+    function setAccessToken() {
+      const accessToken = document.querySelector('#accessToken').value;
+      if (!accessToken) return;
+
+      localStorage.setItem('accessToken', accessToken);
+      window.location.reload();
+    }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1e1e1e;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .Container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .Header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+
+    .Header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .Form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .Form div {
+      display: flex;
+    }
+
+    .Form div input {
+      width: 300px;
+      height: 50%;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      outline: none;
+      margin-right: 5px;
+    }
+
+    .Form div button {
+      width: 100px;
+      height: 50%;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      outline: none;
+      background-color: #fff;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .Form p {
+      text-align: center;
+      margin-top: 1rem;
+      color: #f14e4e;
+    }
+
+    .Information {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .Information p {
+      margin-bottom: 1rem;
+      width: 100%;
+      text-align: left;
+
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    .Information p span {
+      color: #bebebe;
+      font-weight: 600;
+    }
+  </style>
+</html>
