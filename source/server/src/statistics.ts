@@ -86,10 +86,8 @@ class Statistics {
   }
 
   updateAccessToken() {
-    console.log('New access token:', this.accessToken);
     this.accessTokenRuntime = setInterval(() => {
       this.accessToken = crypto.randomBytes(64).toString('hex');
-      console.log('New access token:', this.accessToken);
     }, this._accessTokenUpdateInterval);
   }
 
