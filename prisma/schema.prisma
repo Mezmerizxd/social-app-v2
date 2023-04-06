@@ -21,6 +21,7 @@ model Accounts {
   updatedAt        DateTime  @updatedAt
   verificationCode String    @unique
   verifiedEmail    Boolean   @default(false)
+  admin            Boolean   @default(false)
   profile          Profiles?
 }
 

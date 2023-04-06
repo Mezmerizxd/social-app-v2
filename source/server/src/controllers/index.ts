@@ -2,6 +2,7 @@ import server, { socket } from '../server';
 import handler from '../helpers/handler';
 import { PrismaClient } from '@prisma/client';
 import { logController } from '../helpers/logger';
+import { statistics } from '../statistics';
 
 import MessagingController from './messaging';
 import AccountController from './account';
@@ -55,6 +56,42 @@ export default (prisma: PrismaClient): void => {
     return {
       socketUrl: process.env.SERVER_SOCKET_CONNECTION,
       success: true,
+    };
+  });
+
+  handler.POST(server.v1, '/get-statistics-token', async (req, res) => {
+    const { authorization } = req.headers;
+
+    if (!authorization) {
+      return {
+        success: false,
+        accessToken: null,
+        error: 'Not Authorized',
+      };
+    }
+
+    const account = await prisma.accounts.findFirst({
+      where: {
+        authorization,
+      },
+    });
+    if (!account) {
+      return {
+        success: false,
+        accessToken: null,
+        error: 'Account does not exist',
+      };
+    } else if (account.admin === false) {
+      return {
+        success: false,
+        accessToken: null,
+        error: 'Account is not an admin',
+      };
+    }
+
+    return {
+      success: true,
+      accessToken: statistics.accessToken,
     };
   });
 
