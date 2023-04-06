@@ -22,7 +22,7 @@ class Statistics {
   _http: http.Server;
   express: express.Application;
   _io: sckio.Server;
-  socket: sckio.Namespace;
+  socket: sckio.Namespace<Server.Statistics.Socket.ClientToServer & Server.Statistics.Socket.ServerToClient>;
   prisma: PrismaClient;
 
   accessToken: string = crypto.randomBytes(64).toString('hex');
@@ -115,7 +115,7 @@ class Statistics {
   }
 
   connect() {
-    this.socket.on('connection', (s: sckio.Socket) => {
+    this.socket.on('connection', (s) => {
       if (!s.handshake.query.accessToken) {
         s.disconnect();
       } else if (s.handshake.query.accessToken !== this.accessToken) {
