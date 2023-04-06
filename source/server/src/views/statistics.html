@@ -13,8 +13,11 @@
         <h1>Statistics Server</h1>
       </div>
       <div class="Form">
-        <input type="text" name="accessToken" id="accessToken" placeholder="Access Token" />
-        <button onclick="setAccessToken()">Submit</button>
+        <div>
+          <input type="text" name="accessToken" id="accessToken" placeholder="Access Token" />
+          <button onclick="setAccessToken()">Submit</button>
+        </div>
+        <p>Not Connected</p>
       </div>
       <div class="Information"></div>
     </div>
@@ -47,6 +50,11 @@
     socket.on('connect', () => {
       console.log('Connected to socket');
       form.style.display = 'none';
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from socket');
+      form.style.display = 'flex';
     });
 
     socket.on('systemResources', (data) => {
@@ -111,23 +119,27 @@
 
     .Form {
       width: 100%;
-      height: 10%;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
     }
 
-    .Form input {
-      width: 50%;
+    .Form div {
+      display: flex;
+    }
+
+    .Form div input {
+      width: 300px;
       height: 50%;
       padding: 0.5rem;
       border: none;
       border-radius: 0.5rem;
       outline: none;
+      margin-right: 5px;
     }
 
-    .Form button {
-      width: 10%;
+    .Form div button {
+      width: 100px;
       height: 50%;
       padding: 0.5rem;
       border: none;
@@ -136,6 +148,12 @@
       background-color: #fff;
       color: #000;
       cursor: pointer;
+    }
+
+    .Form p {
+      text-align: center;
+      margin-top: 1rem;
+      color: #f14e4e;
     }
 
     .Information {
