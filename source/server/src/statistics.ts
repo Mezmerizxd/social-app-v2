@@ -4,9 +4,11 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as os from 'os-utils';
+import * as fs from 'fs';
 import * as crypto from 'crypto';
 import { logSocket } from './helpers/logger';
 import { PrismaClient } from '@prisma/client';
+import path = require('path');
 
 class Statistics {
   protected static instance: Statistics;
@@ -109,8 +111,9 @@ class Statistics {
   }
 
   renderer() {
+    this.express.use(express.static(path.join(__dirname, `../../server/public`)));
     this.express.get('/', (req: express.Request, res: express.Response) => {
-      res.sendFile(__dirname + '/views/statistics.html');
+      res.sendFile(path.join(__dirname, `../../server/public/statistics.html`));
     });
   }
 
