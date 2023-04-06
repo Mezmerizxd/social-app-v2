@@ -33,6 +33,8 @@ class Statistics {
   _resourcesUpdateInterval: number = 1000;
   _accessTokenUpdateInterval: number = 1000 * 60 * 60 * 24;
 
+  _connectedSockets: number = 0;
+
   platform: string = 'none';
   process_uptime: number = 0;
   uptime: number = 0;
@@ -122,6 +124,8 @@ class Statistics {
         s.disconnect();
       }
 
+      this._connectedSockets++;
+
       s.on('systemResources', () => {
         setInterval(
           () =>
@@ -141,6 +145,7 @@ class Statistics {
       });
 
       s.on('disconnect', () => {
+        this._connectedSockets--;
         s.disconnect();
       });
     });
@@ -148,20 +153,22 @@ class Statistics {
 
   updateSystemResources() {
     this.resourcesRuntime = setInterval(() => {
-      os.cpuUsage((usage: number) => {
-        this.cpu_usage = Math.round(usage * 100);
-      });
-      this.cpu_count = os.cpuCount();
-      os.cpuFree((free: number) => {
-        this.cpu_free = Math.round(free * 100);
-      });
+      if (this._connectedSockets > 0) {
+        os.cpuUsage((usage: number) => {
+          this.cpu_usage = Math.round(usage * 100);
+        });
+        this.cpu_count = os.cpuCount();
+        os.cpuFree((free: number) => {
+          this.cpu_free = Math.round(free * 100);
+        });
 
-      this.mem_total = Math.round(os.totalmem());
-      this.mem_free = Math.round(os.freemem());
-      this.mem_usage = Math.round(os.totalmem() - os.freemem());
-      this.platform = os.platform();
-      this.process_uptime = Math.round(os.processUptime());
-      this.uptime = Math.round(os.sysUptime());
+        this.mem_total = Math.round(os.totalmem());
+        this.mem_free = Math.round(os.freemem());
+        this.mem_usage = Math.round(os.totalmem() - os.freemem());
+        this.platform = os.platform();
+        this.process_uptime = Math.round(os.processUptime());
+        this.uptime = Math.round(os.sysUptime());
+      }
     }, this._resourcesUpdateInterval);
   }
 }
