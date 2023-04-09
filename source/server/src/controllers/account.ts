@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
-import server from '../server';
+import { server } from '../managers/server';
 import handler from '../helpers/handler';
 import { AccountSettings } from '../config';
 import { createAuthorization, createUserId, createVerificationCode, hashPassword } from '../helpers/generators';
-import Emailer from '../helpers/emailer';
+import { verification } from '../helpers/emailer';
 import { logController } from '../helpers/logger';
 
 export default (prisma: PrismaClient): void => {
@@ -161,7 +161,7 @@ export default (prisma: PrismaClient): void => {
       };
     }
 
-    await Emailer(email, verificationCode);
+    await verification(email, verificationCode);
 
     // Create account
     await prisma.accounts.create({

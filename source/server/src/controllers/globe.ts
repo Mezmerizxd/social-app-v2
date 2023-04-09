@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import server from '../server';
+import { server } from '../managers/server';
 import handler from '../helpers/handler';
 import { logController } from '../helpers/logger';
 import UserData from '../data/user';

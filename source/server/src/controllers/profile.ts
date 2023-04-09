@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import server, { socket } from '../server';
+import { server } from '../managers/server';
 import handler from '../helpers/handler';
 import Profile from '../data/user';
 import { logController } from '../helpers/logger';
@@ -102,7 +102,7 @@ export default (prisma: PrismaClient): void => {
     }
 
     // Emit to users socket room
-    socket.to(friend.userId).emit('receiveFriendRequest', {
+    server.socket.to(friend.userId).emit('receiveFriendRequest', {
       userId: profile.profile.userId,
       username: profile.profile.username,
       avatar: profile.profile.avatar,

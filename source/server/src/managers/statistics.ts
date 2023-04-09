@@ -4,11 +4,11 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as os from 'os-utils';
-import * as fs from 'fs';
 import * as crypto from 'crypto';
-import { logSocket } from './helpers/logger';
+import { logSocket } from '../helpers/logger';
 import { PrismaClient } from '@prisma/client';
-import path = require('path');
+import * as path from 'path';
+import { blue } from 'colors';
 
 class Statistics {
   protected static instance: Statistics;
@@ -74,7 +74,7 @@ class Statistics {
     this.connect();
 
     this._http.listen(this._port, () => {
-      console.log('Statistics is running on port', this._port);
+      console.log(blue(`Statistics address http://localhost:${this._port}`));
     });
   }
 
@@ -84,7 +84,7 @@ class Statistics {
 
     this._io.close();
     this._http.close();
-    console.log('Statistics stopped');
+    console.log(blue('Statistics stopped'));
   }
 
   updateAccessToken() {
@@ -111,9 +111,9 @@ class Statistics {
   }
 
   renderer() {
-    this.express.use(express.static(path.join(__dirname, `../../server/public`)));
+    this.express.use(express.static(path.join(__dirname, `../../../server/public`)));
     this.express.get('/', (req: express.Request, res: express.Response) => {
-      res.sendFile(path.join(__dirname, `../../server/public/statistics.html`));
+      res.sendFile(path.join(__dirname, `../../../server/public/statistics.html`));
     });
   }
 
