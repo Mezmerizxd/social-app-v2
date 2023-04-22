@@ -132,6 +132,9 @@ declare namespace Client.Globe {
       selectedPostUserId: number;
       selectedPostUsername: string;
     };
+    isViewingPost: boolean;
+    viewingLevel: number;
+    viewedPosts: string[];
   }
 
   interface Post {

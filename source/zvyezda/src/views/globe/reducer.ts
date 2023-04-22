@@ -29,6 +29,9 @@ export const InitialState: Client.Globe.InitialState = {
     selectedPostUserId: 0,
     selectedPostUsername: '',
   },
+  isViewingPost: false,
+  viewingLevel: 0,
+  viewedPosts: [],
 };
 
 export const GlobeSlice = createSlice({
@@ -84,31 +87,15 @@ export const GlobeSlice = createSlice({
 
       state.data.likedPosts = likedPosts;
     },
+    viewPost: (state, action) => {
+      state.viewedPosts.push(action.payload);
+      state.viewingLevel++;
+      state.isViewingPost = true;
+    },
   },
 });
 
-export const { setAccount, handleCreatePostUi, addPost, handlePostOptionsUi, deletePost, likePost } =
+export const { setAccount, handleCreatePostUi, addPost, handlePostOptionsUi, deletePost, likePost, viewPost } =
   GlobeSlice.actions;
 
 export default GlobeSlice.reducer;
-
-// state?.data?.likedPosts?.map((post) => {
-//   likedPosts.push(post);
-// });
-// if (likedPosts.includes(action.payload.postId)) {
-//   likedPosts = likedPosts.filter((postId) => postId !== action.payload.postId);
-//   state.posts.map((post) => {
-//     if (post.postId === action.payload.postId) {
-//       post.likes.push(action.payload.userId);
-//       return;
-//     }
-//   });
-// } else {
-//   likedPosts.push(action.payload.postId);
-//   state.posts.map((post) => {
-//     if (post.postId === action.payload.postId) {
-//       post.likes = post.likes.filter((userId) => userId !== action.payload.userId);
-//       return;
-//     }
-//   });
-// }

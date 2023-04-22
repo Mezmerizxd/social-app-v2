@@ -1,11 +1,11 @@
-import { Content, ContentCreatePostContainer, ContentPostsContainer } from './styled';
+import { Dashboard, DashboardCreatePostContainer, DashboardPostsContainer } from './styled';
 import CreatePost from './widgets/CreatePost';
 import Post from '../models/Post';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import PostOptions from './PostOptions';
 import { useEffect } from 'react';
 import Api from '../../../classes/Api';
-import { addPost } from '../reducer';
+import { addPost, viewPost } from '../reducer';
 
 export default () => {
   const state = useAppSelector((state) => state.globe);
@@ -22,7 +22,6 @@ export default () => {
       if (response && response.success === true) {
         // dispatch(addPost(post));
         for (let i = 0; i < response.posts.length; i++) {
-          console.log(response.posts[i]);
           dispatch(addPost(response.posts[i]));
         }
       }
@@ -30,30 +29,36 @@ export default () => {
   }, []);
 
   return (
-    <Content>
-      <ContentCreatePostContainer>
+    <Dashboard>
+      <DashboardCreatePostContainer>
         <CreatePost />
-      </ContentCreatePostContainer>
-      <ContentPostsContainer>
+      </DashboardCreatePostContainer>
+      <DashboardPostsContainer>
         {state?.posts?.length > 0 &&
           state?.posts?.map((post: Client.Globe.Components.Models.Post, i: number) => (
-            <Post
+            <div
               key={i}
-              postId={post.postId}
-              userId={post.userId}
-              username={post.username}
-              id={post.id}
-              createdAt={post.createdAt}
-              avatar={post.avatar}
-              replies={post.replies}
-              content={post.content}
-              likes={post.likes}
-              views={post.views}
-              shared={false}
-            />
+              onClick={() => {
+                dispatch(viewPost(post.postId));
+              }}
+            >
+              <Post
+                postId={post.postId}
+                userId={post.userId}
+                username={post.username}
+                id={post.id}
+                createdAt={post.createdAt}
+                avatar={post.avatar}
+                replies={post.replies}
+                content={post.content}
+                likes={post.likes}
+                views={post.views}
+                shared={false}
+              />
+            </div>
           ))}
         {state.postOptions.open && <PostOptions />}
-      </ContentPostsContainer>
-    </Content>
+      </DashboardPostsContainer>
+    </Dashboard>
   );
 };

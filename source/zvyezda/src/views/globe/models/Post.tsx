@@ -83,10 +83,10 @@ export default ({
         </PostContent>
         <PostContentOptionsContainer>
           <PostContentOption onClick={handleLikePost}>
-            <FavoriteBorderIcon /> <p>{likes.length}</p>
+            <FavoriteBorderIcon /> <p>{likes?.length}</p>
           </PostContentOption>
           <PostContentOption>
-            <CommentIcon /> <p>{replies.length}</p>
+            <CommentIcon /> <p>{replies?.length}</p>
           </PostContentOption>
           <PostContentOption>
             <EyeIcon /> <p>{views}</p>
