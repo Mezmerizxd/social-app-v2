@@ -9,3 +9,7 @@ source/**/build
 docker-compose.yml
 
 database
+
+source/dusha/.vs
+source/dusha/build
+source/dusha/obj
