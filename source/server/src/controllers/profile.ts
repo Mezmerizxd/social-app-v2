@@ -46,7 +46,7 @@ export default (prisma: PrismaClient): void => {
     if (err.error) return err;
 
     const friend = new Profile(prisma, userId, 'id');
-    const err2 = await profile.init();
+    const err2 = await friend.init();
     if (err2.error) return err2;
 
     const handleRequest = await profile.handleFriend(userId, action);
