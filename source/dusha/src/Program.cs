@@ -10,38 +10,51 @@ namespace dusha.src
 
         static void Main()
         {
-            Console.WriteLine("Starting...");
+            Console.Clear();
 
-            // Check if server is online
-            if (IsServerOnline() == false)
-            {
-                Console.WriteLine("Failed to connect to Social App V2 Servers.");
-            }
-            else
-            {
-                Console.WriteLine("Server is ready.");
-            }
+            AnsiConsole.MarkupLine("[blue]Starting...[/]");
+            Thread.Sleep(1000);
 
-            // Get socket details
-            var socket = GetSocketDetails();
-            if (socket == null)
+            AnsiConsole.Status().AutoRefresh(true).Spinner(Spinner.Known.Star).SpinnerStyle(Style.Parse("green"))
+            .Start("Initializing...", ctx => 
             {
-                Console.WriteLine("Failed to get socket details.");
-            }
-            else
-            {
-                socketUrl = socket;
-                Console.WriteLine("Found socket details.", socketUrl);
-            }
+                ctx.Status("[yellow]Checking if server is online...[/]");
+                Thread.Sleep(1500);
+                // Check if server is online
+                if (IsServerOnline() == false)
+                {
+                    AnsiConsole.MarkupLine("[red]Failed to connect to Social App V2 Servers.[/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[green]Server is online.[/]");
+                }
 
+                ctx.Status("[yellow]Getting socket details...[/]");
+                Thread.Sleep(1500);
+                // Get socket details
+                var socket = GetSocketDetails();
+                if (socket == null)
+                {
+                    AnsiConsole.MarkupLine("[red]Failed to get socket details.[/]");
+                }
+                else
+                {
+                    socketUrl = socket;
+                    AnsiConsole.MarkupLine("[green]Found socket details.[/]");
+                }
+            });
+
+            AnsiConsole.MarkupLine("[yellow]Starting authentication...[/]");
+            Thread.Sleep(1500);
             // Start authentication
             Authentication.Start();
             if (Authentication.authorization != null)
             {
-                Console.WriteLine("Successfully authenticated.");
+                AnsiConsole.MarkupLine("[green]Successfully authenticated.[/]");
             }
 
-            // Start profile
+            // // Start profile
             Profile.Start();
 
             Console.Clear();
@@ -49,7 +62,7 @@ namespace dusha.src
             if (Profile.profile?.friends != null && Profile.profile?.friends.Length > 0)
             {
                 var selectionPrompt = new SelectionPrompt<string>();
-                selectionPrompt.Title($"You are logged in as [green]{Profile.profile.username}[/], Select a friend.");
+                selectionPrompt.Title($"[blue]You are logged in as [/][green]{Profile.profile.username}[/][blue], select a friend to chat with.[/]");
                 for (int i = 0; i < Profile.profile.friends.Length; i++)
                 {
                     selectionPrompt.AddChoice(Profile.profile.friends[i].username);

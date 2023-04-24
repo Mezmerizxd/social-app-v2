@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Spectre.Console;
 
 namespace dusha
 {
@@ -8,18 +9,18 @@ namespace dusha
 
         public static void Start()
         {
-            Console.WriteLine("Starting Profile...");
+             AnsiConsole.MarkupLine("[yellow]Starting Profile...[/]");
 
             // Set profile
             FullProfile? fullProfile = GetProfile();
             if (fullProfile == null)
             {
-                Console.WriteLine("Failed to get profile.");
+                AnsiConsole.MarkupLine("[red]Failed to get profile.[/]");
             }
             else
             {
                 profile = fullProfile;
-                Console.WriteLine("Successfully got profile.");
+                AnsiConsole.MarkupLine("[green]Successfully got profile.[/]");
             }
         }
 
@@ -37,7 +38,7 @@ namespace dusha
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                AnsiConsole.MarkupLine("[red]Failed to get friends.[/]", ex.Message);
                 return null;
             }
         }
@@ -57,7 +58,7 @@ namespace dusha
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                AnsiConsole.MarkupLine("[red]Failed to get friend requests.[/]", ex.Message);
                 return null;
             }
         }
@@ -70,7 +71,7 @@ namespace dusha
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                AnsiConsole.MarkupLine("[red]Failed to handle friend request.[/]", ex.Message);
                 return;
             }
         }
@@ -83,7 +84,7 @@ namespace dusha
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                AnsiConsole.MarkupLine("[red]Failed to add friend.[/]", ex.Message);
                 return;
             }
         }
@@ -102,7 +103,7 @@ namespace dusha
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                AnsiConsole.MarkupLine("[red]Failed to get profile.[/]", ex.Message);
                 return null;
             }
         }
@@ -115,7 +116,7 @@ namespace dusha
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                AnsiConsole.MarkupLine("[red]Failed to change username.[/]", ex.Message);
                 return;
             }
         }
@@ -128,7 +129,7 @@ namespace dusha
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                AnsiConsole.MarkupLine("[red]Failed to change avatar.[/]", ex.Message);
                 return;
             }
         }

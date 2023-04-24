@@ -4,37 +4,24 @@ using Spectre.Console;
 
 namespace dusha
 {
-    public class Login
-    {
-        public string? email;
-        public string? password;
-    }
-
-    public class SignUp
-    {
-        public string? email;
-        public string? username;
-        public string? password;
-    }
-
     internal class Authentication
     {
         public static string? authorization = null;
 
         public static void Start()
         {
-            Console.WriteLine("Starting Authentication...");
+            Console.Clear();
 
             if (authorization != null)
             {
-                Console.WriteLine("Found token, validating...");
+                AnsiConsole.MarkupLine("[yellow]Found token, validating...[/]");
                 if (ValidateToken(authorization) == false)
                 {
-                    Console.WriteLine("Failed to validate.");
+                    AnsiConsole.MarkupLine("[red]Failed to validate token.[/]");
                 }
                 else
                 {
-                    Console.WriteLine("Successfully validated token.");
+                    AnsiConsole.MarkupLine("[green]Successfully validated token.[/]");
                     return;
                 }
             }
@@ -44,7 +31,7 @@ namespace dusha
 
             var method = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("Choose an Authentication method.")
+                    .Title("[blue]Choose an Authentication method.[/]")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
                     .AddChoices(new[] {
@@ -78,7 +65,7 @@ namespace dusha
             authorization = null;
             var retry = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("Failed to authenticate, would you like to retry?")
+                    .Title("[red]Failed to authenticate, would you like to retry?[/]")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
                     .AddChoices(new[] {
@@ -96,6 +83,9 @@ namespace dusha
 
         private static bool LoginForm()
         {
+            AnsiConsole.MarkupLine("[blue]Login to your account.[/]");
+            AnsiConsole.MarkupLine("");
+            
             var email = AnsiConsole.Ask<string>("[green]Email[/]:");
             var password = AnsiConsole.Prompt(
                 new TextPrompt<string>("[green]Password[/]:")
@@ -110,14 +100,14 @@ namespace dusha
 
             if (ValidateUserInput(login.email, true) == false)
             {
-                Console.WriteLine("Email is invalid");
+                AnsiConsole.MarkupLine("[red]Email is invalid[/]");
                 Thread.Sleep(1500);
                 Console.Clear();
                 return false;
             }
             if (ValidateUserInput(login.password, false) == false)
             {
-                Console.WriteLine("Password is invalid");
+                AnsiConsole.MarkupLine("[red]Password is invalid[/]");
                 Thread.Sleep(1500);
                 Console.Clear();
                 return false;
@@ -147,6 +137,7 @@ namespace dusha
                     else
                     {
                         Console.WriteLine(response["error"]);
+                        AnsiConsole.MarkupLine($"[red]Error: {response["error"]}[/]");
                         Thread.Sleep(1500);
                         Console.Clear();
                         return false;
@@ -155,16 +146,19 @@ namespace dusha
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                AnsiConsole.MarkupLine($"[red]Error: {e}[/]");
                 return false;
             }
 
-            Console.WriteLine("Successfully logged in.");
+            AnsiConsole.MarkupLine("[green]Successfully logged in.[/]");
             return true;
         }
 
         private static bool SignUpForm()
         {
+            AnsiConsole.MarkupLine("[blue]Create an account.[/]");
+            AnsiConsole.MarkupLine("");
+
             var email = AnsiConsole.Ask<string>("[green]Email[/]:");
             var username = AnsiConsole.Ask<string>("[green]Username[/]:");
             var password = AnsiConsole.Prompt(
@@ -181,21 +175,21 @@ namespace dusha
 
             if (ValidateUserInput(signup.email, true) == false)
             {
-                Console.WriteLine("Email is invalid");
+                AnsiConsole.MarkupLine("[red]Email is invalid[/]");
                 Thread.Sleep(1500);
                 Console.Clear();
                 return false;
             }
             if (ValidateUserInput(signup.username, false) == false)
             {
-                Console.WriteLine("Username is invalid");
+                AnsiConsole.MarkupLine("[red]Username is invalid[/]");
                 Thread.Sleep(1500);
                 Console.Clear();
                 return false;
             }
             if (ValidateUserInput(signup.password, false) == false)
             {
-                Console.WriteLine("Password is invalid");
+                AnsiConsole.MarkupLine("[red]Password is invalid[/]");
                 Thread.Sleep(1500);
                 Console.Clear();
                 return false;
@@ -223,7 +217,7 @@ namespace dusha
                     }
                     else
                     {
-                        Console.WriteLine(response["error"]);
+                        AnsiConsole.MarkupLine($"[red]Error: {response["error"]}[/]");
                         Thread.Sleep(1500);
                         Console.Clear();
                         return false;
@@ -232,11 +226,11 @@ namespace dusha
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                AnsiConsole.MarkupLine($"[red]Error: {e}[/]");
                 return false;
             }
 
-            Console.WriteLine("Successfully signed up.");
+            AnsiConsole.MarkupLine("[green]Successfully signed up.[/]");
             return true;
         }
 
@@ -279,5 +273,18 @@ namespace dusha
         }
 
 
+    }
+
+    public class Login
+    {
+        public string? email;
+        public string? password;
+    }
+
+    public class SignUp
+    {
+        public string? email;
+        public string? username;
+        public string? password;
     }
 }
