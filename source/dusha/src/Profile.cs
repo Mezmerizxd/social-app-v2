@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using Spectre.Console;
 
 namespace dusha
@@ -28,7 +29,7 @@ namespace dusha
         {
             try
             {
-                var json = Request.Send("http://mezmerizxd.net/api/v1/profile/friends", true);
+                var json = Request.Send("http://mezmerizxd.net/api/v1/profile/friends", true, null);
                 if (json == null)
                     return null;
                 Friends? friendsJson = JObject.Parse(json).ToObject<Friends?>();
@@ -47,7 +48,7 @@ namespace dusha
         {
             try
             {
-                var json = Request.Send("http://mezmerizxd.net/api/v1/profile/friend-requests", true);
+                var json = Request.Send("http://mezmerizxd.net/api/v1/profile/friend-requests", true, null);
                 if (json == null)
                     return null;
                 FriendRequests? friendRequests = JObject.Parse(json).ToObject<FriendRequests>();
@@ -63,29 +64,46 @@ namespace dusha
             }
         }
 
-        public static void HandleFriendRequest(string userId, string action)
+        public static ServerResponse? HandleFriendRequest(string userId, string action)
         {
             try
             {
+                var json = new StringContent(JsonConvert.SerializeObject(new { userId = userId, action = action }), System.Text.Encoding.UTF8, "application/json");
+                var resp = Request.Send("http://mezmerizxd.net/api/v1/profile/handle-friend-request", true, json);
+                if (resp == null)
+                    return null;
+                ServerResponse? serverResponse = JObject.Parse(resp).ToObject<ServerResponse>();
+                if (serverResponse == null)
+                    return null;
 
+                return serverResponse;
             }
             catch (Exception ex)
             {
                 AnsiConsole.MarkupLine("[red]Failed to handle friend request.[/]", ex.Message);
-                return;
+                return null;
             }
         }
 
-        public static void AddFriend(string username)
+        public static ServerResponse? AddFriend(string username)
         {
             try
             {
+                var json = new StringContent(JsonConvert.SerializeObject(new { username = username }), System.Text.Encoding.UTF8, "application/json");
+                var resp = Request.Send("http://mezmerizxd.net/api/v1/profile/add-friend", true, json);
+                if (resp == null)
+                    return null;
+                ServerResponse? serverResponse = JObject.Parse(resp).ToObject<ServerResponse>();
+                if (serverResponse == null)
+                    return null;
 
+                return serverResponse;
+                
             }
             catch (Exception ex)
             {
                 AnsiConsole.MarkupLine("[red]Failed to add friend.[/]", ex.Message);
-                return;
+                return null;
             }
         }
 
@@ -93,7 +111,7 @@ namespace dusha
         {
             try
             {
-                var json = Request.Send("http://mezmerizxd.net/api/v1/profile", true);
+                var json = Request.Send("http://mezmerizxd.net/api/v1/profile", true, null);
                 if (json == null)
                     return null;
                 FullProfile? fullProfile = JObject.Parse(json).ToObject<FullProfile>();
@@ -112,7 +130,8 @@ namespace dusha
         {
             try
             {
-
+                var json = new StringContent(JsonConvert.SerializeObject(new { username = username }), System.Text.Encoding.UTF8, "application/json");
+                Request.Send("http://mezmerizxd.net/api/v1/profile/change-username", true, json);
             }
             catch (Exception ex)
             {
@@ -125,7 +144,8 @@ namespace dusha
         {
             try
             {
-
+                var json = new StringContent(JsonConvert.SerializeObject(new { avatar = avatar }), System.Text.Encoding.UTF8, "application/json");
+                Request.Send("http://mezmerizxd.net/api/v1/profile/change-avatar", true, json);
             }
             catch (Exception ex)
             {

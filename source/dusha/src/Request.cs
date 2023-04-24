@@ -4,7 +4,7 @@ namespace dusha
 {
     internal class Request
     {
-        public static string? Send(string url, bool useAuth)
+        public static string? Send(string url, bool useAuth, HttpContent? content)
         {
             try
             {
@@ -13,14 +13,17 @@ namespace dusha
                     using (var client = new HttpClient())
                     {
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Authentication.authorization);
-                        string request = client.PostAsync(url, null).Result.Content.ReadAsStringAsync().Result;
+                        string request = client.PostAsync(url, content).Result.Content.ReadAsStringAsync().Result;
                         return request;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("TODO");
-                    return null;
+                    using (var client = new HttpClient())
+                    {
+                        string request = client.PostAsync(url, content).Result.Content.ReadAsStringAsync().Result;
+                        return request;
+                    }
                 }
             }
             catch (Exception ex)
@@ -31,5 +34,9 @@ namespace dusha
         }
     }
 
-    class RequestResponse { }
+    class ServerResponse 
+    {
+        public bool? success;
+        public string? error;
+    }
 }
