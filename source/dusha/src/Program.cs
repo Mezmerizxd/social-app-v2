@@ -54,8 +54,8 @@ namespace dusha.src
                 AnsiConsole.MarkupLine("[green]Successfully authenticated.[/]");
             }
 
-            // // Start profile
             Profile.Start();
+            Messaging.Start();
 
             Console.Clear();
 
