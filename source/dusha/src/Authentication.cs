@@ -26,7 +26,7 @@ namespace dusha
                 }
             }
 
-            Thread.Sleep(1500);
+            Thread.Sleep(1000);
             Console.Clear();
 
             var method = AnsiConsole.Prompt(
@@ -56,7 +56,7 @@ namespace dusha
             }
             else { return; }
 
-            Thread.Sleep(1500);
+            Thread.Sleep(1000);
             Console.Clear();
         }
 

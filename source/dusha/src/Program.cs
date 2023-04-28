@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Spectre.Console;
 using System.Net.NetworkInformation;
 
@@ -13,13 +14,13 @@ namespace dusha.src
             Console.Clear();
 
             AnsiConsole.MarkupLine("[blue]Starting...[/]");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
 
             AnsiConsole.Status().AutoRefresh(true).Spinner(Spinner.Known.Star).SpinnerStyle(Style.Parse("green"))
             .Start("Initializing...", ctx => 
             {
                 ctx.Status("[yellow]Checking if server is online...[/]");
-                Thread.Sleep(1500);
+                Thread.Sleep(1000);
                 // Check if server is online
                 if (IsServerOnline() == false)
                 {
@@ -28,10 +29,10 @@ namespace dusha.src
                 else
                 {
                     AnsiConsole.MarkupLine("[green]Server is online.[/]");
-                }
+                }                
 
                 ctx.Status("[yellow]Getting socket details...[/]");
-                Thread.Sleep(1500);
+                Thread.Sleep(1000);
                 // Get socket details
                 var socket = GetSocketDetails();
                 if (socket == null)
@@ -46,7 +47,7 @@ namespace dusha.src
             });
 
             AnsiConsole.MarkupLine("[yellow]Starting authentication...[/]");
-            Thread.Sleep(1500);
+            Thread.Sleep(1000);
             // Start authentication
             Authentication.Start();
             if (Authentication.authorization != null)
@@ -59,18 +60,7 @@ namespace dusha.src
 
             Console.Clear();
 
-            if (Profile.profile?.friends != null && Profile.profile?.friends.Length > 0)
-            {
-                var selectionPrompt = new SelectionPrompt<string>();
-                selectionPrompt.Title($"[blue]You are logged in as [/][green]{Profile.profile.username}[/][blue], select a friend to chat with.[/]");
-                for (int i = 0; i < Profile.profile.friends.Length; i++)
-                {
-                    selectionPrompt.AddChoice(Profile.profile.friends[i].username);
-                }
-                var username = AnsiConsole.Prompt(selectionPrompt);
-
-                Console.WriteLine("Selected: " + username);
-            }
+            Interface.Start();
 
             return;
         }
