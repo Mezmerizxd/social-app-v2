@@ -4,6 +4,8 @@ namespace dusha
 {
   internal class Request
   {
+    public static string DOMAIN = "http://localhost:3000";
+
     public static string? Send(string url, bool useAuth, HttpContent? content)
     {
       try

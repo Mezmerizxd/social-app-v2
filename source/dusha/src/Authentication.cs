@@ -119,7 +119,7 @@ namespace dusha
         {
           var json = JsonConvert.SerializeObject(login);
           var content = new StringContent(json, Encoding.UTF8, "application/json");
-          var request = client.PostAsync("http://mezmerizxd.net/api/v1/account/login", content).Result.Content.ReadAsStringAsync().Result;
+          var request = client.PostAsync($"{Request.DOMAIN}/api/v1/account/login", content).Result.Content.ReadAsStringAsync().Result;
           if (request == null)
           {
             return false;
@@ -201,7 +201,7 @@ namespace dusha
         {
           var json = JsonConvert.SerializeObject(signup);
           var content = new StringContent(json, Encoding.UTF8, "application/json");
-          var request = client.PostAsync("http://mezmerizxd.net/api/v1/account/signup", content).Result.Content.ReadAsStringAsync().Result;
+          var request = client.PostAsync($"{Request.DOMAIN}/api/v1/account/signup", content).Result.Content.ReadAsStringAsync().Result;
           if (request == null)
           {
             return false;
