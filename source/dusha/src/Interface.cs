@@ -11,9 +11,6 @@ namespace dusha
       while (Authentication.authorization != null)
       {
         Console.Clear();
-
-
-
         Home();
       }
     }
@@ -69,19 +66,62 @@ namespace dusha
         selectionPrompt.AddChoice("Back");
         var username = AnsiConsole.Prompt(selectionPrompt);
 
-        Console.WriteLine("Selected: " + username);
-
         switch (username)
         {
           case "Back":
             break;
 
           default:
+            BasicProfile? friend = Profile.GetProfileByUsername(username);
+            if (friend == null)
+              break;
+
+            Chat(friend);
             break;
         }
       }
 
       return;
+    }
+
+    public static void Chat(BasicProfile friend)
+    {
+      if (friend == null || friend.userId == null)
+        return;
+
+      // Get messages from messaging group
+      var messages = Messaging.GetMessageGroup(friend.userId);
+      if (messages == null)
+        return;
+
+      while (true)
+      {
+        Console.Clear();
+
+        // Display messages
+        if (messages.messages != null && messages.messages.Length > 0)
+        {
+          for (int i = 0; i < messages.messages.Length; i++)
+          {
+            if (messages.messages[i].message != null && messages.messages[i].username != null)
+            {
+              if (messages.messages[i].username == Profile.profile?.username)
+              {
+                AnsiConsole.MarkupLine($"[green]{messages.messages[i].username}[/]: {messages.messages[i].message}");
+              }
+              else
+              {
+                AnsiConsole.MarkupLine($"[red]{messages.messages[i].username}[/]: {messages.messages[i].message}");
+              }
+            }
+          }
+        }
+
+        // Send messages
+        var message = AnsiConsole.Ask<string>("[blue]Message (exit: e_qt):[/]");
+        if (message == "e_qt")
+          break;
+      }
     }
 
     public static void AddFriend()
