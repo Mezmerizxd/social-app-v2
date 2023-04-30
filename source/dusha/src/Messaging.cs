@@ -14,7 +14,7 @@ namespace dusha
     public static ReturnGetMessageGroup? GetMessageGroup(string userId)
     {
       var json = new StringContent(JsonConvert.SerializeObject(new { userId = userId }), System.Text.Encoding.UTF8, "application/json");
-      var resp = Request.Send("http://mezmerizxd.net/api/v1/messaging/get-message-group", true, json);
+      var resp = Request.Send($"{Request.DOMAIN}/api/v1/messaging/get-message-group", true, json);
       if (resp == null)
         return null;
       ReturnGetMessageGroup? serverResponse = JObject.Parse(resp).ToObject<ReturnGetMessageGroup>();
@@ -27,14 +27,14 @@ namespace dusha
     public static void DeleteMessage(string messageId, string messageGroupId)
     {
       var json = new StringContent(JsonConvert.SerializeObject(new { messageId = messageId, messageGroupId = messageGroupId }), System.Text.Encoding.UTF8, "application/json");
-      Request.Send("http://mezmerizxd.net/api/v1/messaging/delete-message", true, json);
+      Request.Send($"{Request.DOMAIN}/api/v1/messaging/delete-message", true, json);
       return;
     }
 
     public static void EditMessage(string messageId, string messageGroupId, string message)
     {
       var json = new StringContent(JsonConvert.SerializeObject(new { messageId = messageId, messageGroupId = messageGroupId, message = message }), System.Text.Encoding.UTF8, "application/json");
-      Request.Send("http://mezmerizxd.net/api/v1/messaging/edit-message", true, json);
+      Request.Send($"{Request.DOMAIN}/api/v1/messaging/edit-message", true, json);
       return;
     }
   }

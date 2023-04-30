@@ -25,6 +25,8 @@ namespace dusha.src
         if (IsServerOnline() == false)
         {
           AnsiConsole.MarkupLine("[red]Failed to connect to Social App V2 Servers.[/]");
+          Thread.Sleep(3000);
+          Environment.Exit(0);
         }
         else
         {
@@ -38,6 +40,8 @@ namespace dusha.src
         if (socket == null)
         {
           AnsiConsole.MarkupLine("[red]Failed to get socket details.[/]");
+          Thread.Sleep(3000);
+          Environment.Exit(0);
         }
         else
         {
@@ -69,9 +73,15 @@ namespace dusha.src
     {
       try
       {
-        Ping ping = new Ping();
-        PingReply reply = ping.Send("mezmerizxd.net");
-        return reply.Status == IPStatus.Success;
+        string? socketDetails = GetSocketDetails();
+        if (socketDetails == null)
+        {
+          return false;
+        }
+        else
+        {
+          return true;
+        }
       }
       catch
       {
@@ -85,7 +95,7 @@ namespace dusha.src
       {
         using (var client = new HttpClient())
         {
-          var response = client.PostAsync("http://mezmerizxd.net/api/v1/get-socket-details", null).Result.Content.ReadAsStringAsync().Result;
+          var response = client.PostAsync($"{Request.DOMAIN}/api/v1/get-socket-details", null).Result.Content.ReadAsStringAsync().Result;
           if (response == null)
           {
             return null;
