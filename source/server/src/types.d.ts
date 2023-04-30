@@ -47,6 +47,11 @@ declare namespace Server.API {
       email?: string;
       avatar?: string;
     };
+    ['/profile/u/:username']: () => {
+      userId?: string;
+      username?: string;
+      avatar?: string;
+    };
     ['/profile/change-username']: () => {};
     ['/profile/change-avatar']: () => {};
     ['/profile/friends']: () => {
