@@ -42,16 +42,16 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # Dusha
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '7.x'
-      - name: Build .NET Project
-        run: yarn build:dusha
-      - name: Test .NET Project
-        run: yarn test:dusha
-      - name: Publish .NET Project
-        uses: actions/upload-artifact@v2
-        with:
-          name: SocialAppV2
-          path: source/dusha/build/Release/net7.0/publish
+      # - name: Setup .NET Core
+      #   uses: actions/setup-dotnet@v1
+      #   with:
+      #     dotnet-version: '7.x'
+      # - name: Build .NET Project
+      #   run: yarn build:dusha
+      # - name: Test .NET Project
+      #   run: yarn test:dusha
+      # - name: Publish .NET Project
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: SocialAppV2
+      #     path: source/dusha/build/Release/net7.0/publish
