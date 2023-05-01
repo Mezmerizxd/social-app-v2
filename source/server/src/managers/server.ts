@@ -95,7 +95,7 @@ class Server {
   }
 
   async alertAdminsServerStarted() {
-    if (process.env.PRODUCTION !== 'true') return;
+    if (process.env.USE_PRODUCTION !== 'true') return;
     try {
       const admins = await this.prisma.accounts.findMany({
         where: {

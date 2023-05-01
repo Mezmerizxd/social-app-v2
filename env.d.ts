@@ -1,7 +1,7 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      PRODUCTION: string;
+      USE_PRODUCTION: string;
       PORT: string;
       DATABASE_URL: string;
       SERVER_SOCKET_CONNECTION: string;
