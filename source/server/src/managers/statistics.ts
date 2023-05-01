@@ -111,9 +111,9 @@ class Statistics {
   }
 
   renderer() {
-    this.express.use(express.static(path.join(__dirname, `../../../server/public`)));
+    this.express.use(express.static(path.join(__dirname, `../../server/public`)));
     this.express.get('/', (req: express.Request, res: express.Response) => {
-      res.sendFile(path.join(__dirname, `../../../server/public/statistics.html`));
+      res.sendFile(path.join(__dirname, `../../server/public/statistics.html`));
     });
   }
 

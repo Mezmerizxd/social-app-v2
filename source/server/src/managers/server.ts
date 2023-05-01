@@ -88,9 +88,9 @@ class Server {
   }
 
   renderer() {
-    this.express.use(express.static(path.join(__dirname, `../../../zvyezda/build`)));
+    this.express.use(express.static(path.join(__dirname, `../../zvyezda/build`)));
     this.express.get('/*', (req: express.Request, res: express.Response) => {
-      res.sendFile(path.join(__dirname, `../../../zvyezda/build/index.html`));
+      res.sendFile(path.join(__dirname, `../../zvyezda/build/index.html`));
     });
   }
 
