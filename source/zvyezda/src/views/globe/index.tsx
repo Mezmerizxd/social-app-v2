@@ -1,10 +1,11 @@
 import { Container, ContentContainer, SidebarContainer } from './styled';
 import Optionbar from './components/Optionbar';
-import Content from './components/Content';
+import Dashboard from './components/Dashboard';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { useEffect } from 'react';
 import { setAccount } from './reducer';
 import Api from '../../classes/Api';
+import ViewPost from './components/ViewPost';
 
 export default () => {
   const state: Client.Globe.InitialState = useAppSelector((state) => state.globe);
@@ -31,9 +32,7 @@ export default () => {
         <Optionbar />
       </SidebarContainer>
 
-      <ContentContainer>
-        <Content />
-      </ContentContainer>
+      <ContentContainer>{state.isViewingPost === false ? <Dashboard /> : <ViewPost />}</ContentContainer>
 
       <SidebarContainer></SidebarContainer>
     </Container>

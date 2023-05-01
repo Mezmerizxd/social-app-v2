@@ -1,4 +1,4 @@
-import { Posts, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { logManager } from '../helpers/logger';
 import User from '../data/user';
 import { createPostId } from '../helpers/generators';

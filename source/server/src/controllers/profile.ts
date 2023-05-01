@@ -1,10 +1,63 @@
 import { PrismaClient } from '@prisma/client';
-import server, { socket } from '../server';
+import { server } from '../managers/server';
 import handler from '../helpers/handler';
 import Profile from '../data/user';
 import { logController } from '../helpers/logger';
 
 export default (prisma: PrismaClient): void => {
+  handler.POST(server.v1, '/profile', async (req, res) => {
+    const { authorization } = req.headers;
+    const profile = new Profile(prisma, authorization, 'token');
+    const err = await profile.init();
+    if (err.error) return err;
+
+    return {
+      success: true,
+      userId: profile.account.userId,
+      username: profile.profile.username,
+      email: profile.account.email,
+      avatar: profile.profile.avatar,
+      friends: profile.friends,
+      friendRequestsReceived: profile.requestsReceived,
+      friendRequestsSent: profile.requestsSent,
+    };
+  });
+
+  handler.POST(server.v1, '/profile/u/:username', async (req, res) => {
+    const username = req.params.username;
+    if (!username) {
+      return {
+        success: false,
+        error: 'Missing fields',
+      };
+    }
+
+    const profile = await prisma.profiles.findFirst({
+      where: {
+        username,
+      },
+      select: {
+        userId: true,
+        username: true,
+        avatar: true,
+      },
+    });
+
+    if (!profile) {
+      return {
+        success: false,
+        error: 'Profile not found',
+      };
+    }
+
+    return {
+      success: true,
+      userId: profile.userId,
+      username: profile.username,
+      avatar: profile.avatar,
+    };
+  });
+
   handler.POST(server.v1, '/profile/friends', async (req, res) => {
     const { authorization } = req.headers;
     const profile = new Profile(prisma, authorization, 'token');
@@ -46,7 +99,7 @@ export default (prisma: PrismaClient): void => {
     if (err.error) return err;
 
     const friend = new Profile(prisma, userId, 'id');
-    const err2 = await profile.init();
+    const err2 = await friend.init();
     if (err2.error) return err2;
 
     const handleRequest = await profile.handleFriend(userId, action);
@@ -102,7 +155,7 @@ export default (prisma: PrismaClient): void => {
     }
 
     // Emit to users socket room
-    socket.to(friend.userId).emit('receiveFriendRequest', {
+    server.socket.to(friend.userId).emit('receiveFriendRequest', {
       userId: profile.profile.userId,
       username: profile.profile.username,
       avatar: profile.profile.avatar,
@@ -110,24 +163,6 @@ export default (prisma: PrismaClient): void => {
 
     return {
       success: true,
-    };
-  });
-
-  handler.POST(server.v1, '/profile', async (req, res) => {
-    const { authorization } = req.headers;
-    const profile = new Profile(prisma, authorization, 'token');
-    const err = await profile.init();
-    if (err.error) return err;
-
-    return {
-      success: true,
-      userId: profile.account.userId,
-      username: profile.profile.username,
-      email: profile.account.email,
-      avatar: profile.profile.avatar,
-      friends: profile.friends,
-      friendRequestsReceived: profile.requestsReceived,
-      friendRequestsSent: profile.requestsSent,
     };
   });
 

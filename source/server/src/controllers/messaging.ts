@@ -1,12 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import handler from '../helpers/handler';
-import server, { socket } from '../server';
+import { server } from '../managers/server';
 import Profile from '../data/user';
 import { logController } from '../helpers/logger';
 import { createMessageId } from '../helpers/generators';
 
 export default (prisma: PrismaClient) => {
-  socket.on('connection', async (s) => {
+  server.socket.on('connection', async (s) => {
     s.on('sendMessage', async (data) => {
       const profile = new Profile(prisma, data.authorization, 'token');
       const profileErr = await profile.init();
@@ -34,7 +34,7 @@ export default (prisma: PrismaClient) => {
         },
       });
 
-      socket.to(messageGroupId).emit('message', {
+      server.socket.to(messageGroupId).emit('message', {
         message: data.message,
         avatar: profile.profile.avatar,
         username: profile.profile.username,

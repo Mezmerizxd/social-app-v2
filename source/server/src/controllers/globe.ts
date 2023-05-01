@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import server from '../server';
+import { server } from '../managers/server';
 import handler from '../helpers/handler';
 import { logController } from '../helpers/logger';
 import UserData from '../data/user';
@@ -109,7 +109,7 @@ export default (prisma: PrismaClient): void => {
     const err = await user.init();
     if (err.error) return err;
 
-    const post: any = await Globe.getAllRepliesFromPost(postId);
+    const post = await Globe.getAllRepliesFromPost(postId);
     if (!post) {
       return {
         success: false,
@@ -119,8 +119,7 @@ export default (prisma: PrismaClient): void => {
 
     return {
       success: true,
-      post: post,
-      replies: post.replies,
+      ...post,
     };
   });
 

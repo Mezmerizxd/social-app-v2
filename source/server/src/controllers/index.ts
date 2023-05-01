@@ -1,8 +1,8 @@
-import server, { socket } from '../server';
+import { server } from '../managers/server';
 import handler from '../helpers/handler';
 import { PrismaClient } from '@prisma/client';
 import { logController } from '../helpers/logger';
-import { statistics } from '../statistics';
+import { statistics } from '../managers/statistics';
 
 import MessagingController from './messaging';
 import AccountController from './account';
@@ -15,7 +15,7 @@ export default (prisma: PrismaClient): void => {
   ProfileController(prisma);
   GlobeController(prisma);
 
-  socket.on('connection', async (s) => {
+  server.socket.on('connection', async (s) => {
     s.on('join', async (data) => {
       // Check theres data
       if (!data.authorization) return;

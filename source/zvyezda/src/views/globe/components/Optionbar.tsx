@@ -1,4 +1,4 @@
-import { Sidebar, SidebarHeader, SidebarOption, SidebarOptions } from './styled';
+import { Sidebar, SidebarHeader, SidebarOption, SidebarOptions, SidebarProfile } from './styled';
 import MessageIcon from '@mui/icons-material/Message';
 import HomeIcon from '@mui/icons-material/Home';
 
@@ -6,9 +6,7 @@ export default () => {
   return (
     <Sidebar>
       <SidebarHeader>
-        <h1>
-          The Globe <span style={{ color: 'rgb(230, 10, 0)' }}>{'[DEV]'}</span>
-        </h1>
+        <h1>The Globe</h1>
       </SidebarHeader>
       <SidebarOptions>
         <SidebarOption onClick={() => (window.location.href = '/')}>
@@ -20,6 +18,10 @@ export default () => {
           <p>Messaging</p>
         </SidebarOption>
       </SidebarOptions>
+      <SidebarProfile>
+        <img src="https://cdn.discordapp.com/embed/avatars/1.png" />
+        <p>zvyezda</p>
+      </SidebarProfile>
     </Sidebar>
   );
 };
