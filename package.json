@@ -1,6 +1,6 @@
 {
   "name": "social-app-v2",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "main": "index.js",
   "author": "Rory Pearson (Mezmerizxd)",
   "license": "MIT",
@@ -9,7 +9,10 @@
     "build": "lerna run build --stream --parallel",
     "start": "yarn migrate && yarn build && node ./source/server/build/index.js",
     "minimal-client:watch": "preact watch --refresh --src ./src --cwd ./source/minimal-client/",
-    "start:dusha": "cd source/dusha && dotnet run",
+    "start:dusha": "cd source/dusha && yarn start",
+    "watch:dusha": "cd source/dusha && yarn watch",
+    "build:dusha": "cd source/dusha && yarn build",
+    "test:dusha": "cd source/dusha && yarn test",
     "migrate": "yarn prisma migrate deploy",
     "generate": "yarn prisma generate",
     "prettier": "lerna run prettier --stream --parallel"

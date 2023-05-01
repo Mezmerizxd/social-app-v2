@@ -1,5 +1,5 @@
 {
-  "packages": ["source/server", "source/zvyezda"],
+  "packages": ["source/server", "source/zvyezda", "source/dusha"],
   "npmClient": "yarn",
   "version": "0.0.0"
 }

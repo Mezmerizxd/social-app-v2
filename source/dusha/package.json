@@ -1,0 +1,13 @@
+{
+  "name": "dusha",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "dotnet run",
+    "build": "dotnet build --configuration Release --no-restore",
+    "watch": "dotnet watch",
+    "test": "dotnet test --no-restore --verbosity normal",
+    "prettier": "prettier src/**/*.cs --write"
+  }
+}
