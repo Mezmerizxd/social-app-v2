@@ -40,7 +40,7 @@ export default new (class Api {
     if (host.includes('localhost')) {
       return 'http://localhost:3000/api/v1';
     } else {
-      return 'http://mezmerizxd.net/api/v1';
+      return 'http://sav2.zvyezda.com/api/v1';
     }
   };
 })();

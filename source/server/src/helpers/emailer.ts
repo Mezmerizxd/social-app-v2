@@ -15,7 +15,7 @@ export const verification = async (recipient: string, code: string) => {
         <div>
             <h1>Email Verification</h1>
             <p>Click the button below to verify your email address.</p>
-            <a href="http://mezmerizxd.net/verify-email?code=${code}">Verify Email</a>
+            <a href="http://sav2.zvyezda.com/verify-email?code=${code}">Verify Email</a>
             <style>
             @import url("https://fonts.googleapis.com/css2?family=Quicksand");
             * {
@@ -62,7 +62,7 @@ export const verification = async (recipient: string, code: string) => {
         `;
 
   const mailOptions = {
-    from: '"No Reply" <no-reply@mezmerizxd.net>',
+    from: '"No Reply" <no-reply@sav2.zvyezda.com>',
     to: recipient,
     subject: 'Email Verification',
     html: html,
@@ -92,8 +92,8 @@ export const serverStarted = async (recipient: string) => {
   const html = `
   <div>
     <h1>Server Started</h1>
-    <a href="http://mezmerizxd.net">Live Website</a>
-    <a href="http://statistics.mezmerizxd.net">Statistics Website</a>
+    <a href="http://sav2.zvyezda.com">Live Website</a>
+    <a href="http://sav2-stats.zvyezda.com">Statistics Website</a>
     <p>Statistics Access Code: ${statistics.accessToken}</p>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Quicksand');
@@ -143,7 +143,7 @@ export const serverStarted = async (recipient: string) => {
   `;
 
   const mailOptions = {
-    from: '"No Reply" <no-reply@mezmerizxd.net>',
+    from: '"No Reply" <no-reply@sav2.zvyezda.com>',
     to: recipient,
     subject: 'Server Started',
     html: html,

@@ -4,7 +4,7 @@ namespace dusha
 {
   internal class Request
   {
-    public static string DOMAIN = "http://mezmerizxd.net";
+    public static string DOMAIN = "http://sav2.zvyezda.com";
 
     public static string? Send(string url, bool useAuth, HttpContent? content)
     {
